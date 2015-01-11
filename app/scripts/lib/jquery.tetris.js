@@ -181,30 +181,29 @@
   }
 
 
-  function __getMyText(text) {
+  function formatCaseNumber(text) {
     if (/[^0-9]/.test(text.slice(0, 1))) {
-      text = '<i>' + text.slice(0, 1) + '</i>' + text.slice(1);
+      text = '<i>' + text.slice(0, 1) + '</i><span>' + text.slice(1) + '</span>';
     } else if (text.length > 4) {
-      text = '<span style="line-height: 12px;word-break: break-all;position: absolute;width: 100%;left: 0;top: 12px;">' + text + '</span>';
+      text = '<span">' + text + '</span>';
     }
     return text;
   }
 
   // TODO: should use template to generate html
-  function __generator(conf, tdata) {
-    var __bottom = (conf._dy * 1.3 + tdata.y * conf.standard);
-    var __left = tdata.x * conf.standard;
+  function blockGenerator(conf, tdata) {
+    var bottom = (conf._dy * 1.3 + tdata.y * conf.standard);
+    var left = tdata.x * conf.standard;
     var html = $('<div>')
       .attr('class', conf.tclass)
       .attr('data-aidx', tdata.aIndex)
       .attr('data-atype', tdata.aType)
-      .attr('data-left', __left)
-      .attr('data-bottom', Math.round(__bottom - conf._dy * 1.3))
+      .attr('data-left', left)
+      .attr('data-bottom', Math.round(bottom - conf._dy * 1.3))
       .css({
-        left: __left,
-        bottom: Math.round(__bottom)
+        left: left,
+        bottom: Math.round(bottom)
       });
-
     var _case = tdata.shape + '' + tdata.orientation;
     var _matrix_pos = matrixPos(_case);
 
@@ -215,12 +214,14 @@
         .attr('class', conf.tbclass)
         .attr('data-case', name)
         .css({
-          'text-align': 'center',
-          'line-height': '60px',
           'color' : tdata.textColor,
           'background-color': tdata.bgColor,
           'top': _matrix_pos[i][1] * conf.standard + 'px',
-          'left': _matrix_pos[i][0] * conf.standard + 'px'
+          'left': _matrix_pos[i][0] * conf.standard + 'px',
+          'height': conf.standard,
+          'width': conf.standard,
+          'font-size' : (conf.standard / 3) + 'px',
+          'line-height': (conf.standard / 3) + 'px'
         });
 
       var d = conf.tCaseData[name];
@@ -241,7 +242,7 @@
         block.append(thumbnail);
       }
 
-      block.append(__getMyText(name));
+      block.append(formatCaseNumber(name));
 
       html.append(block);
     }
@@ -317,7 +318,7 @@
 
     this.init = function(callback) {
       $.each(conf.tetris, function(key, val) {
-        __generator(conf, val);
+        blockGenerator(conf, val);
       });
 
       $('.case_thumbnail').hover(function() {

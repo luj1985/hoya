@@ -141,6 +141,10 @@ $(function() {
     _load_main: function() {
       __changePage('main', function() {
         if (!PAGEINITED['main']) {
+          // screen width;
+          var totalWidth = $(window).width();
+          totalWidth = totalWidth > 480 ? 480 : totalWidth; 
+          
           var _my_tetris = $('#my_index_tetris');
           tetrisConf = {
             container: _my_tetris,
@@ -149,20 +153,20 @@ $(function() {
             tetris: tetrisDefs,
             tCaseData: CASEDICT,
             _dy: _my_tetris.height(),
-            standard: 40, // 1个x/y坐标单位
+            standard: totalWidth / 12, // 1个x/y坐标单位
             speed: ANIMATE.c // 单帧动画速度
           };
           my_tetris = new $.tetris(tetrisConf);
 
           my_tetris.init(function() {
-            Tools.loadimg($('#my_index_tetris').find('img[data-src]'), false, function() {
-              $('#my_index_tetris').find('img[data-src]').each(function() {
+            Tools.loadimg(_my_tetris.find('img[data-src]'), false, function() {
+              _my_tetris.find('img[data-src]').each(function() {
                 $(this).attr('src', $(this).attr('data-src'));
               });
               Tools.loading(false);
             }, function() {
               setTimeout(function() {
-                $('#my_index_tetris').find('img[data-src]').each(function() {
+                _my_tetris.find('img[data-src]').each(function() {
                   $(this).attr('src', $(this).attr('data-src'));
                 });
                 Tools.loading(false);
