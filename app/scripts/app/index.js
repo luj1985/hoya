@@ -93,7 +93,9 @@ $(function() {
       x: t[7],
       y: t[8]
     };
-  })
+  });
+
+  CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
 
   var LFN = {
     _load_main: function() {
