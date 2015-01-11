@@ -40,6 +40,7 @@ $(function() {
     }
   };
   Tools.loading(true);
+
   var PAGEINITED = { };
   var tetrisConf;
   var my_tetris;
@@ -54,7 +55,7 @@ $(function() {
     PAGEINITED[$(this).attr('id')] = false;
   });
 
-  function __pageTransation($page, atype, isRevert, callback) {
+  function pageTransition($page, atype, isRevert, callback) {
     callback = callback || function() { void 0; }
     switch (atype) {
       case 'fade':
@@ -63,26 +64,26 @@ $(function() {
       default:
         isRevert ? $page.hide(callback) : $page.show(callback);
     }
-    $page.addClass('p-active');
+    $page.addClass('active');
   }
 
-  function __changePage(pageid, callback) {
-    var _currentPage = $('.page.p-active');
+  function switchPage(pageid, callback) {
+    var _currentPage = $('.page.active');
 
-    _currentPage && __pageTransation(_currentPage, _currentPage.attr('data-amt'), true);
+    _currentPage && pageTransition(_currentPage, _currentPage.attr('data-amt'), true);
 
-    _currentPage.removeClass('p-active');
+    _currentPage.removeClass('active');
 
     var _nextPage = $('#' + pageid);
     _nextPage.find('img[data-src]').each(function() {
       $(this).attr('src', $(this).attr('data-src')).removeAttr('data-src');
     });
-    __pageTransation(_nextPage, _nextPage.attr('data-amt'), false, function() {
+    pageTransition(_nextPage, _nextPage.attr('data-amt'), false, function() {
       callback();
-      $('.footer').css('top', 'auto');
+      $('footer').css('top', 'auto');
       var _dw = $(document).height() - $(window).height();
       if (_dw > 0) {
-        $('.footer').css('top', $(document).height() - 30 + 'px');
+        $('footer').css('top', $(document).height() - 30 + 'px');
       }
     });
   }
@@ -139,12 +140,12 @@ $(function() {
 
   var LFN = {
     _load_main: function() {
-      __changePage('main', function() {
+      switchPage('main', function() {
         if (!PAGEINITED['main']) {
           // screen width;
           var totalWidth = $(window).width();
           totalWidth = totalWidth > 480 ? 480 : totalWidth; 
-          
+
           var _my_tetris = $('#my_index_tetris');
           tetrisConf = {
             container: _my_tetris,
@@ -190,12 +191,12 @@ $(function() {
     _load_about: function() {
       if (!PAGEINITED['about']) {
         $('#about-list').css('top', '-10%');
-        $('.my_tetris-wrapper').width($(window).width()).height($(window).height());
+        $('.tetris-wrapper').width($(window).width()).height($(window).height());
 
         my_tetris.flyAway(ANIMATE.a, ANIMATE.b);
 
         setTimeout(function() {
-          __changePage('about', function() {
+          switchPage('about', function() {
             $('#about-list').animate({
               'top': ['50%', 'easeOutQuart']
             }, 500, function() {
@@ -205,7 +206,7 @@ $(function() {
         }, tetrisConf.tetris.length * ANIMATE.b);
         PAGEINITED['about'] = true;
       } else {
-        __changePage('about', function() { });
+        switchPage('about', function() { });
       }
     }
   };
@@ -213,7 +214,7 @@ $(function() {
   function _init_simple_load_fn(key_ary) {
     $.each(key_ary, function(key, val) {
       LFN['_load_' + val] = function() {
-        __changePage(val, function() {
+        switchPage(val, function() {
           console.log(val + ' loaded..');
           PAGEINITED[val] = true;
         });
@@ -323,7 +324,7 @@ $(function() {
         });
 
         LFN['_load_case_' + _case] = function() {
-          __changePage('case_' + _case, function() {
+          switchPage('case_' + _case, function() {
             if (!PAGEINITED['case_' + _case]) {
               $('#case_slider-' + _case).append('<div class="nivoSlider-ctrl">' + new Array($('#case_slider-' + _case).children('.nivoSlider-item').length + 1).join('<span></span>') + '</div>').children('.nivoSlider-ctrl').on('click', 'span', function() {
                 if ($(this).hasClass('active')) {
@@ -391,7 +392,7 @@ $(function() {
   });
 
   $(document).on('keydown', function(e) {
-    var _c_p_a = $('.case_page.p-active');
+    var _c_p_a = $('.case_page.active');
     var _c_p_a_ctrl = _c_p_a.find('.nivoSlider-ctrl');
     if (_c_p_a.length) {
       var _idx = _c_p_a_ctrl.children('span').index(_c_p_a_ctrl.children('span.active'));
@@ -422,6 +423,6 @@ $(function() {
         LFN[loadfn]();
     }
   });
-  window.location.hash = '';
+  // window.location.hash = '';
   $(window).hashChange();
 });

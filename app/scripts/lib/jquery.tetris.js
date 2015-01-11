@@ -220,7 +220,8 @@
           'left': _matrix_pos[i][0] * conf.standard + 'px',
           'height': conf.standard,
           'width': conf.standard,
-          'font-size' : (conf.standard / 3) + 'px',
+          // exclude 1px border
+          'font-size' : ((conf.standard - 2) / 3) + 'px',
           'line-height': (conf.standard / 3) + 'px'
         });
 
