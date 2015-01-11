@@ -2164,39 +2164,6 @@
 
             if (CASEDICT[_case]) {
                 if (!$('#case_' + _case).length) {
-                    // var _case_thumbnail_id = '#case_thumbnail-' + _case;
-                    // if (!$(_case_thumbnail_id).length) {
-                    //     $('body').append('<div class="case_thumbnail case_thumbnail-loading" id="case_thumbnail-' + _case + '"><span class="scale_mid" style="width: ' + CASEDICT[_case].text.replace(/[^a-zA-Z0-9]/g, 'aa').length * 6.1 + 'px;">' + CASEDICT[_case].text + '</span><a href="#case_' + _case + '"><img id="case_thumbnail_img-' + _case + '" data-src="http://localhost:9012/images/case/' + _case + '/1.jpg" alt="' + CASEDICT[_case].text + '" title="' + CASEDICT[_case].text + '" /></a></div>');
-
-                    //     HY.loadimg($('#case_thumbnail_img-' + _case), false, function() {
-                    //         $('#case_thumbnail_img-' + _case).attr('src', $('#case_thumbnail_img-' + _case).attr('data-src'));
-
-                    //         function _load_th_img() {
-                    //             setTimeout(function() {
-                    //                 var _adj_w = $('#case_thumbnail_img-' + _case).width();
-                    //                 var _adj_h = $('#case_thumbnail_img-' + _case).height();
-
-                    //                 if (_adj_h < 60) {
-                    //                     _load_th_img();
-                    //                 } else {
-
-                    //                     var _p_h = $(_case_thumbnail_id).width();
-                    //                     if (_adj_w > _adj_h) {
-                    //                         $('#case_thumbnail_img-' + _case).height(_p_h).css('margin-left', (_adj_h - _adj_w) * _p_h / _adj_h / 2 + 'px');
-                    //                     } else {
-                    //                         $('#case_thumbnail_img-' + _case).width(_p_h).css('margin-top', (_adj_w - _adj_h) * _p_h / _adj_w / 2 + 'px');
-                    //                     }
-
-                    //                     $(_case_thumbnail_id).removeClass('case_thumbnail-loading').css({
-                    //                         top: $t_block.offset().top + 'px',
-                    //                         left: $t_block.offset().left + 'px'
-                    //                     });
-                    //                 }
-                    //             }, 100);
-
-                    //         }
-                    //         _load_th_img();
-                    //     });
 
 
                     var _case_img = '';
@@ -2206,7 +2173,7 @@
                             // _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 60px;">' + LANG.casename + '</p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
                             _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
                         }
-                        _case_img += '<div class="nivoSlider-item"><img src="http://localhost:9012/images/case/' + _case + '/' + i + '.jpg?20140629" /></div>';
+                        _case_img += '<div class="nivoSlider-item"><img src="images/case/' + _case + '/' + i + '.jpg?20140629" /></div>';
                     }
                     if (i === 2) {
                         // _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 60px;">' + LANG.casename + '</p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';

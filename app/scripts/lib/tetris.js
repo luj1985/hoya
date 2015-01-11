@@ -237,7 +237,7 @@
                 }
                 var randomCss = 'text-align:' + cssDict.ta[HY.getRdInt(2)] + ';line-height:' + cssDict.lh[HY.getRdInt(2)] + ';';
 
-                var thumbnail_img = tdata.text[i] === '' ? '' : ('<span class="case_title" style="width: ' + conf.tCaseData[tdata.text[i]].text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px;">' + conf.tCaseData[tdata.text[i]].text + '</span><img class="case_thumbnail" data-src="http://localhost:9012/images/case/' + tdata.text[i] + '/a.jpg?20140629" alt="' + conf.tCaseData[tdata.text[i]].text + '" />');
+                var thumbnail_img = tdata.text[i] === '' ? '' : ('<span class="case_title" style="width: ' + conf.tCaseData[tdata.text[i]].text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px;">' + conf.tCaseData[tdata.text[i]].text + '</span><img class="case_thumbnail" data-src="images/case/' + tdata.text[i] + '/a.jpg?20140629" alt="' + conf.tCaseData[tdata.text[i]].text + '" />');
 
                 _html += '<span class="' + conf.tbclass + '" style="color:' + tdata.textColor + ';background-color:' + tdata.bgColor + ';top:' + _matrix_pos[i][1] * conf.standard + 'px;left:' + _matrix_pos[i][0] * conf.standard + 'px;' + randomCss + '" data-case="' + tdata.text[i] + '"' + ((tdata.text[i] !== '' && conf.tCaseData[tdata.text[i]]) ? (' data-year="' + conf.tCaseData[tdata.text[i]].year + '" data-category="' + conf.tCaseData[tdata.text[i]].category) : '') + '">' + thumbnail_img + __getMyText(tdata.text[i]) + '</span>';
             }
