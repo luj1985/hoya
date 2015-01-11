@@ -1,48 +1,9 @@
-(function() {
-  window.HY = {
-    getUrlParam: function(name, str) {
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-      var search = ("string" == typeof str) ? str : window.location.search;
-      var r = search.substr(1).match(reg);
-      (r != null) ? r = decodeURIComponent(r[2]) : r = undefined;
-      return r;
-    },
-    getRdInt: function(maxVal) {
-      return Math.floor(Math.random() * (maxVal + 1));
-    },
-    loading: function(loading) {
-      loading ? $('.loading,.loading_shade').removeClass('dn') : $('.loading,.loading_shade').addClass('dn');
-    },
-    loadimg: function(arr, funLoading, funOnLoad, funOnError) {
+(function(window, $, undefined) {
+  function getRdInt(v) {
+    return Math.floor(Math.random() * (v + 1));
+  }
 
-      var numLoaded = 0,
-        numError = 0,
-        isObject = Object.prototype.toString.call(arr) === "[object Object]" ? true : false;
-
-      var arr = isObject ? arr.get() : arr;
-      for (a in arr) {
-        var src = isObject ? $(arr[a]).attr("data-src") : arr[a];
-        preload(src, arr[a]);
-      }
-
-      function preload(src, obj) {
-        var img = new Image();
-        img.onload = function() {
-          numLoaded++;
-          funLoading && funLoading(numLoaded, arr.length, src, obj);
-          funOnLoad && numLoaded == arr.length && funOnLoad(numError);
-        };
-        img.onerror = function() {
-          numLoaded++;
-          numError++;
-          funOnError && funOnError(numLoaded, arr.length, src, obj);
-        }
-        img.src = src;
-      }
-
-    }
-  };
-  HY.tetris = function(conf) {
+  $.tetris = function(conf) {
     var _this = this;
     conf = $.extend({
       container: $('#container'),
@@ -263,7 +224,7 @@
           // lh: ['25px', '43px', '62px']
           lh: ['60px', '60px', '60px']
         }
-        var randomCss = 'text-align:' + cssDict.ta[HY.getRdInt(2)] + ';line-height:' + cssDict.lh[HY.getRdInt(2)] + ';';
+        var randomCss = 'text-align:' + cssDict.ta[getRdInt(2)] + ';line-height:' + cssDict.lh[getRdInt(2)] + ';';
 
         var thumbnail_img = tdata.text[i] === '' ? '' : ('<span class="case_title" style="width: ' + conf.tCaseData[tdata.text[i]].text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px;">' + conf.tCaseData[tdata.text[i]].text + '</span><img class="case_thumbnail" data-src="images/case/' + tdata.text[i] + '/a.jpg?20140629" alt="' + conf.tCaseData[tdata.text[i]].text + '" />');
 
@@ -364,4 +325,4 @@
       }, conf.speed * conf.tetris.length);
     };
   };
-})();
+})(window, jQuery);

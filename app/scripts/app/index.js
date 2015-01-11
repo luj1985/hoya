@@ -1,12 +1,52 @@
 $(function() {
-  HY.loading(true);
+  var Tools = {
+    getUrlParam: function(name, str) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var search = ("string" == typeof str) ? str : window.location.search;
+      var r = search.substr(1).match(reg);
+      (r != null) ? r = decodeURIComponent(r[2]) : r = undefined;
+      return r;
+    },
+    loading: function(loading) {
+      loading ? $('.loading,.loading_shade').removeClass('dn') : $('.loading,.loading_shade').addClass('dn');
+    },
+    loadimg: function(arr, funLoading, funOnLoad, funOnError) {
+
+      var numLoaded = 0,
+        numError = 0,
+        isObject = Object.prototype.toString.call(arr) === "[object Object]" ? true : false;
+
+      var arr = isObject ? arr.get() : arr;
+      for (a in arr) {
+        var src = isObject ? $(arr[a]).attr("data-src") : arr[a];
+        preload(src, arr[a]);
+      }
+
+      function preload(src, obj) {
+        var img = new Image();
+        img.onload = function() {
+          numLoaded++;
+          funLoading && funLoading(numLoaded, arr.length, src, obj);
+          funOnLoad && numLoaded == arr.length && funOnLoad(numError);
+        };
+        img.onerror = function() {
+          numLoaded++;
+          numError++;
+          funOnError && funOnError(numLoaded, arr.length, src, obj);
+        }
+        img.src = src;
+      }
+
+    }
+  };
+  Tools.loading(true);
   var PAGEINITED = { };
   var tetrisConf;
   var my_tetris;
 
   var ANIMATE = { a: 100, b: 80, c: 222 };
 
-  if (HY.getUrlParam('_d') === '1') {
+  if (Tools.getUrlParam('_d') === '1') {
     ANIMATE = { a: 10, b: 8, c: 2 };
   }
 
@@ -112,24 +152,24 @@ $(function() {
             standard: 40, // 1个x/y坐标单位
             speed: ANIMATE.c // 单帧动画速度
           };
-          my_tetris = new HY.tetris(tetrisConf);
+          my_tetris = new $.tetris(tetrisConf);
 
           my_tetris.init(function() {
-            HY.loadimg($('#my_index_tetris').find('img[data-src]'), false, function() {
+            Tools.loadimg($('#my_index_tetris').find('img[data-src]'), false, function() {
               $('#my_index_tetris').find('img[data-src]').each(function() {
                 $(this).attr('src', $(this).attr('data-src'));
               });
-              HY.loading(false);
+              Tools.loading(false);
             }, function() {
               setTimeout(function() {
                 $('#my_index_tetris').find('img[data-src]').each(function() {
                   $(this).attr('src', $(this).attr('data-src'));
                 });
-                HY.loading(false);
+                Tools.loading(false);
               }, 22222);
             });
           }).start(function() {
-            // HY.loading(false);
+            // Tools.loading(false);
           });
 
           setTimeout(function() {

@@ -1,12 +1,7 @@
-
-(function(window, document, undefined) {
-  
-  /****** consummate jquery animate ******/
-  $.easing['jswing'] = $.easing['swing'];
+(function($, undefined) {
   $.extend($.easing, {
     def: 'easeOutQuad',
     swing: function(x, t, b, c, d) {
-      //alert($.easing.default);
       return $.easing[$.easing.def](x, t, b, c, d);
     },
     easeInQuad: function(x, t, b, c, d) {
@@ -152,4 +147,4 @@
       return $.easing.easeOutBounce(x, t * 2 - d, 0, c, d) * .5 + c * .5 + b;
     }
   });
-})(window, document);
+})(jQuery);
