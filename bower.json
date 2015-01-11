@@ -3,8 +3,8 @@
   "private": true,
   "dependencies": {
     "jquery": "~1.11.1",
-    "font-awesome": "~4.2.0",
     "lesshat": "~3.0.2",
-    "normalize-less": "*"
+    "normalize-less": "*",
+    "material-design-iconic-font": "~1.1.1"
   }
 }
