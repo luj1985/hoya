@@ -184,8 +184,8 @@
   function formatCaseNumber(text) {
     if (/[^0-9]/.test(text.slice(0, 1))) {
       text = '<i>' + text.slice(0, 1) + '</i><span>' + text.slice(1) + '</span>';
-    } else if (text.length > 4) {
-      text = '<span">' + text + '</span>';
+    } else if (text.length <= 4) {
+      text = '<i>&nbsp;</i><span">' + text + '</span>';
     }
     return text;
   }

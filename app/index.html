@@ -10,6 +10,7 @@
     <meta name="baidu-site-verification" content="AfHQIzIHJ6" />
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/main.css?v=20140629">
+    <link rel="stylesheet" href="../bower_components/material-design-iconic-font/css/material-design-iconic-font.css">
   </head>
   <body class="">
     <nav class="language">
@@ -17,9 +18,6 @@
       <a href="./zh.html" data-la="zh">简</a> | 
       <a href="./en.html" data-la="en">EN</a>
     </nav>
-
-    <div class="loading dn scale_small"></div>
-    <div class="loading_shade dn"></div>
 
     <div class="page" id="main" data-amt="fade">
       <h2 class="hlogo">
@@ -83,10 +81,10 @@
     </div>
 
     <div class="page" id="survey" data-amt="fade">
-      <div class="atc-nav">
-        <a href="#main" class="atc-nav-main">&nbsp;</a>
-        <a href="#about" class="atc-nav-about">&nbsp;</a>
-      </div>
+      <nav class="menu">
+        <a href="#main"><i class="md md-apps"></i></a>
+        <a href="#about"><i class="md md-menu"></i></a>
+      </nav>
       <section>
         <h3>概况</h3>
         <article>
@@ -641,9 +639,12 @@
       </div>
     </div>
 
-    <footer>
+    <div class="loading dn scale_small"></div>
+    <div class="loading_shade dn"></div>
+
+    <!-- <footer>
       <p>Copyright &copy; hoya.com, All rights reserved.</p>
-    </footer>
+    </footer> -->
 
     <script src="bower_components/jquery/dist/jquery.js?v=20140629"></script>
     <script src="scripts/vendor/hash.js?v=20140629"></script>

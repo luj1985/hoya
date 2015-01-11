@@ -80,11 +80,11 @@ $(function() {
     });
     pageTransition(_nextPage, _nextPage.attr('data-amt'), false, function() {
       callback();
-      $('footer').css('top', 'auto');
-      var _dw = $(document).height() - $(window).height();
-      if (_dw > 0) {
-        $('footer').css('top', $(document).height() - 30 + 'px');
-      }
+      // $('footer').css('top', 'auto');
+      // var _dw = $(document).height() - $(window).height();
+      // if (_dw > 0) {
+      //   $('footer').css('top', $(document).height() - 30 + 'px');
+      // }
     });
   }
 
@@ -190,8 +190,6 @@ $(function() {
 
     _load_about: function() {
       if (!PAGEINITED['about']) {
-        $('#about-list').css('top', '-10%');
-        $('.tetris-wrapper').width($(window).width()).height($(window).height());
 
         my_tetris.flyAway(ANIMATE.a, ANIMATE.b);
 
@@ -297,7 +295,7 @@ $(function() {
           // _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 60px;">' + LANG.casename + '</p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
           _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
         }
-        $('.footer').before('<div id="case_' + _case + '" class="page case_page" data-amt="fade"><div class="atc-nav"><a href="#main" class="atc-nav-main">&nbsp;</a></div><div id="case_slider-' + _case + '" class="nivoSlider">' + _case_img + '</div></div>');
+        $('footer').before('<div id="case_' + _case + '" class="page case_page" data-amt="fade"><div class="atc-nav"><a href="#main" class="atc-nav-main">&nbsp;</a></div><div id="case_slider-' + _case + '" class="nivoSlider">' + _case_img + '</div></div>');
 
         var $t_block_title = $t_block.children('.case_title').clone();
         $t_block_title.width($t_block_title.width() + 10);
@@ -412,13 +410,12 @@ $(function() {
 
 
   $(window).hashChange(function() {
-    var _hash = window.location.hash.replace('#', '');
-
-    switch (_hash) {
+    var hash = window.location.hash.replace('#', '');
+    switch (hash) {
       case 'main':
       default:
-        _hash = _hash || 'main';
-        var loadfn = '_load_' + _hash;
+        hash = hash || 'main';
+        var loadfn = '_load_' + hash;
         // console.log(loadfn)
         LFN[loadfn]();
     }
