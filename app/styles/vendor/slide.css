@@ -1,0 +1,37 @@
+  .slides { display: none; }
+  .nivoSlider img { display: none; }
+
+  .slides .slidesjs-navigation { margin-top: 3px; }
+
+  .slides .slidesjs-previous { float: left; margin-right: 5px; }
+
+  .slides .slidesjs-next { float: left; margin-right: 5px; }
+
+  .slidesjs-pagination { position: absolute; bottom: 30px;
+  right: 40px; list-style: none; margin: 6px 0 0; padding: 0; z-index: 10; }
+
+  .slidesjs-pagination li { float: left; margin: 0 1px; }
+
+  .slidesjs-pagination li a {
+    cursor:pointer;
+    text-indent: -9999px;
+    /*border-radius: 50%;*/
+    margin: 0 5px;
+    width: 8px;
+    height: 8px;
+    line-height: 7px;
+    background: #dedede;
+    box-shadow: 0px 1px 2px 0px #9f9f9f inset;
+    display: inline-block;
+  }
+
+  .slidesjs-pagination li a.active,
+  .slidesjs-pagination li a:hover,
+  .slidesjs-pagination li a:hover.active {
+    background: #7a7a7a; }
+
+  .slides a:link,
+  .slides a:visited { color: #333; }
+
+  .slides a:hover,
+  .slides a:active { color: #9e2020; }
