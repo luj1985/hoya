@@ -1,23 +1,6 @@
 (function(window, $, undefined) {
-  function getRdInt(v) {
-    return Math.floor(Math.random() * (v + 1));
-  }
 
-
-  function __getMyText(text) {
-    if (/[^0-9]/.test(text.slice(0, 1))) {
-      text = '<i>' + text.slice(0, 1) + '</i>' + text.slice(1);
-    } else if (text.length > 4) {
-      text = '<span style="line-height: 12px;word-break: break-all;position: absolute;width: 100%;left: 0;top: 12px;">' + text + '</span>';
-    }
-    return text;
-  }
-
-  function __generator(conf, tdata) {
-    var __bottom = (conf._dy * 1.3 + tdata.y * conf.standard);
-    var __left = tdata.x * conf.standard;
-    var _html = '<div class="' + conf.tclass + '" data-aidx="' + tdata.aIndex + '" data-atype="' + tdata.aType + '" data-left="' + __left + '" data-bottom="' + Math.round(__bottom - conf._dy * 1.3) + '" style="bottom:' + Math.round(__bottom) + 'px;left:' + __left + 'px;">';
-    var _case = tdata.shape + '' + tdata.orientation;
+  function matrixPos(_case) {
     var _matrix_pos = [];
 
     switch (_case) {
@@ -194,23 +177,75 @@
       default:
         _matrix_pos = [];
     }
+    return _matrix_pos;
+  }
+
+
+  function __getMyText(text) {
+    if (/[^0-9]/.test(text.slice(0, 1))) {
+      text = '<i>' + text.slice(0, 1) + '</i>' + text.slice(1);
+    } else if (text.length > 4) {
+      text = '<span style="line-height: 12px;word-break: break-all;position: absolute;width: 100%;left: 0;top: 12px;">' + text + '</span>';
+    }
+    return text;
+  }
+
+  // TODO: should use template to generate html
+  function __generator(conf, tdata) {
+    var __bottom = (conf._dy * 1.3 + tdata.y * conf.standard);
+    var __left = tdata.x * conf.standard;
+    var html = $('<div>')
+      .attr('class', conf.tclass)
+      .attr('data-aidx', tdata.aIndex)
+      .attr('data-atype', tdata.aType)
+      .attr('data-left', __left)
+      .attr('data-bottom', Math.round(__bottom - conf._dy * 1.3))
+      .css({
+        left: __left,
+        bottom: Math.round(__bottom)
+      });
+
+    var _case = tdata.shape + '' + tdata.orientation;
+    var _matrix_pos = matrixPos(_case);
 
     for (var i = 0; i < _matrix_pos.length; i++) {
-      var cssDict = {
-        // ta: ['left', 'center', 'right'],
-        ta: ['center', 'center', 'center'],
-        // lh: ['25px', '43px', '62px']
-        lh: ['60px', '60px', '60px']
+      var name = tdata.text[i] || '';
+
+      var block = $('<span>')
+        .attr('class', conf.tbclass)
+        .attr('data-case', name)
+        .css({
+          'text-align': 'center',
+          'line-height': '60px',
+          'color' : tdata.textColor,
+          'background-color': tdata.bgColor,
+          'top': _matrix_pos[i][1] * conf.standard + 'px',
+          'left': _matrix_pos[i][0] * conf.standard + 'px'
+        });
+
+      var d = conf.tCaseData[name];
+      if (name !== '' && d) {
+        block.attr('data-year', d.year);
+        block.attr('data-category', d.category);
+        var title = $('<span>')
+          .attr('class', 'case_title')
+          .css('width', d.text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px')
+          .text(d.text);
+
+        var thumbnail = $('<img>')
+          .attr('class', 'case_thumbnail')
+          .attr('data-src', 'images/case/' + name + '/a.jpg?20140629')
+          .attr('alt', d.text);
+
+        block.append(title);
+        block.append(thumbnail);
       }
-      var randomCss = 'text-align:' + cssDict.ta[getRdInt(2)] + ';line-height:' + cssDict.lh[getRdInt(2)] + ';';
 
-      var thumbnail_img = tdata.text[i] === '' ? '' : ('<span class="case_title" style="width: ' + conf.tCaseData[tdata.text[i]].text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px;">' + conf.tCaseData[tdata.text[i]].text + '</span><img class="case_thumbnail" data-src="images/case/' + tdata.text[i] + '/a.jpg?20140629" alt="' + conf.tCaseData[tdata.text[i]].text + '" />');
+      block.append(__getMyText(name));
 
-      _html += '<span class="' + conf.tbclass + '" style="color:' + tdata.textColor + ';background-color:' + tdata.bgColor + ';top:' + _matrix_pos[i][1] * conf.standard + 'px;left:' + _matrix_pos[i][0] * conf.standard + 'px;' + randomCss + '" data-case="' + tdata.text[i] + '"' + ((tdata.text[i] !== '' && conf.tCaseData[tdata.text[i]]) ? (' data-year="' + conf.tCaseData[tdata.text[i]].year + '" data-category="' + conf.tCaseData[tdata.text[i]].category) : '') + '">' + thumbnail_img + __getMyText(tdata.text[i]) + '</span>';
+      html.append(block);
     }
-
-    _html += '</div>';
-    conf.container.append(_html);
+    conf.container.append(html);
   }
 
   function __animate(conf) {
