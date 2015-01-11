@@ -1,25 +1,13 @@
-
 $(function() {
   HY.loading(true);
-
-  var PAGEINITED = {
-    // 'main': false
-  };
+  var PAGEINITED = { };
   var tetrisConf;
   var my_tetris;
 
-  var ANIMATE = {
-    a: 100,
-    b: 80,
-    c: 222
-  };
+  var ANIMATE = { a: 100, b: 80, c: 222 };
 
   if (HY.getUrlParam('_d') === '1') {
-    ANIMATE = {
-      a: 10,
-      b: 8,
-      c: 2
-    }
+    ANIMATE = { a: 10, b: 8, c: 2 };
   }
 
   $('.page').each(function() {
@@ -27,26 +15,13 @@ $(function() {
   });
 
   function __pageTransation($page, atype, isRevert, callback) {
-    callback = callback || function() {
-      void 0;
-    }
+    callback = callback || function() { void 0; }
     switch (atype) {
       case 'fade':
-        if (isRevert) {
-          $page.fadeOut(200, function() {
-            callback();
-          });
-        } else {
-          $page.fadeIn(200, function() {
-            callback();
-          });
-        }
+        isRevert ? $page.fadeOut(200, callback) : $page.fadeIn(200 ,callback);
+        break;
       default:
-        isRevert ? $page.hide(function() {
-          callback();
-        }) : $page.show(function() {
-          callback();
-        });
+        isRevert ? $page.hide(callback) : $page.show(callback);
     }
     $page.addClass('p-active');
   }
@@ -72,6 +47,54 @@ $(function() {
     });
   }
 
+  var CASES = [
+    [ '#864C9B', '#fff', ['M1026', 'M1020', '0945', '1010'], 2, 2, 14, 3, 0, 3 ],
+    [ "#2F4891", '#fff', ['', '1406', '', '1334'], 4, 4, 13, 1, 1, 3 ],
+    [ "#E61923", '#fff', ['0804', 'M0816', 'V0802', '0829'], 7, 1, 11, 1, 3, 5 ],
+    [ "#5D4097", '#fff', ['M1104', '1110', 'M1112', 'M1121'], 3, 2, 10, 1, 4, 4 ],
+    [ "#6DB14D", '#fff', ['9350', '9306', 'M0409', 'M0411'], 4, 2, 9, 1, 5, 3 ],
+    [ "#6043D1", '#fff', ['M1203', '1228', 'M1201', '1238'], 4, 4, 8, 2, 6, 3 ],
+    [ "#1E8F78", '#fff', ['9441', '9444', 'M0523', 'M0510'], 7, 1, 15, 3, 8, 5 ],
+    [ "#F39900", '#fff', ['M0208', '', '9101', ''], 7, 1, 12, 1, 9, 5 ],
+    [ "#1F8D79", '#fff', ['9456', '9442', 'M0526', '9445'], 5, 1, 7, 1, 10, 3 ],
+    [ "#5D4097", '#fff', ['1138', '1144', '1143', '1122'], 6, 2, 6, 1, 0, 5 ],
+    [ "#2E6BB4", '#fff', ['M1317', '1151-1', '', '1323'], 1, 1, 16, 3, 6, 5 ],
+    [ "#2F4891", '#fff', ['1401', '', '1408', '1402'], 6, 2, 17, 3, 8, 6 ],
+    [ "#6043D1", '#fff', ['1243', 'M1208', '1249', '1216'], 3, 2, 18, 3, 10, 5 ],
+    [ "#F0820E", '#fff', ['0738', 'M0708', '0709', '0922'], 7, 1, 24, 2, 0, 9 ],
+    [ "#6DB14B", '#fff', ['M0414', '', '9311', '9316'], 6, 2, 5, 1, 1, 7 ],
+    [ "#EFC23C", '#fff', ['M0601', '9437-1', '0629', ''], 2, 4, 4, 1, 3, 7 ],
+    [ "#DD4291", '#fff', ['M0900', '0919', '1221', '0909'], 7, 1, 25, 3, 5, 9 ],
+    [ "#F4A700", '#fff', ['M0121', '', '9015', ''], 4, 1, 23, 1, 6, 7 ],
+    [ "#C7CF39", '#fff', ['9201', '9230', '9217', 'M0311'], 2, 1, 3, 1, 1, 9 ],
+    [ "#2E6BB4", '#fff', ['M1302', 'M1310', '1320', '1303'], 2, 4, 2, 1, 3, 10 ],
+    [ "#6DB14B", '#fff', ['M0405', '9353', '9345', '9437'], 2, 3, 19, 4, 6, 8 ],
+    [ "#E61923", '#fff', ['0811', '0801', 'M0804', 'M0801'], 2, 1, 20, 4, 9, 8 ],
+    [ "#E61923", '#fff', ['M0826', 'M0815', '', ''], 2, 4, 21, 4, 0, 11 ],
+    [ "#864C9B", '#fff', ['1003', '', 'V1001', ''], 4, 4, 22, 4, 5, 11 ],
+    [ "#6043D1", '#fff', ['', '1206', '1225', '1210'], 5, 2, 1, 1, 7, 10 ],
+    [ "#864C9B", '#fff', ['1008', '1024', 'M1029', '1006'], 2, 4, 26, 3, 10, 10 ],
+    [ "#F0820E", '#fff', ['', '', '0000', ''], 3, 3, 27, 3, 0, 12 ],
+    [ "#5D4097", '#fff', ['1130', '1150', '1141', '1151'], 5, 1, 28, 4, 3, 12 ],
+    [ "#F0820E", '#fff', ['', '', '0716', ''], 3, 3, 29, 4, 5, 12 ],
+    [ "#2D6CB4", '#fff', ['1315', 'V1302', 'M1306', '0919-1'], 6, 1, 30, 4, 8, 12 ],
+    [ "#DD4291", '#fff', ['', '0937', '', ''], 2, 2, 31, 4, 10, 12 ]
+  ];
+
+  var tetrisDefs = $.map(CASES, function(t) {
+    return {
+      bgColor: t[0],
+      textColor: t[1],
+      text: t[2],
+      shape: t[3],
+      orientation: t[4],
+      aIndex: t[5],
+      aType: t[6],
+      x: t[7],
+      y: t[8]
+    };
+  })
+
   var LFN = {
     _load_main: function() {
       __changePage('main', function() {
@@ -81,317 +104,7 @@ $(function() {
             container: _my_tetris,
             tclass: 'tetris',
             tbclass: 'tetris-block',
-            tetris: [{
-              bgColor: '#864C9B',
-              textColor: '#fff',
-              text: ['M1026', 'M1020', '0945', '1010'],
-              shape: 2,
-              orientation: 2,
-              aIndex: 14,
-              aType: 3,
-              x: 0,
-              y: 3
-            }, {
-              bgColor: "#2F4891",
-              textColor: '#fff',
-              text: ['', '1406', '', '1334'],
-              shape: 4,
-              orientation: 4,
-              aIndex: 13,
-              aType: 1,
-              x: 1,
-              y: 3
-            }, {
-              bgColor: "#E61923",
-              textColor: '#fff',
-              text: ['0804', 'M0816', 'V0802', '0829'],
-              shape: 7,
-              orientation: 1,
-              aIndex: 11,
-              aType: 1,
-              x: 3,
-              y: 5
-            }, {
-              bgColor: "#5D4097",
-              textColor: '#fff',
-              text: ['M1104', '1110', 'M1112', 'M1121'],
-              shape: 3,
-              orientation: 2,
-              aIndex: 10,
-              aType: 1,
-              x: 4,
-              y: 4
-            }, {
-              bgColor: "#6DB14D",
-              textColor: '#fff',
-              text: ['9350', '9306', 'M0409', 'M0411'],
-              shape: 4,
-              orientation: 2,
-              aIndex: 9,
-              aType: 1,
-              x: 5,
-              y: 3
-            }, {
-              bgColor: "#6043D1",
-              textColor: '#fff',
-              text: ['M1203', '1228', 'M1201', '1238'],
-              shape: 4,
-              orientation: 4,
-              aIndex: 8,
-              aType: 2,
-              x: 6,
-              y: 3
-            }, {
-              bgColor: "#1E8F78",
-              textColor: '#fff',
-              text: ['9441', '9444', 'M0523', 'M0510'],
-              shape: 7,
-              orientation: 1,
-              aIndex: 15,
-              aType: 3,
-              x: 8,
-              y: 5
-            }, {
-              bgColor: "#F39900",
-              textColor: '#fff',
-              text: ['M0208', '', '9101', ''],
-              shape: 7,
-              orientation: 1,
-              aIndex: 12,
-              aType: 1,
-              x: 9,
-              y: 5
-            }, {
-              bgColor: "#1F8D79",
-              textColor: '#fff',
-              text: ['9456', '9442', 'M0526', '9445'],
-              shape: 5,
-              orientation: 1,
-              aIndex: 7,
-              aType: 1,
-              x: 10,
-              y: 3
-            }, {
-              bgColor: "#5D4097",
-              textColor: '#fff',
-              text: ['1138', '1144', '1143', '1122'],
-              shape: 6,
-              orientation: 2,
-              aIndex: 6,
-              aType: 1,
-              x: 0,
-              y: 5
-            }, {
-              bgColor: "#2E6BB4",
-              textColor: '#fff',
-              text: ['M1317', '1151-1', '', '1323'],
-              shape: 1,
-              orientation: 1,
-              aIndex: 16,
-              aType: 3,
-              x: 6,
-              y: 5
-            }, {
-              bgColor: "#2F4891",
-              textColor: '#fff',
-              text: ['1401', '', '1408', '1402'],
-              shape: 6,
-              orientation: 2,
-              aIndex: 17,
-              aType: 3,
-              x: 8,
-              y: 6
-            }, {
-              bgColor: "#6043D1",
-              textColor: '#fff',
-              text: ['1243', 'M1208', '1249', '1216'],
-              shape: 3,
-              orientation: 2,
-              aIndex: 18,
-              aType: 3,
-              x: 10,
-              y: 5
-            }, {
-              bgColor: "#F0820E",
-              textColor: '#fff',
-              text: ['0738', 'M0708', '0709', '0922'],
-              shape: 7,
-              orientation: 1,
-              aIndex: 24,
-              aType: 2,
-              x: 0,
-              y: 9
-            }, {
-              bgColor: "#6DB14B",
-              textColor: '#fff',
-              text: ['M0414', '', '9311', '9316'],
-              shape: 6,
-              orientation: 2,
-              aIndex: 5,
-              aType: 1,
-              x: 1,
-              y: 7
-            }, {
-              bgColor: "#EFC23C",
-              textColor: '#fff',
-              text: ['M0601', '9437-1', '0629', ''],
-              shape: 2,
-              orientation: 4,
-              aIndex: 4,
-              aType: 1,
-              x: 3,
-              y: 7
-            }, {
-              bgColor: "#DD4291",
-              textColor: '#fff',
-              text: ['M0900', '0919', '1221', '0909'],
-              shape: 7,
-              orientation: 1,
-              aIndex: 25,
-              aType: 3,
-              x: 5,
-              y: 9
-            }, {
-              bgColor: "#F4A700",
-              textColor: '#fff',
-              text: ['M0121', '', '9015', ''],
-              shape: 4,
-              orientation: 1,
-              aIndex: 23,
-              aType: 1,
-              x: 6,
-              y: 7
-            }, {
-              bgColor: "#C7CF39",
-              textColor: '#fff',
-              text: ['9201', '9230', '9217', 'M0311'],
-              shape: 2,
-              orientation: 1,
-              aIndex: 3,
-              aType: 1,
-              x: 1,
-              y: 9
-            }, {
-              bgColor: "#2E6BB4",
-              textColor: '#fff',
-              text: ['M1302', 'M1310', '1320', '1303'],
-              shape: 2,
-              orientation: 4,
-              aIndex: 2,
-              aType: 1,
-              x: 3,
-              y: 10
-            }, {
-              bgColor: "#6DB14B",
-              textColor: '#fff',
-              text: ['M0405', '9353', '9345', '9437'],
-              shape: 2,
-              orientation: 3,
-              aIndex: 19,
-              aType: 4,
-              x: 6,
-              y: 8
-            }, {
-              bgColor: "#E61923",
-              textColor: '#fff',
-              text: ['0811', '0801', 'M0804', 'M0801'],
-              shape: 2,
-              orientation: 1,
-              aIndex: 20,
-              aType: 4,
-              x: 9,
-              y: 8
-            }, {
-              bgColor: "#E61923",
-              textColor: '#fff',
-              text: ['M0826', 'M0815', '', ''],
-              shape: 2,
-              orientation: 4,
-              aIndex: 21,
-              aType: 4,
-              x: 0,
-              y: 11
-            }, {
-              bgColor: "#864C9B",
-              textColor: '#fff',
-              text: ['1003', '', 'V1001', ''],
-              shape: 4,
-              orientation: 4,
-              aIndex: 22,
-              aType: 4,
-              x: 5,
-              y: 11
-            }, {
-              bgColor: "#6043D1",
-              textColor: '#fff',
-              text: ['', '1206', '1225', '1210'],
-              shape: 5,
-              orientation: 2,
-              aIndex: 1,
-              aType: 1,
-              x: 7,
-              y: 10
-            }, {
-              bgColor: "#864C9B",
-              textColor: '#fff',
-              text: ['1008', '1024', 'M1029', '1006'],
-              shape: 2,
-              orientation: 4,
-              aIndex: 26,
-              aType: 3,
-              x: 10,
-              y: 10
-            }, {
-              bgColor: "#F0820E",
-              textColor: '#fff',
-              text: ['', '', '0000', ''],
-              shape: 3,
-              orientation: 3,
-              aIndex: 27,
-              aType: 3,
-              x: 0,
-              y: 12
-            }, {
-              bgColor: "#5D4097",
-              textColor: '#fff',
-              text: ['1130', '1150', '1141', '1151'],
-              shape: 5,
-              orientation: 1,
-              aIndex: 28,
-              aType: 4,
-              x: 3,
-              y: 12
-            }, {
-              bgColor: "#F0820E",
-              textColor: '#fff',
-              text: ['', '', '0716', ''],
-              shape: 3,
-              orientation: 3,
-              aIndex: 29,
-              aType: 4,
-              x: 5,
-              y: 12
-            }, {
-              bgColor: "#2D6CB4",
-              textColor: '#fff',
-              text: ['1315', 'V1302', 'M1306', '0919-1'],
-              shape: 6,
-              orientation: 1,
-              aIndex: 30,
-              aType: 4,
-              x: 8,
-              y: 12
-            }, {
-              bgColor: "#DD4291",
-              textColor: '#fff',
-              text: ['', '0937', '', ''],
-              shape: 2,
-              orientation: 2,
-              aIndex: 31,
-              aType: 4,
-              x: 10,
-              y: 12
-            }],
+            tetris: tetrisDefs,
             tCaseData: CASEDICT,
             _dy: _my_tetris.height(),
             standard: 40, // 1个x/y坐标单位
@@ -430,15 +143,6 @@ $(function() {
 
     _load_about: function() {
       if (!PAGEINITED['about']) {
-        // function __getRandomCss(num) {
-        //   return Math.ceil(num / 2 - Math.random() * num);
-        // }
-        // $('#about-list > li').each(function() {
-        //   $(this).css({
-        //     'margin-top': __getRandomCss($(window).height() / 1) + 'px',
-        //     'margin-left': __getRandomCss($(window).width() / 1.1) + 'px'
-        //   }).fadeTo(0, 0);
-        // });
         $('#about-list').css('top', '-10%');
         $('.my_tetris-wrapper').width($(window).width()).height($(window).height());
 
@@ -455,18 +159,7 @@ $(function() {
         }, tetrisConf.tetris.length * ANIMATE.b);
         PAGEINITED['about'] = true;
       } else {
-        __changePage('about', function() {
-          // if (!PAGEINITED['about']) {
-          // $('#about-list > li').each(function(key, val) {
-          //   $(this).animate({
-          //     'marginTop': ['0px', 'easeOutBounce'],
-          //     'marginLeft': [key * 48 + 'px', 'easeOutBounce'],
-          //     'opacity': '1'
-          //   }, 1200);
-          // });
-
-          // }
-        });
+        __changePage('about', function() { });
       }
     }
   };
@@ -505,14 +198,8 @@ $(function() {
     } else if ($(this).attr('data-fake') === 'yes') {
       var _idx = $(this).parent().children('.nav-item').index($(this));
       $('#main').find('.nav-item').eq(_idx).attr('data-delay_click', 'yes');
-      // __changePage('main', function() {
-      //   $('#main').find('.nav-item').click();
-      // });
     }
   });
-  // var ii = 0
-  // $.each(CASEDICT,function(){ii++})
-  // console.log(CASEDICT,ii)
 
 
   $('.nav-list > li').hover(function() {
@@ -536,24 +223,6 @@ $(function() {
       }
     });
   });
-  // $('.nav-list > li').on('click', function() {
-  //   if ($(this).hasClass('active')) {
-  //     $('#my_index_tetris').find('.tetris-block').removeClass('tetris-transparent');
-  //     $(this).removeClass('active');
-  //   } else {
-  //     $('.nav-list > li.active').removeClass('active');
-  //     $(this).addClass('active');
-  //     var _key = $(this).attr('data-year') ? {
-  //       key: 'data-year',
-  //       val: $(this).attr('data-year')
-  //     } : {
-  //       key: 'data-category',
-  //       val: $(this).attr('data-category')
-  //     };
-
-  //     $('#my_index_tetris').find('.tetris-block').addClass('tetris-transparent').end().find('.tetris-block[' + _key.key + '=' + _key.val + ']').removeClass('tetris-transparent');
-  //   }
-  // });
 
   $('#my_index_tetris').on('click', '.tetris-block', function() {
     var $t_block = $(this);
@@ -654,46 +323,15 @@ $(function() {
               });
 
               PAGEINITED['case_' + _case] = true;
-
             }
-
-            // $('.case_thumbnail:visible').hide();
-            // $('#my_index_tetris').removeClass('tetris-transparent');
           });
         };
-        // console.log(LFN)
       }
 
       window.location.hash = '#case_' + _case;
-
-      // $('.case_thumbnail').hide();
-      // $(_case_thumbnail_id).show();
-      // $('#my_index_tetris').addClass('tetris-transparent');
-
-      // $('body').one('click', function(e) {
-      //   var _etarget = $(e.target);
-      //   if (!_etarget.parents(_case_thumbnail_id).length) {
-      //     $('.case_thumbnail:visible').hide();
-      //     $('#my_index_tetris').removeClass('tetris-transparent');
-      //   }
-      // });
     }
     return false;
   });
-
-  // $('.tetris-block').hover(function() {
-  //   if (!$(this).find('img').length) {
-  //     return;
-  //   } else {
-
-  //   }
-  // }, function() {
-  //   if (!$(this).find('img').length) {
-  //     return;
-  //   } else {
-
-  //   }
-  // });
 
   $('.team-name-list').on('click', 'li', function() {
     var $this = $(this);
