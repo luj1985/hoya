@@ -6,8 +6,7 @@
   .font-face(BGOTHM, ~'fonts/BGOTHM', normal, normal)
 }
 
-body {
-  background: #fff;
+html, body {
   color: #040000;
   width: 100%;
   height: 100%;
@@ -22,10 +21,6 @@ a {
   &:hover {
     text-decoration: underline;
   }
-}
-
-.fbgmb {
-  font-family: 'BGOTHM';
 }
 
 h1.txhide {
@@ -68,4 +63,52 @@ h1.txhide {
   a.current {
     color: #e27e12;
   }
+}
+
+  
+.txhide { 
+  overflow: hidden; 
+  text-indent: 100%; 
+  white-space: nowrap; 
+}
+
+.cf:before,
+.cf:after {
+  content:"";
+  display:table;
+}
+.cf:after { clear:both; }
+.cf { *zoom:1; }
+
+.dn {
+  display: none !important;
+}
+
+.tu {
+  text-decoration: underline;
+}
+
+.loading {
+  position: absolute;
+  background: url(../images/trinket/loading.gif);
+  bottom: 60px;
+  right: 40px;
+  z-index: 10;
+  width: 200px;
+  height: 23px;
+}
+
+.loading_shade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999999999;
+}
+
+.scale_small {
+  .scale(.75);
+}
+
+.scale_mid {
+  .scale(.88);
 }

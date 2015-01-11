@@ -1,0 +1,95 @@
+.my_tetris-wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.my_tetris {
+  position: absolute;
+  width: 480px;
+  height: 100%;
+  left: 50%;
+  margin-left: -240px;
+  bottom: 50px;
+  z-index: 2000;
+}
+
+
+.tetris {
+  position: absolute;
+}
+
+.tetris-block {
+  position: absolute;
+  width: 34px;
+  padding: 0 1px;
+  height: 36px;
+  line-height: 36px;
+  font-size: 12px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: -0.5px;
+  i {
+    font-style: normal;
+    position: absolute;
+    top: 12px;
+    width: 100%;
+    height: 12px;
+    font-size: 15px;
+    line-height: 12px;
+    left: 0;
+    display: block;
+    font-family: "BGOTHM";
+  }
+  .case_thumbnail {
+    position: absolute;
+    border: 1px solid #E27D12;
+    line-height: 100%;
+    z-index: 10000;
+    top: -12.7px;
+    left: -16.7px;
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    z-index: 100;
+    .scale(0.01);
+    .transition(all .16s ease-out);
+    .opacity(0);
+  }
+}
+.tetris-block:hover {
+  .case_thumbnail {
+    top: -16px;
+    left: -16px;
+    .opacity(1);
+    .scale(1);
+  }
+  .case_title {
+    display: block;
+  }
+}
+.tetris-block.tetris-transparent:hover {
+  .case_thumbnail,
+  .case_title {
+    display: none;
+  }
+}
+.tetris-transparent {
+  .transition(all .2s ease-out);
+  .opacity(.3);
+}
+.case_title {
+  position: absolute;
+  padding: 3px 6px 2px;
+  background: #111;
+  color: #fff;
+  top: 14px;
+  left: 26px;
+  font-size: 12px;
+  line-height: 16px;
+  z-index: 101;
+  display: none;
+  text-align: center;
+}
