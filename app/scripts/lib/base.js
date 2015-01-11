@@ -4,11 +4,6 @@
  * 20140705
  */
 (function(window, document, undefined) {
-    console = console || {
-        log: function() {
-            void 0;
-        }
-    };
     window.HY = {
         /**
          * cookie
