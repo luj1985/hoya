@@ -190,7 +190,6 @@
     return text;
   }
 
-  // TODO: should use template to generate html
   function generateBlock(conf, tdata) {
     var size = conf.standard;
     var bottom = (conf._dy * 1.3 + tdata.y * size);
@@ -246,7 +245,6 @@
         })
         .append(title, thumbnail);
       }
-
       block.append(formatCaseNumber(name)).appendTo(html);
     }
     conf.container.append(html);
@@ -254,20 +252,10 @@
 
   $.tetris = function(conf) {
     conf = $.extend({
-      container: $('#container'),
+      container: $('#tetris'),
       tclass: 'tetris',
       tbclass: 'tetris-block',
-      tetris: [{
-        bgColor: '#ccc',
-        textColor: '#fff',
-        text: ['CGHP', 'LDTF', 'TZD2', 'QJNT'],
-        shape: 5,
-        orientation: 1,
-        aIndex: 2, // animate away index
-        aType: 1, // animate type ->: 1
-        x: 8,
-        y: 11
-      }],
+      tetris: [],
       tCaseData: {},
       _dy: 500,
       standard: 10, // 1个x/y坐标单位
@@ -278,34 +266,35 @@
       var tetris = conf.container.children('.' + conf.tclass);
       tetris.stop(true, true);
 
-      var _sprt = 0;
-      var width = $(window).width(),
-          height = $(window).height();
-      var _adict = ['0', {
-        'left': ['+=' + width + 'px', 'easeInQuad']
-      }, {
-        'bottom': ['-=' + height + 'px', 'easeInQuad']
-      }, {
-        'left': ['-=' + width + 'px', 'easeInQuad']
-      }, {
-        'bottom': ['+=' + width + 'px', 'easeInQuad']
-      }];
+      var _sprt = 0,
+          width = $(window).width(),
+          height = $(window).height(),
+          easing = ['0', 
+            { 'left': ['+=' + width + 'px', 'easeInQuad'] }, 
+            { 'bottom': ['-=' + height + 'px', 'easeInQuad'] }, 
+            { 'left': ['-=' + width + 'px', 'easeInQuad'] }, 
+            { 'bottom': ['+=' + width + 'px', 'easeInQuad'] }
+          ];
+
       for (var i = 1; i <= conf.tetris.length; i++) {
         _sprt += delay;
-        var this_t = conf.container.children('.' + conf.tclass + '[data-aidx=' + i + ']');
-        this_t.delay(_sprt).animate(_adict[parseInt(this_t.attr('data-atype'), 10)], fatime);
+        var node = conf.container.children('.tetris' + '[data-aidx=' + i + ']');
+        node.delay(_sprt).animate(easing[parseInt(node.attr('data-atype'), 10)], fatime);
       }
     }
 
     this.reset = function() {
-      conf.container.children('.' + conf.tclass).each(function() {
-        $(this).css('left', $(this).attr('data-left') + 'px');
-        $(this).css('bottom', $(this).attr('data-bottom') + 'px');
+      conf.container.children('.tetris').each(function() {
+        var $this = $(this);
+        $this.css({
+          'left': $this.attr('data-left') + 'px',
+          'bottom': $this.attr('data-bottom') + 'px'
+        });
       });
     }
 
     this.init = function(callback) {
-      $.each(conf.tetris, function(key, val) {
+      $.each(conf.tetris, function(_, val) {
         generateBlock(conf, val);
       });
       callback();

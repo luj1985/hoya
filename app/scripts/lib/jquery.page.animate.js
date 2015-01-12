@@ -1,4 +1,4 @@
-$(function(window, jQuery, undefined) {
+(function(window, $, undefined) {
   function pageTransition($page, atype, isRevert, callback) {
     callback = callback || function() { void 0; }
     switch (atype) {
@@ -23,5 +23,8 @@ $(function(window, jQuery, undefined) {
     pageTransition(next, next.attr('data-amt'), false, callback);
   }
 
+  $.PAGES = {};
+  $.PAGE_INITED = {};
+  $.ANIMATE = { a: 100, b: 80, c: 222 };
   $.switchPage = switchPage;
-})
+})(window, jQuery);
