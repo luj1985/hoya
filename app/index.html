@@ -1,18 +1,20 @@
 <!doctype html>
-<html>
+<html lang="tw">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>hoya</title>
     <meta name="keywords" content="">
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="baidu-site-verification" content="AfHQIzIHJ6" />
     <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="styles/main.css?v=20140629">
+    <!-- endbuild -->
+
     <link rel="stylesheet" href="../bower_components/material-design-iconic-font/css/material-design-iconic-font.css">
   </head>
-  <body class="">
+  <body>
     <nav class="language">
       <a href="./index.html" class="current" data-la="tw">繁</a> | 
       <a href="./zh.html" data-la="zh">简</a> | 
@@ -176,10 +178,10 @@
     </div>
 
     <div class="page" id="culture" data-amt="fade">
-      <div class="atc-nav">
-        <a href="#main" class="atc-nav-main">&nbsp;</a>
-        <a href="#about" class="atc-nav-about">&nbsp;</a>
-      </div>
+      <nav class="menu">
+        <a href="#main"><i class="md md-apps"></i></a>
+        <a href="#about"><i class="md md-menu"></i></a>
+      </nav>
       <section>
         <h3>文化</h3>
         <article>
@@ -196,12 +198,12 @@
     </div>
 
     <div class="page" id="team" data-amt="fade">
-      <div class="atc-nav">
-        <a href="#main" class="atc-nav-main">&nbsp;</a>
-        <a href="#about" class="atc-nav-about">&nbsp;</a>
-      </div>
-      <div class="article">
-        <h3 class="article_title">團隊</h3>
+      <nav class="menu">
+        <a href="#main"><i class="md md-apps"></i></a>
+        <a href="#about"><i class="md md-menu"></i></a>
+      </nav>
+      <section>
+        <h3>團隊</h3>
         <div class="team-block cf">
           <ul class="team-name-list">
             <li class="active">許銘陽</li>
@@ -359,7 +361,7 @@
             <img class="team-detail-avatar" src="images/trinket/1x1.gif" title="照片" data-src="images/photo/5.jpg" />
           </div>
         </div>
-      </div>
+      </section>
     </div>
 
     <div class="page" id="honor" data-amt="fade">
@@ -646,12 +648,22 @@
       <p>Copyright &copy; hoya.com, All rights reserved.</p>
     </footer> -->
 
-    <script src="bower_components/jquery/dist/jquery.js?v=20140629"></script>
-    <script src="scripts/vendor/hash.js?v=20140629"></script>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/plugins.js -->
     <script src="scripts/lib/jquery.easing.js?v=20140629"></script>
     <script src="scripts/lib/jquery.tetris.js?v=20140629"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/main.js -->
     <script src="scripts/app/relationship.js?v=20140629"></script>
     <script src="scripts/app/content.zh_tw.js?v=20150111"></script>
     <script src="scripts/app/app.js?v=20140629"></script>
-</body>
+    <!-- endbuild -->
+  </body>
 </html>
