@@ -7,7 +7,7 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles/hoya.css?v=20140629">
+    <link rel="stylesheet" href="styles/hoya.css">
   </head>
   <body>
     <nav class="locale">
@@ -56,7 +56,7 @@
           <a href="#" data-list="#category_list" data-order="2">類別</a>
           <a href="#about">關於</a>
         </nav>
-        <div class="my_tetris" id="my_index_tetris"></div>
+        <div class="my_tetris" id="tetris"></div>
       </div>
     </div>
 
@@ -645,17 +645,24 @@
 
     <!-- build:js scripts/platform.js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="scripts/lib/jquery.hash.js?v=20140629"></script>
-    <script src="scripts/lib/jquery.easing.js?v=20140629"></script>
-    <script src="scripts/lib/jquery.tetris.js?v=20140629"></script>
+    <script src="scripts/lib/jquery.hash.js"></script>
+    <script src="scripts/lib/jquery.easing.js"></script>
+    <script src="scripts/lib/jquery.tetris.js"></script>
+    <script src="scripts/lib/jquery.imageloader.js"></script>
+    <script src="scripts/lib/jquery.loader.js"></script>
+    <script src="scripts/lib/jquery.page.animate.js"></script>
     <!-- endbuild -->
 
     <!-- build:js scripts/content.tw.js -->
-    <script src="scripts/app/relationship.js?v=20140629"></script>
+    <script src="scripts/app/relationship.js"></script>
     <script src="scripts/app/content.zh_tw.js?v=20150111"></script>
     <!-- endbuild -->
 
-
-    <script src="scripts/app/app.js?v=20140629"></script>
+    <!-- build:js scripts/app.js -->
+    <script src="scripts/app/page.case.js"></script>
+    <script src="scripts/app/page.team.js"></script>
+    <script src="scripts/app/navigation.js"></script>
+    <script src="scripts/app/app.js"></script>
+    <!-- endbuild -->
   </body>
 </html>

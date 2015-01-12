@@ -1,92 +1,15 @@
 $(function() {
-  var Tools = {
-    getUrlParam: function(name, str) {
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-      var search = ("string" == typeof str) ? str : window.location.search;
-      var r = search.substr(1).match(reg);
-      (r != null) ? r = decodeURIComponent(r[2]) : r = undefined;
-      return r;
-    },
-    loading: function(loading) {
-      loading ? $('.loading,.loading_shade').removeClass('dn') : $('.loading,.loading_shade').addClass('dn');
-    },
-    loadimg: function(arr, funLoading, funOnLoad, funOnError) {
-
-      var numLoaded = 0,
-        numError = 0,
-        isObject = Object.prototype.toString.call(arr) === "[object Object]" ? true : false;
-
-      var arr = isObject ? arr.get() : arr;
-      for (a in arr) {
-        var src = isObject ? $(arr[a]).attr("data-src") : arr[a];
-        preload(src, arr[a]);
-      }
-
-      function preload(src, obj) {
-        var img = new Image();
-        img.onload = function() {
-          numLoaded++;
-          funLoading && funLoading(numLoaded, arr.length, src, obj);
-          funOnLoad && numLoaded == arr.length && funOnLoad(numError);
-        };
-        img.onerror = function() {
-          numLoaded++;
-          numError++;
-          funOnError && funOnError(numLoaded, arr.length, src, obj);
-        }
-        img.src = src;
-      }
-
-    }
-  };
-  Tools.loading(true);
-
-  var PAGEINITED = { };
-  var tetrisConf;
-  var my_tetris;
+  $.loading(true);
+  var PAGE_INITED = { };
 
   var ANIMATE = { a: 100, b: 80, c: 222 };
 
-  if (Tools.getUrlParam('_d') === '1') {
-    ANIMATE = { a: 10, b: 8, c: 2 };
-  }
 
   $('.page').each(function() {
-    PAGEINITED[$(this).attr('id')] = false;
+    var name = $(this).attr('id');
+    PAGE_INITED[name] = false;
   });
 
-  function pageTransition($page, atype, isRevert, callback) {
-    callback = callback || function() { void 0; }
-    switch (atype) {
-      case 'fade':
-        isRevert ? $page.fadeOut(200, callback) : $page.fadeIn(200 ,callback);
-        break;
-      default:
-        isRevert ? $page.hide(callback) : $page.show(callback);
-    }
-    $page.addClass('active');
-  }
-
-  function switchPage(pageid, callback) {
-    var _currentPage = $('.page.active');
-
-    _currentPage && pageTransition(_currentPage, _currentPage.attr('data-amt'), true);
-
-    _currentPage.removeClass('active');
-
-    var _nextPage = $('#' + pageid);
-    _nextPage.find('img[data-src]').each(function() {
-      $(this).attr('src', $(this).attr('data-src')).removeAttr('data-src');
-    });
-    pageTransition(_nextPage, _nextPage.attr('data-amt'), false, function() {
-      callback();
-      // $('footer').css('top', 'auto');
-      // var _dw = $(document).height() - $(window).height();
-      // if (_dw > 0) {
-      //   $('footer').css('top', $(document).height() - 30 + 'px');
-      // }
-    });
-  }
 
   var CASES = [
     [ '#864C9B', '#fff', ['M1026', 'M1020', '0945', '1010'], 2, 2, 14, 3, 0, 3 ],
@@ -136,140 +59,79 @@ $(function() {
     };
   });
 
-  CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
+  var PAGE_LOADER = { };
+  var tetris;
 
-  var LFN = {
-    _load_main: function() {
-      switchPage('main', function() {
-        if (!PAGEINITED['main']) {
-          // screen width;
-          var totalWidth = $(window).width();
-          totalWidth = totalWidth > 480 ? 480 : totalWidth; 
+  PAGE_LOADER["_load_main"] = function() {
+    $.switchPage('main', function() {
+      if (!PAGE_INITED['main']) {
+        // screen width;
+        var width = $(window).width();
+        width = width > 480 ? 480 : width; 
 
-          var _my_tetris = $('#my_index_tetris');
-          tetrisConf = {
-            container: _my_tetris,
-            tclass: 'tetris',
-            tbclass: 'tetris-block',
-            tetris: tetrisDefs,
-            tCaseData: CASEDICT,
-            _dy: _my_tetris.height(),
-            standard: totalWidth / 12, // 1个x/y坐标单位
-            speed: ANIMATE.c // 单帧动画速度
-          };
-          my_tetris = new $.tetris(tetrisConf);
-
-          my_tetris.init(function() {
-            Tools.loadimg(_my_tetris.find('img[data-src]'), false, function() {
-              _my_tetris.find('img[data-src]').each(function() {
+        var container = $('#tetris');
+        tetris = new $.tetris({
+          container: container,
+          tclass: 'tetris',
+          tbclass: 'tetris-block',
+          tetris: tetrisDefs,
+          tCaseData: CASEDICT,
+          _dy: container.height(),
+          standard: width / 12, // 1个x/y坐标单位
+          speed: ANIMATE.c // 单帧动画速度
+        });
+        tetris.init(function() {
+          $.loadimg(container.find('img[data-src]'), false, function() {
+            container.find('img[data-src]').each(function() {
+              $(this).attr('src', $(this).attr('data-src'));
+            });
+            $.loading(false);
+          }, function() {
+            setTimeout(function() {
+              container.find('img[data-src]').each(function() {
                 $(this).attr('src', $(this).attr('data-src'));
               });
-              Tools.loading(false);
-            }, function() {
-              setTimeout(function() {
-                _my_tetris.find('img[data-src]').each(function() {
-                  $(this).attr('src', $(this).attr('data-src'));
-                });
-                Tools.loading(false);
-              }, 22222);
-            });
-          }).start(function() {
-            // Tools.loading(false);
+              $.loading(false);
+            }, 22222);
           });
-
-          setTimeout(function() {
-            $('.nav-item:first').click();
-          }, 288);
-          PAGEINITED['main'] = true;
-        } else {
-          $('#main').find('.nav-item[data-delay_click=yes]').click().removeAttr('data-delay_click');
-        }
-      });
-
-    },
-
-    _load_about: function() {
-      if (!PAGEINITED['about']) {
-
-        my_tetris.flyAway(ANIMATE.a, ANIMATE.b);
-
-        setTimeout(function() {
-          switchPage('about', function() {
-            $('#about-list').animate({
-              'top': ['50%', 'easeOutQuart']
-            }, 500, function() {
-              my_tetris.reset();
-            });
-          });
-        }, tetrisConf.tetris.length * ANIMATE.b);
-        PAGEINITED['about'] = true;
-      } else {
-        switchPage('about', function() { });
-      }
-    }
-  };
-
-  function _init_simple_load_fn(key_ary) {
-    $.each(key_ary, function(key, val) {
-      LFN['_load_' + val] = function() {
-        switchPage(val, function() {
-          console.log(val + ' loaded..');
-          PAGEINITED[val] = true;
+        }).start(function() {
+          $.loading(false);
         });
-      };
+        PAGE_INITED['main'] = true;
+      }
     });
   }
 
-  _init_simple_load_fn(['survey', 'culture', 'team', 'list', 'research', 'honor', 'media', 'recruit', 'contact']);
-
-  $('.nav-item').click(function() {
-    var this_list = $(this).attr('data-list');
-
-    var _order = $(this).attr('data-order');
-    $('.nav-item.active').removeClass('active');
-    $('.nav-item[data-order=' + _order + ']').addClass('active');
-
-    $('.nav-list > li.active').click();
-
-    if (this_list) {
-      if (!$(this_list).hasClass('active')) {
-        $('.nav-list.active').animate({
-          'bottom': ['-600px', 'easeInExpo']
-        }, 200).removeClass('active');
-        $(this_list).animate({
-          'bottom': ['0px', 'easeOutExpo']
-        }, 200).addClass('active');
+  PAGE_LOADER["_load_about"] = function() {
+    if (!PAGE_INITED['about']) {
+      if (tetris) {
+        tetris.flyAway(ANIMATE.a, ANIMATE.b);
       }
-    } else if ($(this).attr('data-fake') === 'yes') {
-      var _idx = $(this).parent().children('.nav-item').index($(this));
-      $('#main').find('.nav-item').eq(_idx).attr('data-delay_click', 'yes');
+      setTimeout(function() {
+        $.switchPage('about', function() {
+          tetris && tetris.reset();
+        });
+      }, tetrisDefs.length * ANIMATE.b);
+      PAGE_INITED['about'] = true;
+    } else {
+      $.switchPage('about', function() { });
     }
-  });
-
-
-  $('.nav-list > li').hover(function() {
-    var _key = $(this).attr('data-year') ? {
-      key: 'data-year',
-      val: $(this).attr('data-year')
-    } : {
-      key: 'data-category',
-      val: $(this).attr('data-category')
+  };
+  
+  $.each(['survey', 'culture', 'team', 'list', 'research', 'honor', 'media', 'recruit', 'contact'], function(key, val) {
+    PAGE_LOADER['_load_' + val] = function() {
+      $.switchPage(val, function() {
+        console.log('loaded '+ val);
+        PAGE_INITED[val] = true;
+      });
     };
-
-    $('.nav-list > li.active').removeClass('active');
-    $(this).addClass('active');
-    $('#my_index_tetris').find('.tetris-block').addClass('tetris-transparent').end().find('.tetris-block[' + _key.key + '=' + _key.val + ']').removeClass('tetris-transparent');
-  }, function() {
-    $('body').one('click', function(e) {
-      if (!$(e.target).parents('.nav-list').length) {
-
-        $('.nav-list > li.active').removeClass('active');
-        $('#my_index_tetris').find('.tetris-block').removeClass('tetris-transparent');
-      }
-    });
   });
 
-  $('#my_index_tetris').on('click', '.tetris-block', function() {
+
+
+  CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
+
+  $('#tetris').on('click', '.tetris-block', function() {
     var $t_block = $(this);
     var $t_block_bg = $t_block.css('background-color');
     var _case = $.trim($t_block.attr('data-case'));
@@ -280,22 +142,18 @@ $(function() {
 
     if (CASEDICT[_case]) {
       if (!$('#case_' + _case).length) {
-
-
-        var _case_img = '';
+        var caseImgHTML = '';
         CASEDICT[_case].desc = CASEDICT[_case].desc || '';
         for (var i = 1; i <= CASEDICT[_case].img; i++) {
           if (i === 2) {
-            // _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 60px;">' + LANG.casename + '</p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
-            _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
+            caseImgHTML += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
           }
-          _case_img += '<div class="nivoSlider-item"><img src="images/case/' + _case + '/' + i + '.jpg?20140629" /></div>';
+          caseImgHTML += '<div class="nivoSlider-item"><img src="images/case/' + _case + '/' + i + '.jpg?20140629" /></div>';
         }
         if (i === 2) {
-          // _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 60px;">' + LANG.casename + '</p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
-          _case_img += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
+          caseImgHTML += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
         }
-        $('footer').before('<div id="case_' + _case + '" class="page case_page" data-amt="fade"><div class="atc-nav"><a href="#main" class="atc-nav-main">&nbsp;</a></div><div id="case_slider-' + _case + '" class="nivoSlider">' + _case_img + '</div></div>');
+        $('footer').before('<div id="case_' + _case + '" class="page case_page" data-amt="fade"><div class="atc-nav"><a href="#main" class="atc-nav-main">&nbsp;</a></div><div id="case_slider-' + _case + '" class="nivoSlider">' + caseImgHTML + '</div></div>');
 
         var $t_block_title = $t_block.children('.case_title').clone();
         $t_block_title.width($t_block_title.width() + 10);
@@ -321,9 +179,9 @@ $(function() {
           });
         });
 
-        LFN['_load_case_' + _case] = function() {
-          switchPage('case_' + _case, function() {
-            if (!PAGEINITED['case_' + _case]) {
+        PAGE_LOADER['_load_case_' + _case] = function() {
+          $.switchPage('case_' + _case, function() {
+            if (!PAGE_INITED['case_' + _case]) {
               $('#case_slider-' + _case).append('<div class="nivoSlider-ctrl">' + new Array($('#case_slider-' + _case).children('.nivoSlider-item').length + 1).join('<span></span>') + '</div>').children('.nivoSlider-ctrl').on('click', 'span', function() {
                 if ($(this).hasClass('active')) {
                   return;
@@ -354,7 +212,6 @@ $(function() {
                 }, 100);
               }).children('span:first').click();
               $('#case_slider-' + _case).on('click', '.nivoSlider-item', function(e) {
-                // console.log(e.pageX, e.pageY, $(this).offset(), $(this).width())
                 var _niem = $(this).parent().children('.nivoSlider-item');
                 var _idx = _niem.index($(this));
                 if ($(this).width() / 2 + $(this).offset().left > e.pageX) {
@@ -367,58 +224,20 @@ $(function() {
                 $(this).parent().children('.nivoSlider-ctrl').children('span').eq(_idx).click();
               });
 
-              PAGEINITED['case_' + _case] = true;
+              PAGE_INITED['case_' + _case] = true;
             }
           });
         };
       }
-
       window.location.hash = '#case_' + _case;
     }
     return false;
   });
 
-  $('.team-name-list').on('click', 'li', function() {
-    var $this = $(this);
-    var _lis = $this.parent().children('li');
-    var _idx = _lis.index($this);
-    // console.log(_idx)
-    _lis.removeClass('active');
-    $this.addClass('active');
-
-    $this.parent().siblings('.team-detail').addClass('dn').eq(_idx).removeClass('dn');
-  });
-
-  $(document).on('keydown', function(e) {
-    var _c_p_a = $('.case_page.active');
-    var _c_p_a_ctrl = _c_p_a.find('.nivoSlider-ctrl');
-    if (_c_p_a.length) {
-      var _idx = _c_p_a_ctrl.children('span').index(_c_p_a_ctrl.children('span.active'));
-
-      if (e.which === 37 || e.which === 38) {
-        _idx--;
-      } else if (e.which === 39 || e.which === 40) {
-        _idx++;
-      }
-
-      (_idx === _c_p_a_ctrl.children('span').length) && (_idx = 0);
-      (_idx === -1) && (_idx = _c_p_a_ctrl.children('span').length - 1);
-      _c_p_a_ctrl.children('span').eq(_idx).click();
-    }
-  });
-
-
-
   $(window).hashChange(function() {
-    var hash = window.location.hash.replace('#', '');
-    switch (hash) {
-      case 'main':
-      default:
-        hash = hash || 'main';
-        var loadfn = '_load_' + hash;
-        // console.log(loadfn)
-        LFN[loadfn]();
-    }
+    var name = window.location.hash.replace('#', '');
+    name = name || 'main';
+    PAGE_LOADER['_load_' + name]();
   });
   // window.location.hash = '';
   $(window).hashChange();
