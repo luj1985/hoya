@@ -1,3 +1,10 @@
+@hoya-orange: #E27D12;
+@hoya-black: #231815;
+@hoya-green: #84C325;
+@hoya-white: #FFFFFF;
+@hoya-content: #828282;
+@hoya-light: #B5B5B5;
+
 @font-face {
   .font-face(BGOTHL, ~'fonts/BGOTHL', normal, normal)
 }
@@ -7,7 +14,7 @@
 }
 
 html, body {
-  color: #040000;
+  color: @hoya-black;
   width: 100%;
   height: 100%;
 }
@@ -17,16 +24,16 @@ body, button, input, select, textarea, i{
 }
 
 a {
-  color: #040000;
+  color: @hoya-black;
   text-decoration: none;
 
   &:hover {
-    color: #e27e12;
+    color: @hoya-orange;
     text-decoration: underline;
   }
 
   &.active {
-    color: #e27e12;
+    color: @hoya-orange;
   }
 }
 

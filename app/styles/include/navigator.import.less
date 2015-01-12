@@ -29,13 +29,12 @@ nav.menu {
   top: -3rem;
   padding-left: .4rem;
   a {
-    color: #e67d19;
+    color: @hoya-orange;
     font-size: 1.5rem;
     width: 2.5rem;
     text-align: center;
   }
 }
-
 
 .nav-items {
   font-size: 12px;
@@ -44,47 +43,20 @@ nav.menu {
   left: 10px;
   z-index: 3;
 }
+
 .nav-item {
-  float: left;
-  margin-right: 30px;
-  cursor: pointer;
-  &:hover {
-    color: #E27D12;
-  }
   a {
-    color: #231815;
+    color: @hoya-black;
     &:hover {
       text-decoration: none;
-      color: #E27D12;
+      color: @hoya-orange;
     }
   }
-}
-.nav-item.active {
-  color: #E27D12;
-}
-.nav-lists {
-  font-size: 15px;
-  position: absolute;
-  bottom: 30px;
-  height: 100%;
-  overflow: hidden;
-  width: 200px;
-}
-.nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  li {
-    margin-bottom: 2px;
-    cursor: pointer;
-    &:hover {
-      // color: #EBC093;
-      color: #E27D12;
-    }
-    &.active {
-      color: #E27D12;
-    }
+  &:hover {
+    color: @hoya-orange;
   }
-  position: absolute;
-  bottom: -500px;
+  &.active {
+    color: @hoya-orange;
+
+  }
 }
