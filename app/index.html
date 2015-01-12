@@ -7,16 +7,11 @@
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.ico">
-
-    <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css?v=20140629">
-    <!-- endbuild -->
-
-    <link rel="stylesheet" href="../bower_components/material-design-iconic-font/css/material-design-iconic-font.css">
+    <link rel="stylesheet" href="styles/hoya.css?v=20140629">
   </head>
   <body>
-    <nav class="language">
-      <a href="./index.html" class="current" data-la="tw">繁</a> | 
+    <nav class="locale">
+      <a href="./index.html" class="active" data-la="tw">繁</a> | 
       <a href="./zh.html" data-la="zh">简</a> | 
       <a href="./en.html" data-la="en">EN</a>
     </nav>
@@ -648,22 +643,19 @@
       <p>Copyright &copy; hoya.com, All rights reserved.</p>
     </footer> -->
 
-
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
+    <!-- build:js scripts/platform.js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-    <!-- build:js scripts/plugins.js -->
+    <script src="scripts/lib/jquery.hash.js?v=20140629"></script>
     <script src="scripts/lib/jquery.easing.js?v=20140629"></script>
     <script src="scripts/lib/jquery.tetris.js?v=20140629"></script>
     <!-- endbuild -->
 
-    <!-- build:js scripts/main.js -->
+    <!-- build:js scripts/content.tw.js -->
     <script src="scripts/app/relationship.js?v=20140629"></script>
     <script src="scripts/app/content.zh_tw.js?v=20150111"></script>
-    <script src="scripts/app/app.js?v=20140629"></script>
     <!-- endbuild -->
+
+
+    <script src="scripts/app/app.js?v=20140629"></script>
   </body>
 </html>

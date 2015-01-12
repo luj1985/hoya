@@ -1,3 +1,52 @@
+@font-face {
+  .font-face(BGOTHL, ~'fonts/BGOTHL', normal, normal)
+}
+
+@font-face {
+  .font-face(BGOTHM, ~'fonts/BGOTHM', normal, normal)
+}
+
+html, body {
+  color: #040000;
+  width: 100%;
+  height: 100%;
+}
+
+body, button, input, select, textarea, i{
+  font: 12px/1.5 "BGOTHL", "Microsoft YaHei","Tahoma","Arial";
+}
+
+a {
+  color: #040000;
+  text-decoration: none;
+
+  &:hover {
+    color: #e27e12;
+    text-decoration: underline;
+  }
+
+  &.active {
+    color: #e27e12;
+  }
+}
+
+.loading {
+  position: absolute;
+  background: url(../images/trinket/loading.gif);
+  bottom: 60px;
+  right: 40px;
+  z-index: 10;
+  width: 200px;
+  height: 23px;
+}
+
+.loading_shade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999999999;
+}
+
 body.lang-en {
   -webkit-font-smoothing: subpixel-antialiased;
   .nav-items-fake {
