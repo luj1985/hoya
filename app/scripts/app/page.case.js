@@ -80,14 +80,40 @@ $(function() {
         CASEDICT[_case].desc = CASEDICT[_case].desc || '';
         for (var i = 1; i <= CASEDICT[_case].img; i++) {
           if (i === 2) {
-            caseImgHTML += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
+            caseImgHTML += 
+              '<div class="nivoSlider-item nivoSlider-item_desc">' + 
+                '<div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + 
+                  '<p style="margin-top: 40px;"></p>' + 
+                  CASEDETAILS[_case] + 
+                  '<br/><br/>' + 
+                  CASEDICT[_case].desc + 
+                '</div>' + 
+              '</div>';
           }
-          caseImgHTML += '<div class="nivoSlider-item"><img src="images/case/' + _case + '/' + i + '.jpg?20140629" /></div>';
+          caseImgHTML += 
+            '<div class="nivoSlider-item">' + 
+              '<img src="images/case/' + _case + '/' + i + '.jpg?20140629" />' +
+            '</div>';
         }
         if (i === 2) {
-          caseImgHTML += '<div class="nivoSlider-item nivoSlider-item_desc"><div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + '<p style="margin-top: 40px;"></p>' + CASEDETAILS[_case] + '<br/><br/>' + CASEDICT[_case].desc + '</div></div>';
+          caseImgHTML += 
+            '<div class="nivoSlider-item nivoSlider-item_desc">' +
+              '<div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + 
+                '<p style="margin-top: 40px;"></p>' + 
+                CASEDETAILS[_case] + 
+                '<br/><br/>' + 
+                CASEDICT[_case].desc + 
+              '</div>' + 
+            '</div>';
         }
-        $('footer').before('<div id="case_' + _case + '" class="page case_page" data-amt="fade"><div class="atc-nav"><a href="#main" class="atc-nav-main">&nbsp;</a></div><div id="case_slider-' + _case + '" class="nivoSlider">' + caseImgHTML + '</div></div>');
+        $('footer').before(
+          '<div id="case_' + _case + '" class="page case_page" data-amt="fade">' + 
+            '<div class="atc-nav">' + 
+              '<a href="#main" class="atc-nav-main">&nbsp;</a>' + 
+            '</div>' + 
+            '<div id="case_slider-' + _case + '" class="nivoSlider">' + caseImgHTML + '</div>' + 
+          '</div>'
+        );
 
         var title = $t_block.children('.case_title').clone();
         title.width(title.width() + 10);

@@ -8,14 +8,9 @@ $(function() {
   });
 
   $(window).hashChange(function() {
-    var name = window.location.hash.replace('#', '');
-    name = name || 'main';
+    var name = window.location.hash.replace('#', '') || 'main';
     var loader = PAGES['_load_' + name];
-    if (loader) {
-      loader();
-    } else {
-      console.error('cannot found page: ' + name);
-    }
+    loader && loader();
   });
   // window.location.hash = '';
   $(window).hashChange();

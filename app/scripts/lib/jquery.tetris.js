@@ -262,6 +262,8 @@
       speed: 100 // 单帧动画速度
     }, conf);
 
+    this.tetris = conf.tetris;
+
     this.flyAway = function(fatime, delay) {
       var tetris = conf.container.children('.' + conf.tclass);
       tetris.stop(true, true);
