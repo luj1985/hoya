@@ -11,25 +11,16 @@ $(function(window, jQuery, undefined) {
     $page.addClass('active');
   }
 
-  function switchPage(pageid, callback) {
-    var _currentPage = $('.page.active');
+  function switchPage(id, callback) {
+    var current = $('.page.active');
+    pageTransition(current, current.attr('data-amt'), true);
+    current.removeClass('active');
 
-    _currentPage && pageTransition(_currentPage, _currentPage.attr('data-amt'), true);
-
-    _currentPage.removeClass('active');
-
-    var _nextPage = $('#' + pageid);
-    _nextPage.find('img[data-src]').each(function() {
+    var next = $('#' + id);
+    next.find('img[data-src]').each(function() {
       $(this).attr('src', $(this).attr('data-src')).removeAttr('data-src');
     });
-    pageTransition(_nextPage, _nextPage.attr('data-amt'), false, function() {
-      callback();
-      // $('footer').css('top', 'auto');
-      // var _dw = $(document).height() - $(window).height();
-      // if (_dw > 0) {
-      //   $('footer').css('top', $(document).height() - 30 + 'px');
-      // }
-    });
+    pageTransition(next, next.attr('data-amt'), false, callback);
   }
 
   $.switchPage = switchPage;

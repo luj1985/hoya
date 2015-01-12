@@ -191,16 +191,18 @@
   }
 
   // TODO: should use template to generate html
-  function blockGenerator(conf, tdata) {
-    var bottom = (conf._dy * 1.3 + tdata.y * conf.standard);
-    var left = tdata.x * conf.standard;
+  function generateBlock(conf, tdata) {
+    var size = conf.standard;
+    var bottom = (conf._dy * 1.3 + tdata.y * size);
+    var left = tdata.x * size;
     var html = $('<div>')
-      .attr('class', conf.tclass)
-      .attr('data-aidx', tdata.aIndex)
-      .attr('data-atype', tdata.aType)
-      .attr('data-left', left)
-      .attr('data-bottom', Math.round(bottom - conf._dy * 1.3))
-      .css({
+      .attr({
+        'class': conf.tclass,
+        'data-aidx': tdata.aIndex,
+        'data-atype': tdata.aType,
+        'data-left': left,
+        'data-bottom': Math.round(bottom - conf._dy * 1.3)
+      }).css({
         left: left,
         bottom: Math.round(bottom)
       });
@@ -209,61 +211,46 @@
 
     for (var i = 0; i < _matrix_pos.length; i++) {
       var name = tdata.text[i] || '';
-
+      var pos = _matrix_pos[i];
       var block = $('<span>')
         .attr('class', conf.tbclass)
         .attr('data-case', name)
         .css({
           'color' : tdata.textColor,
           'background-color': tdata.bgColor,
-          'top': _matrix_pos[i][1] * conf.standard + 'px',
-          'left': _matrix_pos[i][0] * conf.standard + 'px',
-          'height': conf.standard,
-          'width': conf.standard,
+          'top': pos[1] * size + 'px',
+          'left': pos[0] * size + 'px',
+          'height': size,
+          'width': size,
           // exclude 1px border
-          'font-size' : ((conf.standard - 2) / 3) + 'px',
-          'line-height': (conf.standard / 3) + 'px'
+          'font-size' : ((size - 2) / 3) + 'px',
+          'line-height': (size / 3) + 'px'
         });
 
       var d = conf.tCaseData[name];
       if (name !== '' && d) {
-        block.attr('data-year', d.year);
-        block.attr('data-category', d.category);
         var title = $('<span>')
           .attr('class', 'case_title')
           .css('width', d.text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px')
           .text(d.text);
 
-        var thumbnail = $('<img>')
-          .attr('class', 'case_thumbnail')
-          .attr('data-src', 'images/case/' + name + '/a.jpg?20140629')
-          .attr('alt', d.text);
+        var thumbnail = $('<img>').attr({
+          'class': 'case_thumbnail',
+          'data-src': 'images/case/' + name + '/a.jpg',
+          'alt': d.text
+        });
 
-        block.append(title);
-        block.append(thumbnail);
+        block.attr({
+          'data-year': d.year,
+          'data-category': d.category
+        })
+        .append(title, thumbnail);
       }
 
-      block.append(formatCaseNumber(name));
-
-      html.append(block);
+      block.append(formatCaseNumber(name)).appendTo(html);
     }
     conf.container.append(html);
   }
-
-  function __animate(conf) {
-    var _tetris = conf.container.children('.' + conf.tclass);
-    var _mry = Math.round(conf._dy * 1.3);
-
-    _tetris.each(function(key) {
-      var _aem = $(this);
-      setTimeout(function() {
-        _aem.animate({
-          'bottom': ['-=' + _mry + 'px', 'easeOutExpo']
-        }, conf.speed);
-      }, key * conf.speed * 0.93);
-    });
-  }
-
 
   $.tetris = function(conf) {
     conf = $.extend({
@@ -288,20 +275,20 @@
     }, conf);
 
     this.flyAway = function(fatime, delay) {
-      var _tetris = conf.container.children('.' + conf.tclass);
-      _tetris.stop(true, true);
+      var tetris = conf.container.children('.' + conf.tclass);
+      tetris.stop(true, true);
 
       var _sprt = 0;
-      var _ww = $(window).width();
-      var _wh = $(window).height();
+      var width = $(window).width(),
+          height = $(window).height();
       var _adict = ['0', {
-        'left': ['+=' + _ww + 'px', 'easeInQuad']
+        'left': ['+=' + width + 'px', 'easeInQuad']
       }, {
-        'bottom': ['-=' + _wh + 'px', 'easeInQuad']
+        'bottom': ['-=' + height + 'px', 'easeInQuad']
       }, {
-        'left': ['-=' + _ww + 'px', 'easeInQuad']
+        'left': ['-=' + width + 'px', 'easeInQuad']
       }, {
-        'bottom': ['+=' + _ww + 'px', 'easeInQuad']
+        'bottom': ['+=' + width + 'px', 'easeInQuad']
       }];
       for (var i = 1; i <= conf.tetris.length; i++) {
         _sprt += delay;
@@ -319,47 +306,21 @@
 
     this.init = function(callback) {
       $.each(conf.tetris, function(key, val) {
-        blockGenerator(conf, val);
-      });
-
-      $('.case_thumbnail').hover(function() {
-        var $this = $(this);
-
-        var $case_title = $this.siblings('.case_title');
-        var _oft = $this.offset();
-        var _case = $this.attr('data-case');
-        _oft.dtop = _oft.top + 60;
-        _oft.top = _oft.top + 10;
-        _oft.dleft = _oft.left + 55;
-        _oft.left = _oft.left + 10;
-        $('body').on('mousemove.c_t' + _case, function(e) {
-          if (_oft.top < e.pageY && _oft.dtop > e.pageY && _oft.left < e.pageX && _oft.dleft > e.pageX) {
-            $case_title.offset({
-              top: e.pageY - 10,
-              left: e.pageX
-            });
-          } else {
-            $('body').off('mousemove.c_t' + _case);
-            $case_title.css('z-index', '-1');
-            setTimeout(function() {
-              $case_title.css('z-index', '101');
-            }, 88);
-          }
-        });
-      }, function(e) {
-        // if (!$(e.relatedTarget).hasClass('case_title')) {
-        //   $('body').off('mousemove.c_t');
-        // }
+        generateBlock(conf, val);
       });
       callback();
       return this;
     };
 
     this.start = function(callback) {
-      __animate(conf);
-      setTimeout(function() {
-        callback();
-      }, conf.speed * conf.tetris.length);
+      var step = Math.round(conf._dy * 1.3);
+      conf.container.children('.' + conf.tclass).each(function(i) {
+        var block = $(this);
+        setTimeout(function() {
+          block.animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
+        }, i * conf.speed * 0.93);
+      });
+      setTimeout(callback, conf.speed * conf.tetris.length);
     };
   };
 })(window, jQuery);
