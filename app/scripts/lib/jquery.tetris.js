@@ -265,10 +265,7 @@
     this.tetris = conf.tetris;
 
     this.flyAway = function(fatime, delay) {
-      var tetris = conf.container.children('.' + conf.tclass);
-      tetris.stop(true, true);
-
-      var _sprt = 0,
+      var container = conf.container,
           width = $(window).width(),
           height = $(window).height(),
           easing = ['0', 
@@ -278,11 +275,14 @@
             { 'bottom': ['+=' + width + 'px', 'easeInQuad'] }
           ];
 
-      for (var i = 1; i <= conf.tetris.length; i++) {
-        _sprt += delay;
-        var node = conf.container.children('.tetris' + '[data-aidx=' + i + ']');
-        node.delay(_sprt).animate(easing[parseInt(node.attr('data-atype'), 10)], fatime);
-      }
+      container.children('.tetris')
+        .stop(true, true)
+        .each(function() {
+          var node = $(this);
+          var idx = node.data('aidx'),
+              atype = parseInt(node.data('atype'), 10);
+          node.delay(idx * delay).animate(easing[atype], fatime);
+        });
     }
 
     this.reset = function() {
@@ -305,11 +305,9 @@
 
     this.start = function(callback) {
       var step = Math.round(conf._dy * 1.3);
-      conf.container.children('.' + conf.tclass).each(function(i) {
-        var block = $(this);
-        setTimeout(function() {
-          block.animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
-        }, i * conf.speed * 0.93);
+      conf.container.children('.tetris').each(function(i) {
+        $(this).delay(i * conf.speed * 0.93)
+          .animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
       });
       setTimeout(callback, conf.speed * conf.tetris.length);
     };
