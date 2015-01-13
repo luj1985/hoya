@@ -1,6 +1,6 @@
-(function(window, $, undefined) {
+(function($, undefined) {
   $.loading = function(loading) {
-    var loader = $('.loading,.loading_shade');
-    loading ? loader.removeClass('dn') : loader.addClass('dn');
+    var loader = $('.loading');
+    loading ? loader.removeClass('hide') : loader.addClass('hide');
   }
-})(window, jQuery);
+})(jQuery);
