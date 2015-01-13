@@ -93,14 +93,7 @@ $(function() {
 
   $('nav.category .item').on('click', function(e) {
     e.preventDefault();
-    var current = this;
-    $('nav.category .item').each(function() {
-      if (current === this) {
-        var target = $(this).toggleClass('active').data('target');
-      } else {
-        $(this).removeClass('active');
-      }
-    });
+    $(this).toggleClass('active');
   });
 
   $('#year_list').on('click', 'li', function(e) {

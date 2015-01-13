@@ -11,25 +11,21 @@ nav {
     > li {
       display: inline-block;
       position: relative;
-      &.active {
-        background: @menu-background;
-        color: lighten(@hoya-orange, 10%);
-      }
       ul {
         position: absolute;
         max-height: 22rem;
-        overflow: auto;
+        overflow: scroll;
         top: 3rem;
         left: 0;
         width: 7rem;
         display: none;
         visibility: hidden;
-        li { 
+        li {
           padding-left: 1rem;
           background: @menu-background; 
           display: block; 
           color: @menu-color;
-          &:hover, &.active { 
+          &:hover { 
             color: lighten(@hoya-orange, 10%);
             background: @menu-hover-background;
           }
@@ -37,10 +33,14 @@ nav {
       }
     }
   }
-  ul li.active ul {
+  > ul li.active:hover ul {
     display: block;
     opacity: 1;
     visibility: visible;
-  } 
+  }
+  > ul li.active:hover {
+    background: @menu-background;
+    color: lighten(@hoya-orange, 10%);
+  }
 }
 
