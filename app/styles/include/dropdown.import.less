@@ -13,7 +13,7 @@ nav {
       position: relative;
       &.active {
         background: @menu-background;
-        color: @menu-color;
+        color: lighten(@hoya-orange, 10%);
       }
       ul {
         position: absolute;
@@ -30,7 +30,7 @@ nav {
           display: block; 
           color: @menu-color;
           &:hover, &.active { 
-            color: @hoya-orange;
+            color: lighten(@hoya-orange, 10%);
             background: @menu-hover-background;
           }
         }

@@ -90,13 +90,21 @@ $(function() {
     });
   }
 
+
   $('nav.category .item').on('click', function(e) {
     e.preventDefault();
-    var target = $(this).toggleClass('active').data('target');
-    $(target).toggleClass('active');
+    var current = this;
+    $('nav.category .item').each(function() {
+      if (current === this) {
+        var target = $(this).toggleClass('active').data('target');
+      } else {
+        $(this).removeClass('active');
+      }
+    });
   });
 
   $('#year_list').on('click', 'li', function(e) {
+    e.preventDefault();
     var year = $(this).data('year');
     var container = $('#tetris');
     container.find('.tetris-block').addClass('disabled');
@@ -104,6 +112,7 @@ $(function() {
   });
 
   $('#category_list').on('click', 'li', function(e) {
+    e.preventDefault();
     var category = $(this).data('category');
     var container = $('#tetris');
     container.find('.tetris-block').addClass('disabled');
