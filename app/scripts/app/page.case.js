@@ -65,13 +65,11 @@ $(function() {
   };
 
   $('#tetris').on('click', 'img', function() {
-    var $t_block = $(this);
-    var $t_block_bg = $t_block.css('background-color');
-    var _case = $.trim($t_block.attr('data-case'));
+    var block = $(this);
 
-    if ($t_block.hasClass('tetris-transparent')) {
-      return false;
-    }
+    var bg = block.css('background-color');
+    var _case = $.trim(block.data('case'));
+
 
     if (CASEDICT[_case]) {
       if (!$('#case_' + _case).length) {
@@ -81,7 +79,7 @@ $(function() {
           if (i === 2) {
             caseImgHTML += 
               '<div class="nivoSlider-item nivoSlider-item_desc">' + 
-                '<div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + 
+                '<div class="nivoSlider-item_desc-content" style="background-color: ' + bg + '">' + 
                   '<p style="margin-top: 40px;"></p>' + 
                   CASEDETAILS[_case] + 
                   '<br/><br/>' + 
@@ -97,7 +95,7 @@ $(function() {
         if (i === 2) {
           caseImgHTML += 
             '<div class="nivoSlider-item nivoSlider-item_desc">' +
-              '<div class="nivoSlider-item_desc-content" style="background-color: ' + $t_block_bg + '">' + 
+              '<div class="nivoSlider-item_desc-content" style="background-color: ' + bg + '">' + 
                 '<p style="margin-top: 40px;"></p>' + 
                 CASEDETAILS[_case] + 
                 '<br/><br/>' + 
@@ -114,7 +112,7 @@ $(function() {
           '</div>'
         );
 
-        var title = $t_block.children('.title').clone();
+        var title = block.children('.title').clone();
         title.width(title.width() + 10);
         title.css({
           left: 0,

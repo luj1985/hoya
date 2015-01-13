@@ -54,7 +54,8 @@ $(function() {
     $.switchPage('main', function() {
       if (!PAGE_INITED['main']) {
         // screen width;
-        var width = $(window).width();
+        var width = $(window).width(),
+            height = $(window).height();
         width = width > 480 ? 480 : width; 
 
         var container = $('#tetris');
@@ -62,7 +63,7 @@ $(function() {
           container: container,
           tetris: tetrisDefs,
           tCaseData: CASEDICT,
-          height: container.height(),
+          height: height,
           standard: width / 12, // 1个x/y坐标单位
           speed: ANIMATE.c // 单帧动画速度
         });

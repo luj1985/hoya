@@ -196,7 +196,7 @@
     var left = tdata.x * size;
     var html = $('<div>')
       .attr({
-        'class': conf.tclass,
+        'class': conf.blockStyle,
         'data-aidx': tdata.aIndex,
         'data-atype': tdata.aType,
         'data-left': left,
@@ -212,7 +212,7 @@
       var name = tdata.text[i] || '';
       var pos = _matrix_pos[i];
       var block = $('<span>')
-        .attr('class', conf.tbclass)
+        .attr('class', conf.cellStyle)
         .attr('data-case', name)
         .css({
           'color' : tdata.textColor,
@@ -263,7 +263,7 @@
             { 'bottom': ['+=' + width + 'px', 'easeInQuad'] }
           ];
 
-      container.children('.tetris')
+      container.children('.tetris-block')
         .stop(true, true)
         .each(function() {
           var node = $(this);
@@ -274,7 +274,7 @@
     }
 
     this.reset = function() {
-      conf.container.children('.tetris').each(function() {
+      conf.container.children('.tetris-block').each(function() {
         var $this = $(this);
         $this.css({
           'left': $this.attr('data-left') + 'px',
@@ -293,7 +293,7 @@
 
     this.start = function(callback) {
       var step = Math.round(conf.height * 1.3);
-      conf.container.children('.tetris').each(function(i) {
+      conf.container.children('.tetris-block').each(function(i) {
         $(this).delay(i * conf.speed * 0.93)
           .animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
       });
@@ -303,8 +303,8 @@
 
   $.fn.tetris = function(options) {
     options = $.extend({
-      tclass: 'tetris',
-      tbclass: 'tetris-block',
+      blockStyle: 'tetris-block',
+      cellStyle: 'tetris-cell',
       tetris: [],
       tCaseData: {},
       height: 500,
