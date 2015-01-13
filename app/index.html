@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="styles/hoya.css">
+    <link rel="stylesheet" href="../bower_components/swipebox/src/css/swipebox.css">
   </head>
   <body>
     <nav class="locale">
@@ -20,41 +21,47 @@
       <h2 class="hlogo">
         <img src="images/logo/hoya.png" alt="hoya" title="www.hoya.com" />
       </h2>
-      <ul class="nav-list" id="year_list">
-        <li data-year="2014">2014</li>
-        <li data-year="2013">2013</li>
-        <li data-year="2012">2012</li>
-        <li data-year="2011">2011</li>
-        <li data-year="2010">2010</li>
-        <li data-year="2009">2009</li>
-        <li data-year="2008">2008</li>
-        <li data-year="2007">2007</li>
-        <li data-year="2006">2006</li>
-        <li data-year="2005">2005</li>
-        <li data-year="2004">2004</li>
-        <li data-year="2003">2003</li>
-        <li data-year="2002">2002</li>
-        <li data-year="2001">2001</li>
-        <li data-year="2000">2000</li>
-      </ul>
-      <ul class="nav-list" id="category_list">
-        <li data-category="10">綜合規劃</li>
-        <li data-category="9">展演文教</li>
-        <li data-category="8">辦公科研</li>
-        <li data-category="7">商場酒店</li>
-        <li data-category="6">醫療宗教</li>
-        <li data-category="5">工業廠房</li>
-        <li data-category="4">住宅社區</li>
-        <!-- <li data-category="3"><i class="icon-d"></i>教育文化</li> -->
-        <li data-category="2">環境交通</li>
-        <!-- <li data-category="1"><i class="icon-j"></i>方案競圖</li> -->
-        <li data-category="0">禾境室內</li>
-      </ul>
       <div class="tetris-wrapper">
-        <nav class="nav category">
-          <a href="#" data-list="#year_list" data-order="1">年份</a>
-          <a href="#" data-list="#category_list" data-order="2">類別</a>
-          <a href="#about">關於</a>
+        <nav class="category">
+          <ul>
+            <li>
+              年份
+              <ul class="nav-list" id="year_list">
+                <li data-year="2014">2014</li>
+                <li data-year="2013">2013</li>
+                <li data-year="2012">2012</li>
+                <li data-year="2011">2011</li>
+                <li data-year="2010">2010</li>
+                <li data-year="2009">2009</li>
+                <li data-year="2008">2008</li>
+                <li data-year="2007">2007</li>
+                <li data-year="2006">2006</li>
+                <li data-year="2005">2005</li>
+                <li data-year="2004">2004</li>
+                <li data-year="2003">2003</li>
+                <li data-year="2002">2002</li>
+                <li data-year="2001">2001</li>
+                <li data-year="2000">2000</li>
+              </ul>
+            </li>
+            <li>
+              類別
+              <ul class="nav-list" id="category_list">
+                <li data-category="10">綜合規劃</li>
+                <li data-category="9">展演文教</li>
+                <li data-category="8">辦公科研</li>
+                <li data-category="7">商場酒店</li>
+                <li data-category="6">醫療宗教</li>
+                <li data-category="5">工業廠房</li>
+                <li data-category="4">住宅社區</li>
+                <!-- <li data-category="3"><i class="icon-d"></i>教育文化</li> -->
+                <li data-category="2">環境交通</li>
+                <!-- <li data-category="1"><i class="icon-j"></i>方案競圖</li> -->
+                <li data-category="0">禾境室內</li>
+              </ul>
+            </li>
+            <li><a href="#about">關於</a></li>
+          </ul>
         </nav>
         <div class="my_tetris" id="tetris"></div>
       </div>
@@ -624,6 +631,7 @@
 
     <!-- build:js scripts/platform.js -->
     <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/swipebox/src/js/jquery.swipebox.js"></script>
     <script src="scripts/lib/jquery.hash.js"></script>
     <script src="scripts/lib/jquery.easing.js"></script>
     <script src="scripts/lib/jquery.tetris.js"></script>

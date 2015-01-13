@@ -1,0 +1,45 @@
+@menu-background: #555;
+@menu-color: #fff;
+@menu-hover-background: #666;
+
+nav {
+  > ul {
+    display: inline;
+    list-style: none;
+    height: inherit;
+    line-height: inherit;
+    > li {
+      display: inline-block;
+      position: relative;
+      &:hover {
+        background: @menu-background;
+        color: @menu-color;
+      }
+      ul {
+        position: absolute;
+        max-height: 22rem;
+        overflow: scroll;
+        top: 3rem;
+        left: 0;
+        width: 7rem;
+        display: none;
+        visibility: hidden;
+        li { 
+          padding-left: 1rem;
+          background: @menu-background; 
+          display: block; 
+          color: @menu-color;
+          &:hover { 
+            background: @menu-hover-background;
+          }
+        }
+      }
+    }
+  }
+  > ul li:hover ul {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+  } 
+}
+

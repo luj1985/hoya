@@ -1,95 +1,58 @@
 @nav-height: 3rem;
-#year_list {
-  li {
-    width: 52px;
-    text-align: center;
-  }
-}
-#category_list {
-  left: 50px;
-  li {
-    font-size: 13px;
-    margin-bottom: 8px;
-    width: 70px;
-    text-align: center;
-  }
-}
 
-.nav_block_list {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  padding: 0;
-
-  li {
+.nav-list {
+  display: none;
+  z-index: 3;
+  &.show {
     display: block;
-    float: left;
-    margin: 0 6px;
-    width: 36px;
-    height: 36px;
-    line-height: 38px;
-    background: #84C325;
-    text-align: center;
-    a {
-      display: block;
-      color: #fff;
-      font-size: 12px;
-    }
-
-    .transition(all .2s ease-out);
-    
-    &:hover {
-      .scale(2)
-    }
   }
+  background-color: @hoya-white;
 }
 
 nav {
   display: block;
   height: @nav-height;
-  position: relative;
+  line-height: @nav-height;
+  font-size: 1rem;
+  padding: 0 1rem;
   > * {
-    display: inline-block;
     line-height: @nav-height;
     height: @nav-height;
   }
-}
-
-nav.category {
-  z-index: 3000;
-  height: 3rem;
-  line-height: 3rem;
-  font-size: 1rem;
-  padding: 0 1rem;
-  position: absolute;
-  left: 0;
-  top: 0;
-  
   a {
-    margin: auto 1rem;
-    color: @hoya-black;
-    &:hover {
-      color: #e27e12;
+    position: relative;
+    &:hover, &.active {
+      color: @hoya-orange;
     }
-    &.current {
-      color: #e27e12;
+  }
+
+  ul {
+    li {
+      list-style: none;
+      display: inline-block;
+      height: inherit;
+      line-height: inherit;
     }
   }
 }
-
 
 nav.locale {
-  a {
-    padding: 0 .5rem;
-  }
-  height: 3rem;
-  line-height: 3rem;
-  font-size: 1rem;
-  padding: 0 1rem;
   position: absolute;
   right: 0;
   top: 0;
   z-index: 100000;
+  a {
+    padding: 0 .5rem;
+  }
+}
+
+nav.category {
+  position: absolute;
+  left: 0;
+  top: 0;
+  > ul > li {
+    padding: 0 1rem;
+  }
 }
 
 nav.menu {
@@ -101,30 +64,5 @@ nav.menu {
     font-size: 1.5rem;
     width: 2.5rem;
     text-align: center;
-  }
-}
-
-.nav-items {
-  font-size: 12px;
-  bottom: 0;
-  width: 220px;
-  left: 10px;
-  z-index: 3;
-}
-
-.nav-item {
-  a {
-    color: @hoya-black;
-    &:hover {
-      text-decoration: none;
-      color: @hoya-orange;
-    }
-  }
-  &:hover {
-    color: @hoya-orange;
-  }
-  &.active {
-    color: @hoya-orange;
-
   }
 }

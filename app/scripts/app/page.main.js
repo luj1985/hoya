@@ -89,4 +89,10 @@ $(function() {
       }
     });
   }
+
+  $('nav.category').on('click', '.item', function(e) {
+    e.preventDefault();
+    var target = $(this).data('list');
+    // $(target).toggleClass('show');
+  });
 });
