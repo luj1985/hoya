@@ -58,11 +58,11 @@ $(function() {
         width = width > 480 ? 480 : width; 
 
         var container = $('#tetris');
-        tetris = new $.tetris({
+        tetris = container.tetris({
           container: container,
           tetris: tetrisDefs,
           tCaseData: CASEDICT,
-          _dy: container.height(),
+          height: container.height(),
           standard: width / 12, // 1个x/y坐标单位
           speed: ANIMATE.c // 单帧动画速度
         });

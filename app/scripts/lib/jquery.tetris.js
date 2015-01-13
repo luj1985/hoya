@@ -192,7 +192,7 @@
 
   function generateBlock(conf, tdata) {
     var size = conf.standard;
-    var bottom = (conf._dy * 1.3 + tdata.y * size);
+    var bottom = (conf.height * 1.3 + tdata.y * size);
     var left = tdata.x * size;
     var html = $('<div>')
       .attr({
@@ -200,7 +200,7 @@
         'data-aidx': tdata.aIndex,
         'data-atype': tdata.aType,
         'data-left': left,
-        'data-bottom': Math.round(bottom - conf._dy * 1.3)
+        'data-bottom': Math.round(bottom - conf.height * 1.3)
       }).css({
         left: left,
         bottom: Math.round(bottom)
@@ -219,8 +219,8 @@
           'background-color': tdata.bgColor,
           'top': pos[1] * size + 'px',
           'left': pos[0] * size + 'px',
-          'height': size,
-          'width': size,
+          'height': size + 'px',
+          'width': size + 'px',
           // exclude 1px border
           'font-size' : ((size - 2) / 3) + 'px',
           'line-height': (size / 3) + 'px'
@@ -230,7 +230,6 @@
       if (name !== '' && d) {
         var title = $('<span>')
           .attr('class', 'title')
-          .css('width', d.text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px')
           .text(d.text);
 
         var thumbnail = $('<img>').attr({
@@ -249,17 +248,7 @@
     conf.container.append(html);
   }
 
-  $.tetris = function(conf) {
-    conf = $.extend({
-      container: $('#tetris'),
-      tclass: 'tetris',
-      tbclass: 'tetris-block',
-      tetris: [],
-      tCaseData: {},
-      _dy: 500,
-      standard: 10, // 1个x/y坐标单位
-      speed: 100 // 单帧动画速度
-    }, conf);
+  function Tetris(conf) {
 
     this.tetris = conf.tetris;
 
@@ -303,7 +292,7 @@
     };
 
     this.start = function(callback) {
-      var step = Math.round(conf._dy * 1.3);
+      var step = Math.round(conf.height * 1.3);
       conf.container.children('.tetris').each(function(i) {
         $(this).delay(i * conf.speed * 0.93)
           .animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
@@ -311,4 +300,18 @@
       setTimeout(callback, conf.speed * conf.tetris.length);
     };
   };
+
+  $.fn.tetris = function(options) {
+    options = $.extend({
+      tclass: 'tetris',
+      tbclass: 'tetris-block',
+      tetris: [],
+      tCaseData: {},
+      height: 500,
+      standard: 10,
+      speed: 100
+    }, options);
+
+    return new Tetris(options);
+  }
 })(window, jQuery);
