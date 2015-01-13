@@ -234,7 +234,6 @@
           .text(d.text);
 
         var thumbnail = $('<img>').attr({
-          'class': 'thumbnail',
           'data-src': 'images/case/' + name + '/a.jpg',
           'alt': d.text
         });

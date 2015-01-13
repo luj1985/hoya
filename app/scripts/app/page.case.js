@@ -64,7 +64,7 @@ $(function() {
     });
   };
 
-  $('#tetris').on('click', 'img.thumbnail', function() {
+  $('#tetris').on('click', 'img', function() {
     var $t_block = $(this);
     var $t_block_bg = $t_block.css('background-color');
     var _case = $.trim($t_block.attr('data-case'));
