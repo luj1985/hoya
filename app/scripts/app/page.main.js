@@ -98,6 +98,7 @@ $(function() {
 
   $('#year_list').on('click', 'li', function(e) {
     e.preventDefault();
+    e.stopPropagation();
     var year = $(this).data('year');
     var container = $('#tetris');
     container.find('.tetris-block').addClass('disabled');
@@ -106,6 +107,7 @@ $(function() {
 
   $('#category_list').on('click', 'li', function(e) {
     e.preventDefault();
+    e.stopPropagation();
     var category = $(this).data('category');
     var container = $('#tetris');
     container.find('.tetris-block').addClass('disabled');
