@@ -64,7 +64,7 @@ $(function() {
     });
   };
 
-  $('#tetris').on('click', '.tetris-block', function() {
+  $('#tetris').on('click', 'img.thumbnail', function() {
     var $t_block = $(this);
     var $t_block_bg = $t_block.css('background-color');
     var _case = $.trim($t_block.attr('data-case'));
@@ -114,7 +114,7 @@ $(function() {
           '</div>'
         );
 
-        var title = $t_block.children('.case_title').clone();
+        var title = $t_block.children('.title').clone();
         title.width(title.width() + 10);
         title.css({
           left: 0,

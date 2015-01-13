@@ -1,4 +1,3 @@
-
 .my_tetris {
   position: absolute;
   height: 100%;
@@ -20,53 +19,46 @@
     display: block;
   }
 
-  .case_thumbnail {
+  .thumbnail {
     position: absolute;
     overflow: hidden;
     border: 1px solid @hoya-orange;
-    top: -16px;
-    left: -16px;
-    width: 70px;
-    height: 70px;
-    z-index: 100;
+    top: -1rem;
+    left: -1rem;
+    width: 4rem;
+    height: 4rem;
+    z-index: 1;
 
     .transition(all .16s ease-out);
     .scale(0);
     .opacity(0);
   }
 
+  .title {
+    position: absolute;
+    padding: 3px 6px 2px;
+    background: #111;
+    color: @hoya-white;
+    top: .7rem;
+    left: 1.5rem;
+    font-size: .7rem;
+    line-height: 1rem;
+    z-index: 2;
+    display: none;
+    text-align: center;
+  }
+
   &.disabled {
     .opacity(.3);
   }
-}
-.tetris-block:hover {
-  .case_thumbnail {
-    .scale(1);
-    .opacity(1);
+
+  &:hover {
+    .thumbnail {
+      .scale(1);
+      .opacity(1);
+    }
+    .title {
+      display: block;
+    }
   }
-  .case_title {
-    display: block;
-  }
-}
-.tetris-block.tetris-transparent:hover {
-  .case_thumbnail, .case_title {
-    display: none;
-  }
-}
-.tetris-transparent {
-  .transition(all .2s ease-out);
-  .opacity(.3);
-}
-.case_title {
-  position: absolute;
-  padding: 3px 6px 2px;
-  background: #111;
-  color: @hoya-white;
-  top: 14px;
-  left: 26px;
-  font-size: 12px;
-  line-height: 16px;
-  z-index: 101;
-  display: none;
-  text-align: center;
 }

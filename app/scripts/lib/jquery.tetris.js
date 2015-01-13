@@ -229,12 +229,12 @@
       var d = conf.tCaseData[name];
       if (name !== '' && d) {
         var title = $('<span>')
-          .attr('class', 'case_title')
+          .attr('class', 'title')
           .css('width', d.text.replace(/[^a-z0-9A-Z\s]/g, 'AA').length * 7.23 + 'px')
           .text(d.text);
 
         var thumbnail = $('<img>').attr({
-          'class': 'case_thumbnail',
+          'class': 'thumbnail',
           'data-src': 'images/case/' + name + '/a.jpg',
           'alt': d.text
         });
