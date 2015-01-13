@@ -8,9 +8,11 @@ $(function() {
   });
 
   $(window).hashChange(function() {
-    var name = window.location.hash.replace('#', '') || 'main';
+    var hash = window.location.hash.replace('#', '') || 'main';
+    var names = hash.split('_');
+    var name = names[0], param = names[1];
     var loader = PAGES['_load_' + name];
-    loader && loader();
+    loader && loader(param);
   });
   // window.location.hash = '';
   $(window).hashChange();

@@ -5,65 +5,64 @@ $(function() {
 
   CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
 
-  function registerCase(id) {
-    PAGES['_load_case_' + id] = function() {
-      $.switchPage('case_' + id, function() {
-        if (!PAGE_INITED['case_' + id]) {
-          $('#case_slider-' + id)
-            .append(
-              '<div class="nivoSlider-ctrl">' + 
-              new Array($('#case_slider-' + id).children('.nivoSlider-item').length + 1).join('<span></span>') + 
-              '</div>'
-            )
-            .children('.nivoSlider-ctrl')
-            .on('click', 'span', function() {
-              var $this = $(this);
-              if ($this.hasClass('active')) return;
+  PAGES['_load_case'] = function(id) {
+    var name = 'case_' + id;
+    $.switchPage(name, function() {
+      if (!PAGE_INITED['case_' + id]) {
+        $('#case_slider-' + id)
+          .append(
+            '<div class="nivoSlider-ctrl">' + 
+            new Array($('#case_slider-' + id).children('.nivoSlider-item').length + 1).join('<span></span>') + 
+            '</div>'
+          )
+          .children('.nivoSlider-ctrl')
+          .on('click', 'span', function() {
+            var $this = $(this);
+            if ($this.hasClass('active')) return;
 
-              $this.addClass('active').siblings('.active').removeClass('active');
+            $this.addClass('active').siblings('.active').removeClass('active');
 
-              var prev = $this.parent().siblings('.nivoSlider-item.active');
-              var idx = $this.parent().children('span').index($this);
-              var next = $this.parent().siblings('.nivoSlider-item').eq(idx);
-              if (idx === 1) {
-                var nidc = next.children('.nivoSlider-item_desc-content');
-                if (nidc.attr('data-setted') !== 'yes') {
-                  nidc.width(next.prev().children('img:first').height() * 1247 / 795 - 200);
-                  nidc.attr('data-setted', 'yes');
-                }
+            var prev = $this.parent().siblings('.nivoSlider-item.active');
+            var idx = $this.parent().children('span').index($this);
+            var next = $this.parent().siblings('.nivoSlider-item').eq(idx);
+            if (idx === 1) {
+              var nidc = next.children('.nivoSlider-item_desc-content');
+              if (nidc.attr('data-setted') !== 'yes') {
+                nidc.width(next.prev().children('img:first').height() * 1247 / 795 - 200);
+                nidc.attr('data-setted', 'yes');
               }
-
-              if (prev.length) {
-                prev.stop(true, true).fadeOut(200, function() {
-                  prev.removeClass('active');
-                });
-              }
-              setTimeout(function() {
-                next.stop(true, true).fadeIn(200, function() {
-                  next.addClass('active');
-                });
-              }, 100);
-            }).children('span:first').click();
-
-
-          $('#case_slider-' + id).on('click', '.nivoSlider-item', function(e) {
-            var _niem = $(this).parent().children('.nivoSlider-item');
-            var _idx = _niem.index($(this));
-            if ($(this).width() / 2 + $(this).offset().left > e.pageX) {
-              _idx--;
-            } else {
-              _idx++;
             }
-            (_idx === _niem.length) && (_idx = 0);
-            (_idx === -1) && (_idx = _niem.length - 1);
-            $(this).parent().children('.nivoSlider-ctrl').children('span').eq(_idx).click();
-          });
 
-          PAGE_INITED['_load_case_' + id] = true;
-        }
-      });
-    };
-  }
+            if (prev.length) {
+              prev.stop(true, true).fadeOut(200, function() {
+                prev.removeClass('active');
+              });
+            }
+            setTimeout(function() {
+              next.stop(true, true).fadeIn(200, function() {
+                next.addClass('active');
+              });
+            }, 100);
+          }).children('span:first').click();
+
+
+        $('#case_slider-' + id).on('click', '.nivoSlider-item', function(e) {
+          var _niem = $(this).parent().children('.nivoSlider-item');
+          var _idx = _niem.index($(this));
+          if ($(this).width() / 2 + $(this).offset().left > e.pageX) {
+            _idx--;
+          } else {
+            _idx++;
+          }
+          (_idx === _niem.length) && (_idx = 0);
+          (_idx === -1) && (_idx = _niem.length - 1);
+          $(this).parent().children('.nivoSlider-ctrl').children('span').eq(_idx).click();
+        });
+
+        PAGE_INITED['_load_case_' + id] = true;
+      }
+    });
+  };
 
   $('#tetris').on('click', '.tetris-block', function() {
     var $t_block = $(this);
@@ -123,8 +122,6 @@ $(function() {
           zIndex: 999999,
           top: 0
         }).appendTo($('#case_' + _case));
-
-        registerCase(_case);
       }
       window.location.hash = '#case_' + _case;
     }
