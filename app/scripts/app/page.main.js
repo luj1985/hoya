@@ -90,9 +90,23 @@ $(function() {
     });
   }
 
-  $('nav.category').on('click', '.item', function(e) {
+  $('nav.category .item').on('click', function(e) {
     e.preventDefault();
-    var target = $(this).data('list');
-    // $(target).toggleClass('show');
+    var target = $(this).toggleClass('active').data('target');
+    $(target).toggleClass('active');
+  });
+
+  $('#year_list').on('click', 'li', function(e) {
+    var year = $(this).data('year');
+    var container = $('#tetris');
+    container.find('.tetris-block').addClass('disabled');
+    container.find('.tetris-block[data-year="' + year + '"]').removeClass('disabled');
+  });
+
+  $('#category_list').on('click', 'li', function(e) {
+    var category = $(this).data('category');
+    var container = $('#tetris');
+    container.find('.tetris-block').addClass('disabled');
+    container.find('.tetris-block[data-category="' + category + '"]').removeClass('disabled');
   });
 });

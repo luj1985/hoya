@@ -20,17 +20,18 @@
 .hlogo {
   position: absolute;
   top: -@header-height;
-  height: 0;
   padding: .5rem 1rem;
+  img {
+    height: 2rem;
+  }
 }
 
 footer {
   width: 100%;
-  height: @footer-height;
-  line-height: @footer-height;
-}
-
-#main.page.active ~ footer {
+  // height: @footer-height;
+  // line-height: @footer-height;
+  // top: auto;
+  height: 0;
   position: absolute;
-  bottom: 0; 
+  bottom: 0;
 }

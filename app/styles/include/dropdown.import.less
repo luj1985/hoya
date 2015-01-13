@@ -1,6 +1,6 @@
-@menu-background: #555;
+@menu-background: #999;
 @menu-color: #fff;
-@menu-hover-background: #666;
+@menu-hover-background: #EEE;
 
 nav {
   > ul {
@@ -11,14 +11,14 @@ nav {
     > li {
       display: inline-block;
       position: relative;
-      &:hover {
+      &.active {
         background: @menu-background;
         color: @menu-color;
       }
       ul {
         position: absolute;
         max-height: 22rem;
-        overflow: scroll;
+        overflow: auto;
         top: 3rem;
         left: 0;
         width: 7rem;
@@ -29,14 +29,15 @@ nav {
           background: @menu-background; 
           display: block; 
           color: @menu-color;
-          &:hover { 
+          &:hover, &.active { 
+            color: @hoya-orange;
             background: @menu-hover-background;
           }
         }
       }
     }
   }
-  > ul li:hover ul {
+  ul li.active ul {
     display: block;
     opacity: 1;
     visibility: visible;
