@@ -114,4 +114,17 @@ $(function() {
     container.find('.tetris-block').addClass('disabled');
     container.find('.tetris-block[data-category="' + category + '"]').removeClass('disabled');
   });
+
+  $('#tetris').on('tap', '.tetris-cell', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    window.alert('tap event');
+    $(e.target).off('click');
+  });
+
+
+  $('#tetris').on('hover touchstart click', '.tetris-cell', function(e) {
+    // e.preventDefault();
+    e.stopPropagation(); 
+  });
 });

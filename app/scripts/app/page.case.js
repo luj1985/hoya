@@ -34,22 +34,15 @@ $(function() {
     var bg = cell.css('background-color');
     var data = CASEDICT[name];
 
+    var page = $('#case');
+    page.empty();
+    
     $.switchPage('case', function() {
       var cell = $('.tetris-cell[case="' + name + '"]');
       var bg = cell.css('background-color');
-      var page = generateCasePage(name, bg);
-      $('#case').html(page);
+      var html = generateCasePage(name, bg);
+      page.html(html);
       $('#case .slide:first').addClass('active');
     });
   };
-
-  $('#tetris').on('click', '.preview', function() {
-    var cell = $(this).closest('.tetris-cell');
-    var name = cell.data('case');
-
-    if (CASEDICT[name]) {      
-      window.location.hash = '#case_' + name;
-    }
-    return false;
-  });
 });

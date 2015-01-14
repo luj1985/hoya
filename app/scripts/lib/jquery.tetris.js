@@ -236,10 +236,10 @@
       var d = conf.tCaseData[name];
       if (name !== '' && d) {
         var preview = [
-          '<div class="preview">',
+          '<a class="preview" href="#case_' + name + '">',
             '<h5>' + d.text + '</h5>',
             '<img data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
-          '</div>'
+          '</a>'
         ].join('\n');
         var dom = $(preview).data('case', name);
 

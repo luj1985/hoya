@@ -37,6 +37,11 @@
     width: 5rem;
     height: 5rem;
     z-index: 3;
+    cursor: auto;
+    visibility: hidden;
+    text-decoration: none;
+    pointer-events: none;
+
     .transition(all .16s ease-out);
     .scale(0);
     .opacity(0);
@@ -64,19 +69,22 @@
 
   &.disabled, &:empty {
     cursor: auto;
+    .preview {
+      display: none;
+    }
   }
 
-  &:not(.disabled) {
-    &:hover {
-      cursor: auto;
-      .preview {
-        .scale(1);
-        .opacity(1);
-        display: block;
-      }
-      .case {
-        display: none;
-      }
+  &:hover {
+    .preview {
+      .scale(1);
+      .opacity(1);
+      cursor: pointer;
+      display: block;
+      visibility: visible;
+      pointer-events: auto;
+    }
+    .case {
+      display: none;
     }
   }
 }
