@@ -50,42 +50,46 @@ $(function() {
     };
   });
 
+  // screen width;
+  var width = $(window).width(),
+      height = $(window).height();
+  width = width > 480 ? 480 : width; 
+  var container = $('#tetris');
+  var tetris = container.tetris({
+    container: container,
+    tetris: tetrisDefs,
+    tCaseData: CASEDICT,
+    height: height,
+    standard: width / 12, // 1个x/y坐标单位
+    speed: ANIMATE.c // 单帧动画速度
+  });
+
+  tetris.init(function() {
+    $.loadimg(container.find('img[data-src]'), false, function() {
+      container.find('img[data-src]').each(function() {
+        $(this).attr('src', $(this).attr('data-src'));
+      });
+      $.loading(false);
+    }, function() {
+      setTimeout(function() {
+        container.find('img[data-src]').each(function() {
+          $(this).attr('src', $(this).attr('data-src'));
+        });
+        $.loading(false);
+      }, 22222);
+    });
+  });
+
+  $.PAGES.tetris = tetris;
+
   $.PAGES["_load_main"] = function() {
     $.switchPage('main', function() {
       if (!PAGE_INITED['main']) {
-        // screen width;
-        var width = $(window).width(),
-            height = $(window).height();
-        width = width > 480 ? 480 : width; 
 
-        var container = $('#tetris');
-        tetris = container.tetris({
-          container: container,
-          tetris: tetrisDefs,
-          tCaseData: CASEDICT,
-          height: height,
-          standard: width / 12, // 1个x/y坐标单位
-          speed: ANIMATE.c // 单帧动画速度
-        });
-        tetris.init(function() {
-          $.loadimg(container.find('img[data-src]'), false, function() {
-            container.find('img[data-src]').each(function() {
-              $(this).attr('src', $(this).attr('data-src'));
-            });
-            $.loading(false);
-          }, function() {
-            setTimeout(function() {
-              container.find('img[data-src]').each(function() {
-                $(this).attr('src', $(this).attr('data-src'));
-              });
-              $.loading(false);
-            }, 22222);
-          });
-        }).start(function() {
+        tetris.start(function() {
           $.loading(false);
         });
 
-        $.PAGES.tetris = tetris;
         PAGE_INITED['main'] = true;
       }
     });
@@ -123,8 +127,8 @@ $(function() {
   });
 
 
-  $('#tetris').on('hover touchstart click', '.tetris-cell', function(e) {
-    // e.preventDefault();
+  $('#tetris .tetris-cell').on('touchstart click', function(e) {
+    console.log('prevent propagation');
     e.stopPropagation(); 
   });
 });
