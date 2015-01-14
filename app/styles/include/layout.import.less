@@ -1,10 +1,18 @@
 @footer-height: 3rem;
 @header-height: 3rem;
 
+header {
+  display: block;
+  height: @header-height;
+  z-index: 200;
+  .box-shadow(0 2px 5px rgba(0,0,0,0.26));
+  .box-sizing(content-box);
+}
+
 .page {
   display: none;
   position: absolute;
-  top: 3rem;
+  top: 4rem;
   bottom: 0;
   width: 100%;
 }
@@ -19,7 +27,7 @@
 
 .hlogo {
   position: absolute;
-  top: -@header-height;
+  top: -4rem;
   padding: .5rem 1rem;
   img {
     height: 2rem;

@@ -16,5 +16,5 @@ $(function() {
   });
   // window.location.hash = '';
   $(window).hashChange();
-  $.loading(true);
+  // $.loading(true);
 });
