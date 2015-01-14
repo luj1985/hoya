@@ -100,7 +100,8 @@ $(function() {
     return html;
   }
 
-  $('#tetris').on('click', 'img', function() {
+  $('#tetris').on('click', '.preview', function() {
+    console.log('preview clicked');
     var block = $(this);
 
     var bg = block.css('background-color');

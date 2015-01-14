@@ -181,13 +181,20 @@
   }
 
 
-  function formatCaseNumber(text) {
-    if (/[^0-9]/.test(text.slice(0, 1))) {
-      text = '<i>' + text.slice(0, 1) + '</i><span>' + text.slice(1) + '</span>';
-    } else if (text.length <= 4) {
-      text = '<i>&nbsp;</i><span">' + text + '</span>';
+  function formatCaseNumber(caseid) {
+    if (!caseid)  return '';
+    
+    var html = '<div class="case">';
+    var matches = caseid.match(/^([a-zA-Z])(\d+)$/);
+    if (matches) {
+      var l = matches[1], no = matches[2];
+      html += '<i>' + l + '</i>';
+      html += '<span>' + no + '</span>';
+    } else {
+      html += '<span>' + caseid + '</span>';
     }
-    return text;
+    html += '</div>';
+    return html;
   }
 
   function generateBlock(conf, tdata) {
@@ -221,27 +228,25 @@
           'left': pos[0] * size + 'px',
           'height': size + 'px',
           'width': size + 'px',
-          // exclude 1px border
-          'font-size' : ((size - 2) / 3) + 'px',
+          // exclude 1px border and 1px padding
+          'font-size' : ((size - 4) / 3) + 'px',
           'line-height': (size / 3) + 'px'
         });
 
       var d = conf.tCaseData[name];
       if (name !== '' && d) {
-        var title = $('<span>')
-          .attr('class', 'title')
-          .text(d.text);
-
-        var thumbnail = $('<img>').attr({
-          'data-src': 'images/case/' + name + '/a.jpg',
-          'alt': d.text
-        });
+        var preview = [
+          '<div class="preview">',
+            '<h5>' + d.text + '</h5>',
+            '<img data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
+          '</div>'
+        ].join('\n');
 
         block.attr({
           'data-year': d.year,
           'data-category': d.category
         })
-        .append(title, thumbnail);
+        .append(preview);
       }
       block.append(formatCaseNumber(name)).appendTo(html);
     }
@@ -311,7 +316,6 @@
       standard: 10,
       speed: 100
     }, options);
-
     return new Tetris(options);
   }
 })(window, jQuery);
