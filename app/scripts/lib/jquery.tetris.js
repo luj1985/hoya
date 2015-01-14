@@ -183,7 +183,7 @@
 
   function formatCaseNumber(caseid) {
     if (!caseid)  return '';
-    
+
     var html = '<div class="case">';
     var matches = caseid.match(/^([a-zA-Z])(\d+)$/);
     if (matches) {
@@ -241,12 +241,13 @@
             '<img data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
           '</div>'
         ].join('\n');
+        var dom = $(preview).data('case', name);
 
         block.attr({
           'data-year': d.year,
           'data-category': d.category
         })
-        .append(preview);
+        .append(dom);
       }
       block.append(formatCaseNumber(name)).appendTo(html);
     }
