@@ -64,51 +64,60 @@ $(function() {
     });
   };
 
+  function generateCasePage(d, detail) {
+    var html = '';
+    var description = d.desc || '';
+
+    for (var i = 1; i <= d.img; i++) {
+      if (i === 2) {
+        html += 
+          '<div class="nivoSlider-item nivoSlider-item_desc">' + 
+            '<div class="nivoSlider-item_desc-content" style="background-color: ' + bg + '">' + 
+              '<p style="margin-top: 40px;"></p>' + 
+              detail + 
+              '<br/><br/>' + 
+              description + 
+            '</div>' + 
+          '</div>';
+      }
+      html += 
+        '<div class="nivoSlider-item">' + 
+          '<img src="images/case/' + name + '/' + i + '.jpg?20140629" />' +
+        '</div>';
+    }
+
+    if (i === 2) {
+      html += 
+        '<div class="nivoSlider-item nivoSlider-item_desc">' +
+          '<div class="nivoSlider-item_desc-content" style="background-color: ' + bg + '">' + 
+            '<p style="margin-top: 40px;"></p>' + 
+            detail + 
+            '<br/><br/>' + 
+            description + 
+          '</div>' + 
+        '</div>';
+    }
+    return html;
+  }
+
   $('#tetris').on('click', 'img', function() {
     var block = $(this);
 
     var bg = block.css('background-color');
-    var _case = $.trim(block.data('case'));
+    var name = $.trim(block.data('case'));
+    var d = CASEDICT[name];
 
+    if (d) {
+      if (!$('#case_' + name).length) {
+        var detail = CASEDETAILS[name];
+        var html = generateCasePage(d, detail);
 
-    if (CASEDICT[_case]) {
-      if (!$('#case_' + _case).length) {
-        var caseImgHTML = '';
-        CASEDICT[_case].desc = CASEDICT[_case].desc || '';
-        for (var i = 1; i <= CASEDICT[_case].img; i++) {
-          if (i === 2) {
-            caseImgHTML += 
-              '<div class="nivoSlider-item nivoSlider-item_desc">' + 
-                '<div class="nivoSlider-item_desc-content" style="background-color: ' + bg + '">' + 
-                  '<p style="margin-top: 40px;"></p>' + 
-                  CASEDETAILS[_case] + 
-                  '<br/><br/>' + 
-                  CASEDICT[_case].desc + 
-                '</div>' + 
-              '</div>';
-          }
-          caseImgHTML += 
-            '<div class="nivoSlider-item">' + 
-              '<img src="images/case/' + _case + '/' + i + '.jpg?20140629" />' +
-            '</div>';
-        }
-        if (i === 2) {
-          caseImgHTML += 
-            '<div class="nivoSlider-item nivoSlider-item_desc">' +
-              '<div class="nivoSlider-item_desc-content" style="background-color: ' + bg + '">' + 
-                '<p style="margin-top: 40px;"></p>' + 
-                CASEDETAILS[_case] + 
-                '<br/><br/>' + 
-                CASEDICT[_case].desc + 
-              '</div>' + 
-            '</div>';
-        }
         $('footer').before(
-          '<div id="case_' + _case + '" class="page case_page" data-amt="fade">' + 
+          '<div id="case_' + name + '" class="page case_page" data-amt="fade">' + 
             '<div class="atc-nav">' + 
               '<a href="#main" class="atc-nav-main">&nbsp;</a>' + 
             '</div>' + 
-            '<div id="case_slider-' + _case + '" class="nivoSlider">' + caseImgHTML + '</div>' + 
+            '<div id="case_slider-' + name + '" class="nivoSlider">' + html + '</div>' + 
           '</div>'
         );
 
@@ -117,11 +126,11 @@ $(function() {
         title.css({
           left: 0,
           display: 'block',
-          zIndex: 999999,
+          zIndex: 9999,
           top: 0
-        }).appendTo($('#case_' + _case));
+        }).appendTo($('#case_' + name));
       }
-      window.location.hash = '#case_' + _case;
+      window.location.hash = '#case_' + name;
     }
     return false;
   });
