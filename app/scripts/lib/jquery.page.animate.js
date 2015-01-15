@@ -1,14 +1,16 @@
 (function(window, $, undefined) {
-  function pageTransition($page, atype, isRevert, callback) {
-    callback = callback || function() { void 0; }
-    switch (atype) {
+  'use strict';
+
+  function pageTransition(page, animateType, isRevert, callback) {
+    callback = callback || function() { void 0; };
+    switch (animateType) {
       case 'fade':
-        isRevert ? $page.fadeOut(200, callback) : $page.fadeIn(200 ,callback);
+        isRevert ? page.fadeOut(200, callback) : page.fadeIn(200 ,callback);
         break;
       default:
-        isRevert ? $page.hide(callback) : $page.show(callback);
+        isRevert ? page.hide(callback) : page.show(callback);
     }
-    $page.addClass('active');
+    page.addClass('active');
   }
 
   function switchPage(id, callback) {
