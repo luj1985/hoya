@@ -5,6 +5,7 @@
     "jquery": "~1.11.1",
     "lesshat": "~3.0.2",
     "normalize-less": "*",
-    "material-design-iconic-font": "~1.1.1"
+    "material-design-iconic-font": "~1.1.1",
+    "fastclick": "~1.0.3"
   }
 }
