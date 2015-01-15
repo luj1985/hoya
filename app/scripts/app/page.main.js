@@ -117,6 +117,7 @@ $(function() {
     container.find('.tetris-block[data-category="' + category + '"]').removeClass('disabled');
   });
 
+  // 8rem;
   var CONTENT_HEIGHT = CONTENT_WIDTH = 8 * 16;
 
   $('#tetris .tetris-cell').on('click', function(e) {
@@ -124,11 +125,15 @@ $(function() {
     var name = cell.data('case');
     var d = CASEDICT[name];
     if (d) {
-      var width = cell.width(),
-          height = cell.height();
       var offset = cell.offset();
-      var centerX = offset.left + (width / 2),
-          centerY = offset.top + (height / 2);
+      var left = offset.left + (cell.width() / 2) - (CONTENT_WIDTH / 2);
+      var top = offset.top + (cell.height() / 2) - (CONTENT_HEIGHT / 2);
+
+      // make content always stay in screen
+      left = left < 0 ? 0 : left;
+      top = top < 0 ? 0 : top;
+      left = (left + CONTENT_WIDTH) > SCREEN_WIDTH ? (SCREEN_WIDTH - CONTENT_WIDTH) : left;
+      top = (top + CONTENT_HEIGHT) > SCREEN_HEIGHT ? (SCREEN_HEIGHT - CONTENT_HEIGHT) : top;
 
       var preview = [
         '<a class="preview" href="#case_' + name + '">',
@@ -137,29 +142,19 @@ $(function() {
         '</a>'
       ].join('\n');
 
-      var left = centerX - (CONTENT_WIDTH / 2);
-      var top = centerY - (CONTENT_HEIGHT / 2);
-
-      left = left < 0 ? 0 : left;
-      top = top < 0 ? 0 : top;
-      left = (left + CONTENT_WIDTH) > SCREEN_WIDTH ? (SCREEN_WIDTH - CONTENT_WIDTH) : left;
-      top = (top + CONTENT_HEIGHT) > SCREEN_HEIGHT ? (SCREEN_HEIGHT - CONTENT_HEIGHT) : top;
-
-
-      $('.highlight .content')
-        .html(preview).css({
-          left: left,
-          top: top
-        });
-      $('.highlight').addClass('show');
+      $('.highlight').find('.content').html(preview).css({ 
+        left: left, 
+        top: top,
+        width: CONTENT_WIDTH,
+        height: CONTENT_HEIGHT
+      })
+      .end().addClass('show');
     }
-    e.preventDefault();
     e.stopPropagation(); 
   });
 
   $('.highlight').on('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation(); 
     $(this).removeClass('show');
+    e.stopPropagation();
   })
 });
