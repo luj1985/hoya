@@ -79,21 +79,12 @@
           'line-height': (size / 3) + 'px'
         });
 
-      var d = conf.tCaseData[name];
-      if (name !== '' && d) {
-        var preview = [
-          '<a class="preview" href="#case_' + name + '">',
-            '<h5>' + d.text + '</h5>',
-            '<img data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
-          '</a>'
-        ].join('\n');
-        var dom = $(preview).data('case', name);
-
+      var d = CASEDICT[name];
+      if (d) {
         block.attr({
           'data-year': d.year,
           'data-category': d.category
-        })
-        .append(dom);
+        });
       }
       block.append(formatCaseNumber(name)).appendTo(html);
     }
@@ -158,7 +149,6 @@
       blockStyle: 'tetris-block',
       cellStyle: 'tetris-cell',
       tetris: [],
-      tCaseData: {},
       height: 500,
       standard: 10,
       speed: 100
