@@ -16,23 +16,28 @@ nav {
   font-size: 1rem;
   padding: 0 1rem;
   > * {
+    display: inline-block;
     line-height: @nav-height;
     height: @nav-height;
   }
   a {
     position: relative;
+    padding: 0 .5rem;
+    vertical-align: middle;
     &:hover, &.active {
       color: @hoya-orange;
     }
   }
+}
 
-  ul {
-    li {
-      list-style: none;
-      display: inline-block;
-      height: inherit;
-      line-height: inherit;
-    }
+nav.menu {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding-left: .3rem;
+  a {
+    color: @hoya-orange;
+    font-size: 1.5rem;
   }
 }
 
@@ -40,10 +45,7 @@ nav.locale {
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 5;
-  a {
-    padding: 0 .5rem;
-  }
+  padding-right: .5rem;
 }
 
 nav.category {
@@ -52,18 +54,5 @@ nav.category {
   top: 0;
   > ul > li {
     padding: 0 1rem;
-  }
-}
-
-nav.menu {
-  display: inline-block;
-  padding-left: .3rem;
-  a {
-    height: inherit;
-    line-height: inherit;
-    color: @hoya-orange;
-    font-size: 1.5rem;
-    vertical-align: middle;
-    padding: 0 .5rem;
   }
 }
