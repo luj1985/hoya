@@ -48,15 +48,15 @@
     var bottom = (conf.height * 1.3 + tdata.y * size);
     var left = tdata.x * size;
     var html = $('<div>')
-      .attr({
-        'class': conf.blockStyle,
-        'data-aidx': tdata.aIndex,
-        'data-atype': tdata.aType,
-        'data-left': left,
-        'data-bottom': Math.round(bottom - conf.height * 1.3)
-      }).css({
+      .attr('class', conf.blockStyle)
+      .css({
         left: left,
         bottom: Math.round(bottom)
+      }).data({
+        'left': left + 'px',
+        'bottom': Math.round(bottom - conf.height * 1.3) + 'px',
+        'aidx': tdata.aIndex,
+        'atype': tdata.aType
       });
     var shapeId = tdata.shape + '' + tdata.orientation;
     var shape = SHAPES[shapeId] || [];
@@ -79,12 +79,21 @@
           'line-height': (size / 3) + 'px'
         });
 
-      var d = CASEDICT[name];
-      if (d) {
+      var d = conf.tCaseData[name];
+      if (name !== '' && d) {
+        var preview = [
+          '<a class="preview" href="#case_' + name + '">',
+            '<h5>' + d.text + '</h5>',
+            '<img data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
+          '</a>'
+        ].join('\n');
+        var dom = $(preview).data('case', name);
+
         block.attr({
           'data-year': d.year,
           'data-category': d.category
-        });
+        })
+        .append(dom);
       }
       block.append(formatCaseNumber(name)).appendTo(html);
     }
@@ -120,8 +129,8 @@
       conf.container.children('.tetris-block').each(function() {
         var $this = $(this);
         $this.css({
-          'left': $this.attr('data-left') + 'px',
-          'bottom': $this.attr('data-bottom') + 'px'
+          'left': $this.data('left'),
+          'bottom': $this.data('bottom')
         });
       });
     };
@@ -149,6 +158,7 @@
       blockStyle: 'tetris-block',
       cellStyle: 'tetris-cell',
       tetris: [],
+      tCaseData: {},
       height: 500,
       standard: 10,
       speed: 100

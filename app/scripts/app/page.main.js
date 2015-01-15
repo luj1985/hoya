@@ -59,6 +59,7 @@ $(function() {
   var tetris = container.tetris({
     container: container,
     tetris: tetrisDefs,
+    tCaseData: CASEDICT,
     height: height,
     standard: width / 12,
     speed: ANIMATE.c
@@ -85,12 +86,13 @@ $(function() {
   $.PAGES["_load_main"] = function() {
     $.switchPage('main', function() {
       if (!PAGE_INITED['main']) {
-        tetris.start(function() { $.loading(false); });
+        tetris.start(function() { 
+          $.loading(false); 
+        });
         PAGE_INITED['main'] = true;
       }
     });
   }
-
 
   $('nav.category .item').on('click', function(e) {
     e.preventDefault();
@@ -115,23 +117,7 @@ $(function() {
     container.find('.tetris-block[data-category="' + category + '"]').removeClass('disabled');
   });
 
-  $('#tetris .tetris-cell').on('click', '.preview', function(e) {
-    $(this).remove();
-  });
-
-  $('#tetris .tetris-cell').on('click', function(e) {
-    var cell = $(this);
-    var name = cell.data('case');
-    var d = CASEDICT[name];
-
-    if ($('.preview', cell).length === 0) {
-      var preview = [
-        '<a class="preview" href="#case_' + name + '">',
-          '<h5>' + d.text + '</h5>',
-          '<img src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
-        '</a>'
-      ].join('\n');
-      cell.append(preview);
-    } 
+  $('#tetris .tetris-cell').on('touchstart click', function(e) {
+    e.stopPropagation(); 
   });
 });
