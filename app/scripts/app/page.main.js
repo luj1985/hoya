@@ -51,17 +51,17 @@ $(function() {
   });
 
   // screen width;
-  var width = $(window).width(),
-      height = $(window).height();
+  var SCREEN_WIDTH = $(window).width(),
+      SCREEN_HEIGHT = $(window).height();
 
-  width = width > 480 ? 480 : width; 
+  var TETRIS_WIDTH = SCREEN_WIDTH > 480 ? 480 : SCREEN_WIDTH; 
   var container = $('#tetris');
   var tetris = container.tetris({
     container: container,
     tetris: tetrisDefs,
     tCaseData: CASEDICT,
-    height: height,
-    standard: width / 12,
+    height: SCREEN_HEIGHT,
+    standard: TETRIS_WIDTH / 12,
     speed: ANIMATE.c
   });
 
@@ -117,7 +117,49 @@ $(function() {
     container.find('.tetris-block[data-category="' + category + '"]').removeClass('disabled');
   });
 
-  $('#tetris .tetris-cell').on('touchstart click', function(e) {
+  var CONTENT_HEIGHT = CONTENT_WIDTH = 8 * 16;
+
+  $('#tetris .tetris-cell').on('click', function(e) {
+    var cell = $(this);
+    var name = cell.data('case');
+    var d = CASEDICT[name];
+    if (d) {
+      var width = cell.width(),
+          height = cell.height();
+      var offset = cell.offset();
+      var centerX = offset.left + (width / 2),
+          centerY = offset.top + (height / 2);
+
+      var preview = [
+        '<a class="preview" href="#case_' + name + '">',
+          '<h5>' + d.text + '</h5>',
+          '<img src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
+        '</a>'
+      ].join('\n');
+
+      var left = centerX - (CONTENT_WIDTH / 2);
+      var top = centerY - (CONTENT_HEIGHT / 2);
+
+      left = left < 0 ? 0 : left;
+      top = top < 0 ? 0 : top;
+      left = (left + CONTENT_WIDTH) > SCREEN_WIDTH ? (SCREEN_WIDTH - CONTENT_WIDTH) : left;
+      top = (top + CONTENT_HEIGHT) > SCREEN_HEIGHT ? (SCREEN_HEIGHT - CONTENT_HEIGHT) : top;
+
+
+      $('.highlight .content')
+        .html(preview).css({
+          left: left,
+          top: top
+        });
+      $('.highlight').addClass('show');
+    }
+    e.preventDefault();
     e.stopPropagation(); 
   });
+
+  $('.highlight').on('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation(); 
+    $(this).removeClass('show');
+  })
 });
