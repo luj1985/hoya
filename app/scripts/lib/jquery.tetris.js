@@ -1,188 +1,34 @@
 (function(window, $, undefined) {
+  'use strict';
 
-  function matrixPos(_case) {
-    var _matrix_pos = [];
-
-    switch (_case) {
-      case '11':
-        _matrix_pos = [
-          [0, 0], // left, top; x, y
-          [1, 0],
-          [0, 1],
-          [1, 1]
-        ];
-        break;
-      case '21':
-        _matrix_pos = [
-          [1, 0],
-          [0, 1],
-          [1, 1],
-          [2, 1]
-        ];
-        break;
-      case '22':
-        _matrix_pos = [
-          [0, 0],
-          [0, 1],
-          [1, 1],
-          [0, 2]
-        ];
-        break;
-      case '23':
-        _matrix_pos = [
-          [0, 0],
-          [1, 0],
-          [2, 0],
-          [1, 1]
-        ];
-        break;
-      case '24':
-        _matrix_pos = [
-          [1, 0],
-          [0, 1],
-          [1, 1],
-          [1, 2]
-        ];
-        break;
-      case '31':
-        _matrix_pos = [
-          [0, 0],
-          [0, 1],
-          [1, 1],
-          [2, 1]
-        ];
-        break;
-      case '32':
-        _matrix_pos = [
-          [0, 0],
-          [1, 0],
-          [0, 1],
-          [0, 2]
-        ];
-        break;
-      case '33':
-        _matrix_pos = [
-          [0, 0],
-          [1, 0],
-          [2, 0],
-          [2, 1]
-        ];
-        break;
-      case '34':
-        _matrix_pos = [
-          [1, 0],
-          [1, 1],
-          [0, 2],
-          [1, 2]
-        ];
-        break;
-      case '41':
-        _matrix_pos = [
-          [2, 0],
-          [0, 1],
-          [1, 1],
-          [2, 1]
-        ];
-        break;
-      case '42':
-        _matrix_pos = [
-          [0, 0],
-          [0, 1],
-          [0, 2],
-          [1, 2]
-        ];
-        break;
-      case '43':
-        _matrix_pos = [
-          [0, 0],
-          [1, 0],
-          [2, 0],
-          [0, 1]
-        ];
-        break;
-      case '44':
-        _matrix_pos = [
-          [0, 0],
-          [1, 0],
-          [1, 1],
-          [1, 2]
-        ];
-        break;
-      case '51':
-        _matrix_pos = [
-          [1, 0],
-          [0, 1],
-          [1, 1],
-          [0, 2]
-        ];
-        break;
-      case '52':
-        _matrix_pos = [
-          [0, 0],
-          [1, 0],
-          [1, 1],
-          [2, 1]
-        ];
-        break;
-      case '61':
-        _matrix_pos = [
-          [0, 0],
-          [0, 1],
-          [1, 1],
-          [1, 2]
-        ];
-        break;
-      case '62':
-        _matrix_pos = [
-          [1, 0],
-          [2, 0],
-          [0, 1],
-          [1, 1]
-        ];
-        break;
-      case '71':
-        _matrix_pos = [
-          [0, 1],
-          [0, 2],
-          [0, 3],
-          [0, 4]
-        ];
-        break;
-      case '72':
-        _matrix_pos = [
-          [1, 0],
-          [2, 0],
-          [3, 0],
-          [4, 0]
-        ];
-        break;
-      case '81':
-        _matrix_pos = [
-          [0, 1],
-          [0, 2],
-          [0, 3],
-          [0, 4],
-          [0, 5]
-        ];
-        break;
-      case '82':
-        _matrix_pos = [
-          [1, 0],
-          [2, 0],
-          [3, 0],
-          [4, 0],
-          [5, 0]
-        ];
-        break;
-      default:
-        _matrix_pos = [];
-    }
-    return _matrix_pos;
-  }
-
+  var SHAPES = {
+    '11': [ [0, 0], [1, 0], [0, 1], [1, 1] ],
+    '21': [ [1, 0], [0, 1], [1, 1], [2, 1] ],
+    '22': [ [0, 0], [0, 1], [1, 1], [0, 2] ],
+    '23': [ [0, 0], [1, 0], [2, 0], [1, 1] ],
+    '24': [ [1, 0], [0, 1], [1, 1], [1, 2] ],
+    '31': [ [0, 0], [0, 1], [1, 1], [2, 1] ],
+    '32': [ [0, 0], [1, 0], [0, 1], [0, 2] ],
+    '33': [ [0, 0], [1, 0], [2, 0], [2, 1] ],
+    '34': [ [1, 0], [1, 1], [0, 2], [1, 2] ],
+    '41': [ [2, 0], [0, 1], [1, 1], [2, 1] ],
+    '42': [ [0, 0], [0, 1], [0, 2], [1, 2] ],
+    '43': [ [0, 0], [1, 0], [2, 0], [0, 1] ],
+    '44': [ [0, 0], [1, 0], [1, 1], [1, 2] ],
+    '51': [ [1, 0], [0, 1], [1, 1], [0, 2] ],
+    '52': [ [0, 0], [1, 0], [1, 1], [2, 1] ],
+    '61': [ [0, 0], [0, 1], [1, 1], [1, 2] ],
+    '62': [ [1, 0], [2, 0], [0, 1], [1, 1] ],
+    '71': [ [0, 1], [0, 2], [0, 3], [0, 4] ],
+    '72': [ [1, 0], [2, 0], [3, 0], [4, 0] ],
+    '81': [ [0, 1], [0, 2], [0, 3], [0, 4], [0, 5] ],
+    '82': [ [1, 0], [2, 0], [3, 0], [4, 0], [5, 0] ]
+  };
 
   function formatCaseNumber(caseid) {
-    if (!caseid)  return '';
+    if (!caseid) {
+      return '';
+    }
 
     var html = '<div class="case">';
     var matches = caseid.match(/^([a-zA-Z])(\d+)$/);
@@ -212,12 +58,12 @@
         left: left,
         bottom: Math.round(bottom)
       });
-    var _case = tdata.shape + '' + tdata.orientation;
-    var _matrix_pos = matrixPos(_case);
+    var shapeId = tdata.shape + '' + tdata.orientation;
+    var shape = SHAPES[shapeId] || [];
 
-    for (var i = 0; i < _matrix_pos.length; i++) {
+    for (var i = 0; i < shape.length; i++) {
       var name = tdata.text[i] || '';
-      var pos = _matrix_pos[i];
+      var pos = shape[i];
       var block = $('<span>')
         .attr('class', conf.cellStyle)
         .attr('data-case', name)
@@ -277,7 +123,7 @@
               atype = parseInt(node.data('atype'), 10);
           node.delay(idx * delay).animate(easing[atype], fatime);
         });
-    }
+    };
 
     this.reset = function() {
       conf.container.children('.tetris-block').each(function() {
@@ -287,7 +133,7 @@
           'bottom': $this.attr('data-bottom') + 'px'
         });
       });
-    }
+    };
 
     this.init = function(callback) {
       $.each(conf.tetris, function(_, val) {
@@ -305,7 +151,7 @@
       });
       setTimeout(callback, conf.speed * conf.tetris.length);
     };
-  };
+  }
 
   $.fn.tetris = function(options) {
     options = $.extend({
@@ -318,5 +164,5 @@
       speed: 100
     }, options);
     return new Tetris(options);
-  }
+  };
 })(window, jQuery);
