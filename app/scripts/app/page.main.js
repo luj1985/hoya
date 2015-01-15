@@ -119,7 +119,7 @@ $(function() {
   });
 
   // 8rem;
-  var CONTENT_HEIGHT = CONTENT_WIDTH = 8 * 16;
+  var CONTENT_HEIGHT = CONTENT_WIDTH = 6 * 16;
 
   $('#tetris .tetris-cell').on('click', function(e) {
     var cell = $(this);
