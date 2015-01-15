@@ -3,6 +3,7 @@ $(function() {
   var ANIMATE = $.ANIMATE;
 
   $.PAGES["_load_about"] = function() {
+    $('nav.menu').empty();
     var tetris = $.PAGES.tetris;
     if (!PAGE_INITED['about']) {
       if (tetris) {

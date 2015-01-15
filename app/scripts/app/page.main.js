@@ -85,6 +85,7 @@ $(function() {
 
   $.PAGES["_load_main"] = function() {
     $.switchPage('main', function() {
+      $('nav.menu').empty();
       if (!PAGE_INITED['main']) {
         tetris.start(function() { 
           $.loading(false); 

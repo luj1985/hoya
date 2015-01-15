@@ -10,10 +10,6 @@ $(function() {
     var detail = CASEDETAILS[name];
 
     var html = '';
-    html += '<nav class="menu">'
-    html += '<a href="#main"><i class="md md-apps"></i></a>'
-    html += '</nav>';
-
     html += '<div class="gallery">';
     for (var i = 1, length = data.img; i <= length; i++) {
       if (i === 2) {
@@ -38,6 +34,7 @@ $(function() {
     page.empty();
     
     $.switchPage('case', function() {
+      $('nav.menu').html('<a href="#main"><i class="md md-apps"></i></a>');
       var cell = $('.tetris-cell[case="' + name + '"]');
       var bg = cell.css('background-color');
       var html = generateCasePage(name, bg);
