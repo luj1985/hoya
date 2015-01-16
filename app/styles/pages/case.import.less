@@ -19,12 +19,17 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
+    text-align: center;
 
     &.description {
       padding: 1rem;
       text-align: left;
       color: @hoya-white;
       white-space: normal;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      overflow-scrolling: touch;
       h3 {
         font-size: 2rem;
         margin-bottom: 1rem;
