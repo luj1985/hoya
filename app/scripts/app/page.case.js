@@ -5,11 +5,23 @@ $(function() {
 
   CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
 
-  function generateCasePage(name, bg) {
+  function findColorDef(name) {
+    for(var i = 0, length = CASES.length; i < length; i++) {
+      var c = CASES[i];
+      var arr = c[2];
+      if (arr.indexOf(name) > -1) {
+        return c[0];
+      }
+    }
+    return '';
+  }
+
+  function generateCasePage(name) {
     var data = CASEDICT[name];
     var detail = CASEDETAILS[name];
     var html = '';
     var cnt = 0;
+    var bg = findColorDef(name);
     html += '<div class="gallery">';
     for (var i = 1, length = data.img; i <= length; i++) {
       if (i === 2) {
@@ -39,9 +51,7 @@ $(function() {
     
     $.switchPage('case', function() {
       $('nav.menu').html('<a href="#main"><i class="md md-apps"></i></a>');
-      var cell = $('.tetris-cell[case="' + name + '"]');
-      var bg = cell.css('background-color');
-      var content = generateCasePage(name, bg);
+      var content = generateCasePage(name);
       page.html(content);
     });
   };

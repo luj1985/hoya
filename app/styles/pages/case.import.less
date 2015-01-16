@@ -1,43 +1,41 @@
 #case.page {
-  padding: 1rem 0;
+  padding: 0;
+  overflow-y: hidden;
 }
 
 .gallery {
   position: relative;
-  top: 0;
-  overflow-x: scroll;
-  height: 100%;
-  overflow: auto;
   display: block;
+  top: 0;
+  height: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
   white-space: nowrap;
 
   .slide {
-    width: 320px;
-    height: 432px;
     display: inline-block;
     height: 100%;
     width: 100%;
-    background-color: @hoya-background;
-    z-index: 2;
-    text-align: center;
-    overflow: auto;
-
-    &.image:before {
-      content: "";
-      display: inline-block;
-      height: 100%;
-      vertical-align: middle;
-      margin: 0;
-      padding: 0;
-    }
+    overflow: hidden;
 
     &.description {
       padding: 1rem;
       text-align: left;
+      color: @hoya-white;
+      white-space: normal;
+      h3 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      p {
+        font-size: 1rem;
+        line-height: 2rem;
+      }
     }
 
     img {
-      vertical-align: middle;
       max-width: 100%;
       max-height: 100%;
     }
