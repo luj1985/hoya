@@ -4,6 +4,7 @@ header {
   width: 100%;
   height: @header-height;
   box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+  z-index: 1;
 }
 
 section {
@@ -46,10 +47,12 @@ section {
   overflow-y: auto;
   opacity: 0;
   transition: opacity .2s ease;
+  z-index: -1;
 
   &.active {
     visibility: visible;
     opacity: 1;
+    z-index: 0;
   }
 }
 

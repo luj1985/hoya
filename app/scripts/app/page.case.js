@@ -1,7 +1,6 @@
 $(function() {
   var PAGE_INITED = $.PAGE_INITED;
   var PAGES = $.PAGES;
-  var ANIMATE = $.ANIMATE;
 
   CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
 
@@ -32,7 +31,7 @@ $(function() {
         html += '</div>\n';
         cnt++;
       }
-      html += '<div class="slide"><img src="images/case/' + name + '/' + i + '.jpg"></div>\n';
+      html += '<div class="slide image"><img src="images/image-loader.gif" data-src="images/case/' + name + '/' + i + '.jpg"></div>\n';
       cnt++;
     }
     html += '</div>';
@@ -50,6 +49,10 @@ $(function() {
     page.empty();
     
     $.switchPage('case', function() {
+      var tetris = $.PAGES.tetris;
+      if (tetris) {
+        tetris.reset();
+      }
       $('nav.menu').html('<a href="#home"><i class="md md-apps"></i></a>');
       var content = generateCasePage(name);
       content.find('.slide:first').addClass('active');
