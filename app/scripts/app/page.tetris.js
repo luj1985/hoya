@@ -1,6 +1,5 @@
 $(function() {
   var PAGE_INITED = $.PAGE_INITED;
-  var ANIMATE = $.ANIMATE;
 
   var tetrisDefs = $.map(CASES, function(t) {
     return {
@@ -21,13 +20,8 @@ $(function() {
       SCREEN_HEIGHT = $(window).height();
 
   var container = $('#tetris');
-  var tetrisWidth = container.width();
-  tetrisWidth = tetrisWidth > 480 ? 480 : tetrisWidth; 
   var tetris = container.tetris({
-    tetris: tetrisDefs,
-    height: SCREEN_HEIGHT,
-    standard: tetrisWidth / 12,
-    speed: ANIMATE.c
+    tetris: tetrisDefs
   });
 
   $.PAGES.tetris = tetris;

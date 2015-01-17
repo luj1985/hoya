@@ -152,13 +152,18 @@
       return tetris;
     }
 
+    var width = this.width(),
+        height = $(window).height();
+
+    width = width > 480 ? 480 : width;     
+
     options = $.extend({
       blockStyle: 'tetris-block',
       cellStyle: 'tetris-cell',
       tetris: [],
-      height: 500,
-      standard: 10,
-      speed: 100
+      height: height,
+      standard: width / 12,
+      speed: 222
     }, options);
     tetris = new Tetris(this, options);
 
