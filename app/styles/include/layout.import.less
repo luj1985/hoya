@@ -16,10 +16,16 @@ header {
   bottom: 0;
   width: 100%;
   display: none;
+  visibility: hidden;
   overflow-x: hidden;
   overflow-y: auto;
+  opacity: 0;
+  .transition(all .2s ease);
+
   &.active {
     display: block;
+    visibility: visible;
+    opacity: 1;
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
   }
