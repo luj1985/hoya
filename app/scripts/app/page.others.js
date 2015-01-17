@@ -8,7 +8,7 @@ $(function() {
     PAGES['_load_' + val] = function() {
       $.switchPage(val, function() {
         $('nav.menu').html(
-          '<a href="#main"><i class="md md-apps"></i></a>' +
+          '<a href="#tetris"><i class="md md-apps"></i></a>' +
           '<a href="#about"><i class="md md-menu"></i></a>'
         );
         PAGE_INITED[val] = true;

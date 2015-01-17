@@ -48,14 +48,14 @@ $(function() {
 
   $.PAGES.tetris = tetris;
 
-  $.PAGES["_load_main"] = function() {
-    $.switchPage('main', function() {
+  $.PAGES["_load_tetris"] = function() {
+    $.switchPage('tetris', function() {
       $('nav.menu').empty();
-      if (!PAGE_INITED['main']) {
+      if (!PAGE_INITED['tetris']) {
         tetris.start(function() { 
           $.loading(false); 
         });
-        PAGE_INITED['main'] = true;
+        PAGE_INITED['tetris'] = true;
       }
     });
   }

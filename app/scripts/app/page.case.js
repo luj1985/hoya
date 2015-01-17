@@ -50,7 +50,7 @@ $(function() {
     page.empty();
     
     $.switchPage('case', function() {
-      $('nav.menu').html('<a href="#main"><i class="md md-apps"></i></a>');
+      $('nav.menu').html('<a href="#tetris"><i class="md md-apps"></i></a>');
       var content = generateCasePage(name);
       page.html(content);
     });
