@@ -23,17 +23,6 @@ $(function() {
     tetris: tetrisDefs
   });
 
-  $.PAGES.tetris = tetris;
-
-  $.PAGES["_load_home"] = function() {
-    $.switchPage('home', function() {
-      $('nav.menu').empty();
-      tetris.start(function() { 
-        $.loading(false); 
-      });
-    });
-  }
-
   $('nav.category .item').on('click', function(e) {
     e.preventDefault();
     $(this).toggleClass('active');

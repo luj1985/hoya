@@ -14,7 +14,6 @@
     });
   }
 
-  $.PAGES = {};
   $.switchPage = switchPage;
 
 })(window, jQuery);
