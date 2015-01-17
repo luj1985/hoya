@@ -1,0 +1,28 @@
+#team {
+  .names {
+    float: left;
+    display: inline;
+    width: 4rem;
+    li {
+      list-style: none;
+      a {
+        color: #ACACAC;
+        font-size: .8rem;
+      }
+      &.active {
+        a {
+          font-size: 1rem;
+          color: @hoya-black;
+        }
+      }
+    }
+  }
+
+  article {
+    overflow: hidden;
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+}
