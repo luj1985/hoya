@@ -1,17 +1,17 @@
 (function(window, $, undefined) {
   'use strict';
 
-  function switchPage(id, callback) {
+  function switchPage(id, initializer) {
+    initializer && initializer();
     $('.page').each(function() {
       var page = $(this);
       if (page.attr('id') === id) {
+        page.find('img').imageloader();
         page.addClass('active');
-        $('img', page).imageloader();
       } else {
         page.removeClass('active');
       }
     });
-    callback && callback();
   }
 
   $.PAGES = {};
