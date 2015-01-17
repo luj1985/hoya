@@ -2,14 +2,22 @@
   padding: 0;
   text-align: center;
 }
+nav.category {
+  position: absolute;
+  left: 0;
+  top: 0;
+  > ul > li {
+    padding: 0 1rem;
+  }
+}
 
 #tetris {
-  position: absolute;
+  position: relative;
   display: block;
   width: 100%;
   max-width: 480px;
-  top: 3rem;
-  bottom: 0;
+  height: 100%;
+  margin: 0 auto;
   overflow: hidden;
 }
 
