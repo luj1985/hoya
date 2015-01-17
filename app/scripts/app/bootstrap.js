@@ -7,19 +7,6 @@ $(function() {
 
   CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
 
-  function switchPage(id, initializer) {
-    initializer && initializer();
-    $('.page').each(function() {
-      var page = $(this);
-      if (page.attr('id') === id) {
-        page.find('img').imageloader();
-        page.addClass('active');
-      } else {
-        page.removeClass('active');
-      }
-    });
-  }
-
   function findColorDef(name) {
     for(var i = 0, length = CASES.length; i < length; i++) {
       var c = CASES[i];
@@ -29,6 +16,18 @@ $(function() {
       }
     }
     return '';
+  }
+
+  function switchPage(id, initializer) {
+    initializer && initializer();
+    $('.page').each(function() {
+      var page = $(this);
+      if (page.attr('id') === id) {
+        page.find('img').imageloader().end().addClass('active');
+      } else {
+        page.removeClass('active');
+      }
+    });
   }
 
   function generateCasePage(name) {

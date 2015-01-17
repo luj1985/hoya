@@ -126,14 +126,19 @@
       };
 
       var step = Math.round(conf.height * SCALE);
-      container.children('.tetris-block').addClass('drop').css({
-        'transition-delay': function(i) {
-          return Math.round(i * conf.speed * 0.93) + 'ms';
-        },
-        'bottom': function(i, v) {
-          return $(this).data('bottom');
-        }
-      }).transitionend(callback);
+      container.children('.tetris-block')
+        .removeClass('fly')
+        .removeClass('reset')
+        .addClass('drop')
+        .css({
+          'transition-delay': function(i) {
+            return Math.round(i * conf.speed * 0.93) + 'ms';
+          },
+          'bottom': function(i, v) {
+            return $(this).data('bottom');
+          }
+        })
+        .transitionend(callback);
       finished = true;
     };
 
@@ -141,7 +146,7 @@
       container.children('.tetris-block')
         .removeClass('drop')
         .removeClass('fly')
-        .css('transition', 'none')
+        .addClass('reset')
         .each(function() {
           var $this = $(this);
           $(this).css({
@@ -160,7 +165,9 @@
 
       container.children('.tetris-block')
         .removeClass('drop')
-        .addClass('fly').each(function() {
+        .removeClass('reset')
+        .addClass('fly')
+        .each(function() {
           var node = $(this);
           var idx = node.data('aidx'),
               atype = parseInt(node.data('atype')) - 1;
