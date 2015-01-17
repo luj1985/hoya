@@ -20,12 +20,13 @@ $(function() {
   var SCREEN_WIDTH = $(window).width(),
       SCREEN_HEIGHT = $(window).height();
 
-  var TETRIS_WIDTH = SCREEN_WIDTH > 480 ? 480 : SCREEN_WIDTH; 
   var container = $('#tetris');
+  var tetrisWidth = container.width();
+  tetrisWidth = tetrisWidth > 480 ? 480 : tetrisWidth; 
   var tetris = container.tetris({
     tetris: tetrisDefs,
     height: SCREEN_HEIGHT,
-    standard: TETRIS_WIDTH / 12,
+    standard: tetrisWidth / 12,
     speed: ANIMATE.c
   });
 
