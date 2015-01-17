@@ -123,33 +123,31 @@
     };
 
     this.reset = function() {
-      container.children('.tetris-block')
-        .each(function() {
-          var $this = $(this);
-          $(this).css({
-            'left': $this.data('left'),
-            'bottom': $this.data('bottom')
-          });
-      });
+      container.children('.tetris-block').removeClass('drop');
     };
 
     this.flyAway = function(fatime, delay) {
       var width = $(window).width(),
-          height = $(window).height(),
-          easing = ['0', 
-            { 'left': ['+=' + width + 'px', 'easeInQuad'] }, 
-            { 'bottom': ['-=' + height + 'px', 'easeInQuad'] }, 
-            { 'left': ['-=' + width + 'px', 'easeInQuad'] }, 
-            { 'bottom': ['+=' + width + 'px', 'easeInQuad'] }
-          ];
+          height = $(window).height();
+
+      var easing = [
+        { 'left':   function(i, v) { return (parseInt(v) + width) + 'px'; }},
+        { 'bottom': function(i, v) { return (parseInt(v) + height) + 'px'; }},
+        { 'left':   function(i, v) { return (parseInt(v) - width) + 'px'; }},
+        { 'bottom': function(i, v) { return (parseInt(v) - height) + 'px'; }}
+      ];
 
       container.children('.tetris-block')
-        .stop(true, true)
+        .removeClass('drop')
+        .addClass('fly')
         .each(function() {
           var node = $(this);
           var idx = node.data('aidx'),
               atype = parseInt(node.data('atype'), 10);
-          node.delay(idx * delay).animate(easing[atype], fatime);
+          node.css('transition-delay', (idx * delay) + 'ms');
+          var animate = easing[atype - 1];
+          console.log(animate);
+          node.css(animate);
         });
     };
   }

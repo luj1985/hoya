@@ -30,6 +30,12 @@ nav.category {
     .transition-duration(500ms);
     .transition-property(bottom);
   }
+
+  &.fly {
+    .transition-timing-function(cubic-bezier(0.550, 0.085, 0.680, 0.530));
+    .transition-duration(100ms);
+    .transition-property(left, bottom);
+  }
 }
 
 .tetris-cell {
