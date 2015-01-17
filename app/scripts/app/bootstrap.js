@@ -19,14 +19,11 @@ $(function() {
 
     if (!PAGE_INITED['about']) {
       if (tetris) {
-        tetris.flyAway(ANIMATE.a, ANIMATE.b);
-        // setTimeout(function() {
-        //   $.switchPage('about', function() {
-        //     tetris.reset();
-        //   });
-        // }
-        // // , tetris.tetris.length * ANIMATE.b
-        // );
+        tetris.flyAway(function() {
+          $.switchPage('about', function() {
+            tetris.reset();
+          });
+        });
       } else {
         $.switchPage('about');
       }

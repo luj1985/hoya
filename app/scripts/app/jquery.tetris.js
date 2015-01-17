@@ -109,24 +109,28 @@
 
     this.start = function(callback) {
       var step = Math.round(conf.height * SCALE);
-      container.children('.tetris-block')
-        .addClass('drop')
-        .css({
-          'transition-delay': function(i) {
-            return Math.round(i * conf.speed * 0.93) + 'ms';
-          },
-          'bottom': function(i, v) {
-            return (parseInt(v) - step) + 'px';
-          }
-        });
-      setTimeout(callback, conf.speed * conf.tetris.length);
+      var blocks = container.children('.tetris-block');
+      var length = blocks.length, count = 0;
+      blocks.addClass('drop').css({
+        'transition-delay': function(i) {
+          return Math.round(i * conf.speed * 0.93) + 'ms';
+        },
+        'bottom': function(i, v) {
+          return (parseInt(v) - step) + 'px';
+        }
+      }).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
+        if (++count === length) {
+          callback && callback();
+        }
+      });
     };
 
     this.reset = function() {
       container.children('.tetris-block').removeClass('drop');
     };
 
-    this.flyAway = function(fatime, delay) {
+    this.flyAway = function(callback) {
+      var fatime = 100, delay = 80;
       var width = $(window).width(),
           height = $(window).height();
 
@@ -137,18 +141,21 @@
         { 'bottom': function(i, v) { return (parseInt(v) - height) + 'px'; }}
       ];
 
-      container.children('.tetris-block')
-        .removeClass('drop')
-        .addClass('fly')
-        .each(function() {
-          var node = $(this);
-          var idx = node.data('aidx'),
-              atype = parseInt(node.data('atype'), 10);
-          node.css('transition-delay', (idx * delay) + 'ms');
-          var animate = easing[atype - 1];
-          console.log(animate);
-          node.css(animate);
-        });
+      var blocks = container.children('.tetris-block').removeClass('drop');
+
+      var length = blocks.length, count = 0;
+
+      blocks.addClass('fly').each(function() {
+        var node = $(this);
+        var idx = node.data('aidx'),
+            atype = parseInt(node.data('atype'), 10);
+        node.css('transition-delay', (idx * delay) + 'ms');
+        node.css(easing[atype - 1]);
+      }).bind("transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd", function(){ 
+        if (++count === length) {
+          callback && callback();
+        }
+      });
     };
   }
 
