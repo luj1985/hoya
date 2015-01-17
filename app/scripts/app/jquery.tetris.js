@@ -63,7 +63,7 @@
     if (d) {
       cell.attr({
         'data-year': d.year,
-        'data-category': d.category
+        'data-category': d.category,
       })
     }
     cell.append(formatCaseNumber(name))
@@ -82,7 +82,9 @@
         bottom: Math.round(bottom)
       }).data({
         'aidx': def.aIndex,
-        'atype': def.aType
+        'atype': def.aType,
+        'left': left + 'px',
+        'bottom': Math.round(bottom - conf.height * SCALE) + 'px',
       });
 
     var shapeId = def.shape + '' + def.orientation;
@@ -114,13 +116,22 @@
           return Math.round(i * conf.speed * 0.93) + 'ms';
         },
         'bottom': function(i, v) {
-          return (parseInt(v) - step) + 'px';
+          return $(this).data('bottom');
         }
       }).transitionend(callback);
     };
 
     this.reset = function() {
-      container.children('.tetris-block').removeClass('drop');
+      container.children('.tetris-block')
+        .removeClass('drop')
+        .removeClass('fly')
+        .each(function() {
+          var $this = $(this);
+          $(this).css({
+            'left': $this.data('left'),
+            'bottom': $this.data('bottom')
+          });
+      });
     };
 
     this.flyAway = function(callback) {
@@ -150,9 +161,7 @@
 
   $.fn.tetris = function(options) {
     var tetris = this.data('tetris');
-    if (tetris) {
-      return tetris;
-    }
+    if (tetris) { return tetris; }
 
     var width = this.width(),
         height = $(window).height();
