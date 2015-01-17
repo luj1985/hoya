@@ -7,9 +7,7 @@ $(function() {
     var name = $(this).attr('id');
     PAGE_INITED[name] = false;
   });
-
-  var STATIC_PAGES = ['survey', 'culture', 'team', 'list', 'research', 'honor', 'media', 'recruit', 'contact'];
-
+  
   var DEFAULT_MENU_HTML = [
     '<a href="#tetris"><i class="md md-apps"></i></a>',
     '<a href="#about"><i class="md md-menu"></i></a>'
