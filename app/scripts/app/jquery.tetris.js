@@ -43,11 +43,38 @@
     return html;
   }
 
+  function generateCell(name, pos, tdata, size) {
+    var cell = $('<span>')
+      .attr('class', 'tetris-cell')
+      .attr('data-case', name)
+      .css({
+        'color' : tdata.textColor,
+        'background-color': tdata.bgColor,
+        'top': pos[1] * size + 'px',
+        'left': pos[0] * size + 'px',
+        'height': size + 'px',
+        'width': size + 'px',
+        // exclude 1px border and 1px padding
+        'font-size' : ((size - 4) / 3) + 'px',
+        'line-height': (size / 3) + 'px'
+      });
+
+    var d = CASEDICT[name];
+    if (d) {
+      cell.attr({
+        'data-year': d.year,
+        'data-category': d.category
+      })
+    }
+    cell.append(formatCaseNumber(name))
+    return cell;
+  }
+
   function generateBlock(container, conf, tdata) {
     var size = conf.standard;
     var bottom = (conf.height * 1.3 + tdata.y * size);
     var left = tdata.x * size;
-    var html = $('<div>')
+    var block = $('<div>')
       .attr('class', conf.blockStyle)
       .css({
         left: left,
@@ -64,36 +91,39 @@
     for (var i = 0; i < shape.length; i++) {
       var name = tdata.text[i] || '';
       var pos = shape[i];
-      var block = $('<span>')
-        .attr('class', conf.cellStyle)
-        .attr('data-case', name)
-        .css({
-          'color' : tdata.textColor,
-          'background-color': tdata.bgColor,
-          'top': pos[1] * size + 'px',
-          'left': pos[0] * size + 'px',
-          'height': size + 'px',
-          'width': size + 'px',
-          // exclude 1px border and 1px padding
-          'font-size' : ((size - 4) / 3) + 'px',
-          'line-height': (size / 3) + 'px'
-        });
-
-      var d = conf.tCaseData[name];
-      if (d) {
-        block.attr({
-          'data-year': d.year,
-          'data-category': d.category
-        })
-      }
-      block.append(formatCaseNumber(name)).appendTo(html);
+      var cell = generateCell(name, pos, tdata, size);
+      block.append(cell);
     }
-    container.append(html);
+    container.append(block);
   }
 
   function Tetris(container, conf) {
 
-    this.tetris = conf.tetris;
+    this.init = function() {
+      $.each(conf.tetris, function(_, val) {
+        generateBlock(container, conf, val);
+      });
+      return this;
+    };
+
+    this.start = function(callback) {
+      var step = Math.round(conf.height * 1.3);
+      container.children('.tetris-block').each(function(i) {
+        $(this).delay(i * conf.speed * 0.93)
+          .animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
+      });
+      setTimeout(callback, conf.speed * conf.tetris.length);
+    };
+
+    this.reset = function() {
+      container.children('.tetris-block').each(function() {
+        var $this = $(this);
+        $(this).css({
+          'left': $this.data('left'),
+          'bottom': $this.data('bottom')
+        });
+      });
+    };
 
     this.flyAway = function(fatime, delay) {
       var width = $(window).width(),
@@ -114,45 +144,25 @@
           node.delay(idx * delay).animate(easing[atype], fatime);
         });
     };
-
-    this.reset = function() {
-      container.children('.tetris-block').each(function() {
-        var $this = $(this);
-        $(this).css({
-          'left': $this.data('left'),
-          'bottom': $this.data('bottom')
-        });
-      });
-    };
-
-    this.init = function(callback) {
-      $.each(conf.tetris, function(_, val) {
-        generateBlock(container, conf, val);
-      });
-      callback && callback();
-      return this;
-    };
-
-    this.start = function(callback) {
-      var step = Math.round(conf.height * 1.3);
-      container.children('.tetris-block').each(function(i) {
-        $(this).delay(i * conf.speed * 0.93)
-          .animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
-      });
-      setTimeout(callback, conf.speed * conf.tetris.length);
-    };
   }
 
   $.fn.tetris = function(options) {
+    var tetris = this.data('tetris');
+    if (tetris) {
+      return tetris;
+    }
+
     options = $.extend({
       blockStyle: 'tetris-block',
       cellStyle: 'tetris-cell',
       tetris: [],
-      tCaseData: {},
       height: 500,
       standard: 10,
       speed: 100
     }, options);
-    return new Tetris(this, options);
+    tetris = new Tetris(this, options);
+
+    this.data('tetris', tetris);
+    return tetris.init();
   };
 })(window, jQuery);

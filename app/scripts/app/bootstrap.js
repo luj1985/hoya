@@ -24,7 +24,9 @@ $(function() {
           $.switchPage('about', function() {
             tetris.reset();
           });
-        }, tetris.tetris.length * ANIMATE.b);
+        }
+        // , tetris.tetris.length * ANIMATE.b
+        );
       } else {
         $.switchPage('about');
       }

@@ -24,26 +24,9 @@ $(function() {
   var container = $('#tetris');
   var tetris = container.tetris({
     tetris: tetrisDefs,
-    tCaseData: CASEDICT,
     height: SCREEN_HEIGHT,
     standard: TETRIS_WIDTH / 12,
     speed: ANIMATE.c
-  });
-
-  tetris.init(function() {
-    $.loadimg(container.find('img[data-src]'), false, function() {
-      container.find('img[data-src]').each(function() {
-        $(this).attr('src', $(this).attr('data-src'));
-      });
-      $.loading(false);
-    }, function() {
-      setTimeout(function() {
-        container.find('img[data-src]').each(function() {
-          $(this).attr('src', $(this).attr('data-src'));
-        });
-        $.loading(false);
-      }, 22222);
-    });
   });
 
   $.PAGES.tetris = tetris;
