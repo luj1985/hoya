@@ -1,20 +1,15 @@
 (function(window, $, undefined) {
   'use strict';
-  
-  $.fn.classed = function(cls, predictor) {
-    this.each(function() {
-      var page = $(this);
-      if (predictor(page)) {
-        page.addClass(cls);
-      } else {
-        page.removeClass(cls);
-      }
-    });
-  }
 
   function switchPage(id, callback) {
-    $('.page').classed('active', function(page) {
-      return page.attr('id') === id;
+    $('.page').each(function() {
+      var page = $(this);
+      if (page.attr('id') === id) {
+        page.addClass('active');
+        $('img', page).imageloader();
+      } else {
+        page.removeClass('active');
+      }
     });
     callback && callback();
   }
