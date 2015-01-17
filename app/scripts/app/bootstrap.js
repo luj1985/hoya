@@ -7,6 +7,19 @@ $(function() {
 
   CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
 
+  function switchPage(id, initializer) {
+    initializer && initializer();
+    $('.page').each(function() {
+      var page = $(this);
+      if (page.attr('id') === id) {
+        page.find('img').imageloader();
+        page.addClass('active');
+      } else {
+        page.removeClass('active');
+      }
+    });
+  }
+
   function findColorDef(name) {
     for(var i = 0, length = CASES.length; i < length; i++) {
       var c = CASES[i];
@@ -41,7 +54,7 @@ $(function() {
   }
 
   function loadHome() {
-    $.switchPage('home', function() {
+    switchPage('home', function() {
       var tetris = $('#tetris').tetris();
       $('nav.menu').empty();
       tetris.start(function() { 
@@ -55,12 +68,12 @@ $(function() {
     var tetris = $('#tetris').tetris();
     if (tetris) {
       tetris.flyAway(function() {
-        $.switchPage('about', function() {
+        switchPage('about', function() {
           tetris.reset();
         });
       });
     } else {
-      $.switchPage('about');
+      switchPage('about');
     }
   }
 
@@ -72,8 +85,8 @@ $(function() {
     var page = $('#case');
     page.empty();
     
-    $.switchPage('case', function() {
-      var tetris = $.PAGES.tetris;
+    switchPage('case', function() {
+      var tetris = $('#tetris').tetris();
       if (tetris) { tetris.reset(); }
 
       $('nav.menu').html('<a href="#home"><i class="md md-apps"></i></a>');
@@ -91,20 +104,18 @@ $(function() {
     });
   }
 
-
   function dispatch(name, param) {
     switch (name) {
-      case 'home': loadHome(); break;
-      case 'about': loadAbout(); break;
+      case 'home': loadHome(param); break;
+      case 'about': loadAbout(param); break;
       case 'case': loadCase(param); break;
       default:
         // survey, culture, team, list, research, honor, media, recruit, contact
-        $.switchPage(name, function() {
+        switchPage(name, function() {
           $('nav.menu').html(DEFAULT_MENU_HTML);
         });
     }
   }
-
 
   $('#team .names').on('click', 'a', function(e) {
     e.preventDefault();
