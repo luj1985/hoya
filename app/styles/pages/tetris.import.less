@@ -1,12 +1,12 @@
 #home.page{
   padding: 0;
-  text-align: center;
 }
+
 nav.category {
   position: absolute;
   left: 0;
   top: 0;
-  > ul > li {
+  li {
     padding: 0 1rem;
   }
 }
@@ -15,8 +15,8 @@ nav.category {
   position: relative;
   display: block;
   width: 100%;
-  max-width: 480px;
   height: 100%;
+  max-width: 480px;
   margin: 0 auto;
   overflow: hidden;
 }
@@ -31,15 +31,11 @@ nav.category {
   height: 2rem;
   text-align: center;
   border: 1px solid white;
-  cursor: pointer;
 
   .case {
     position: absolute;
     padding: 1px;
     bottom: 0;
-    text-align: center;
-    vertical-align: bottom;
-    font-size: 100%;
     width: 100%;
     i {
       display: block;
@@ -51,7 +47,7 @@ nav.category {
     }
   }
 
-  &.disabled, &:empty {
-    cursor: auto;
+  &:not(:empty) {
+    cursor: pointer;
   }
 }
