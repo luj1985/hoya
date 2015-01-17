@@ -24,6 +24,16 @@
     '81': [ [0, 1], [0, 2], [0, 3], [0, 4], [0, 5] ],
     '82': [ [1, 0], [2, 0], [3, 0], [4, 0], [5, 0] ]
   };
+  var SCALE = 1.3,
+      SCREEN_WIDTH = $(window).width(),
+      SCREEN_HEIGHT = $(window).height();
+
+  var EASING = [
+    { 'left':   function(i, v) { return (parseInt(v) + SCREEN_WIDTH) + 'px'; }},
+    { 'bottom': function(i, v) { return (parseInt(v) + SCREEN_HEIGHT) + 'px'; }},
+    { 'left':   function(i, v) { return (parseInt(v) - SCREEN_WIDTH) + 'px'; }},
+    { 'bottom': function(i, v) { return (parseInt(v) - SCREEN_HEIGHT) + 'px'; }}
+  ];
 
   function formatCaseNumber(caseid) {
     if (!caseid) {
@@ -69,8 +79,6 @@
     cell.append(formatCaseNumber(name))
     return cell;
   }
-  var SCALE = 1.3;
-
   function generateBlock(conf, def) {
     var size = conf.standard;
     var bottom = (conf.height * SCALE + def.y * size);
@@ -134,26 +142,16 @@
       });
     };
 
+
     this.flyAway = function(callback) {
-      var fatime = 100, delay = 80;
-      var width = $(window).width(),
-          height = $(window).height();
-
-      var easing = [
-        { 'left':   function(i, v) { return (parseInt(v) + width) + 'px'; }},
-        { 'bottom': function(i, v) { return (parseInt(v) + height) + 'px'; }},
-        { 'left':   function(i, v) { return (parseInt(v) - width) + 'px'; }},
-        { 'bottom': function(i, v) { return (parseInt(v) - height) + 'px'; }}
-      ];
-
       container.children('.tetris-block')
         .removeClass('drop')
         .addClass('fly').each(function() {
           var node = $(this);
           var idx = node.data('aidx'),
-              atype = parseInt(node.data('atype'), 10);
-          node.css('transition-delay', (idx * delay) + 'ms');
-          node.css(easing[atype - 1]);
+              atype = parseInt(node.data('atype')) - 1;
+          node.css('transition-delay', (idx * 80) + 'ms');
+          node.css(EASING[atype]);
         })
         .transitionend(callback);
     };
@@ -163,14 +161,12 @@
     var tetris = this.data('tetris');
     if (tetris) { return tetris; }
 
-    var width = this.width(),
-        height = $(window).height();
-
+    var width = this.width();
     width = width > 480 ? 480 : width;     
 
     options = $.extend({
       tetris: [],
-      height: height,
+      height: SCREEN_HEIGHT,
       standard: width / 12,
       speed: 222
     }, options);
