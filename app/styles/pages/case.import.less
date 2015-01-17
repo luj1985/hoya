@@ -13,11 +13,20 @@
   white-space: nowrap;
 
   .slide {
-    display: inline-block;
+    position: absolute;
+    visibility: hidden;
     height: 100%;
     width: 100%;
     overflow: hidden;
     text-align: center;
+    opacity: 0;
+    transition: opacity .3s ease;
+
+    &.active {
+      display: block;
+      visibility: visible;
+      opacity: 1;
+    }
 
     &.description {
       padding: 1rem;

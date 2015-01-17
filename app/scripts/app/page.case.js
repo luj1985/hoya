@@ -32,7 +32,7 @@ $(function() {
         html += '</div>\n';
         cnt++;
       }
-      html += '<div class="slide image"><img src="images/case/' + name + '/' + i + '.jpg"></div>\n';
+      html += '<div class="slide"><img src="images/case/' + name + '/' + i + '.jpg"></div>\n';
       cnt++;
     }
     html += '</div>';
@@ -52,6 +52,17 @@ $(function() {
     $.switchPage('case', function() {
       $('nav.menu').html('<a href="#home"><i class="md md-apps"></i></a>');
       var content = generateCasePage(name);
+      content.find('.slide:first').addClass('active');
+      content.on('click', '.slide', function() {
+        var node = $(this),
+            next = node.next();
+        if (next.length === 0) {
+          next = content.find('.slide:first');
+        }
+
+        node.removeClass('active');
+        next.addClass('active');
+      })
       page.html(content);
     });
   };
