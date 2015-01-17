@@ -76,8 +76,12 @@ $(function() {
       // make content always stay in screen
       left = left < 0 ? 0 : left;
       top = top < 0 ? 0 : top;
-      left = (left + CONTENT_WIDTH) > SCREEN_WIDTH ? (SCREEN_WIDTH - CONTENT_WIDTH) : left;
-      top = (top + CONTENT_HEIGHT) > SCREEN_HEIGHT ? (SCREEN_HEIGHT - CONTENT_HEIGHT) : top;
+
+      maxLeft = (SCREEN_WIDTH - CONTENT_WIDTH);
+      maxTop = (SCREEN_HEIGHT - CONTENT_HEIGHT);
+
+      left = left > maxLeft ? maxLeft : left;
+      top = top > maxTop ? maxTop : top;
 
       var preview = [
         '<a class="preview" href="#case_' + name + '">',

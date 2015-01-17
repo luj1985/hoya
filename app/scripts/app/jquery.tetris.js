@@ -133,6 +133,7 @@
       container.children('.tetris-block')
         .removeClass('drop')
         .removeClass('fly')
+        .css('transition', 'none')
         .each(function() {
           var $this = $(this);
           $(this).css({

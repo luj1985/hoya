@@ -3,7 +3,7 @@ header {
   display: block;
   width: 100%;
   height: @header-height;
-  .box-shadow(0 2px 5px rgba(0,0,0,0.26));
+  box-shadow: 0 2px 5px rgba(0,0,0,0.26);
 }
 
 section {
@@ -45,7 +45,7 @@ section {
   overflow-x: hidden;
   overflow-y: auto;
   opacity: 0;
-  .transition(opacity .2s ease);
+  transition: opacity .2s ease;
 
   &.active {
     visibility: visible;

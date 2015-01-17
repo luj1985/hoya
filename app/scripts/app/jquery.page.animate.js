@@ -16,7 +16,6 @@
 
   $.PAGES = {};
   $.PAGE_INITED = {};
-  $.ANIMATE = { a: 100, b: 80, c: 222 };
   $.switchPage = switchPage;
 
 })(window, jQuery);
