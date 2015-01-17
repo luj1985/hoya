@@ -8,10 +8,10 @@
   display: block;
   top: 0;
   height: 100%;
-  overflow-x: scroll;
-  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   overflow-scrolling: touch;
+  overflow-x: auto;
+  overflow-y: hidden;
   white-space: nowrap;
 
   .slide {
@@ -26,12 +26,13 @@
       text-align: left;
       color: @hoya-white;
       white-space: normal;
-      overflow-y: scroll;
+      overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       overflow-scrolling: touch;
       h3 {
-        font-size: 2rem;
+        color: @hoya-white;
+        font-size: 1.5rem;
         margin-bottom: 1rem;
       }
       p {
