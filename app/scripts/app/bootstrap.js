@@ -2,18 +2,6 @@ $(function() {
   var PAGE_INITED = $.PAGE_INITED;
   var PAGES = $.PAGES;
 
-  
-  $.fn.classed = function(cls, predictor) {
-    this.each(function() {
-      var page = $(this);
-      if (predictor(page)) {
-        page.addClass(cls);
-      } else {
-        page.removeClass(cls);
-      }
-    });
-  }
-
   $('.page').each(function() {
     var name = $(this).attr('id');
     PAGE_INITED[name] = false;

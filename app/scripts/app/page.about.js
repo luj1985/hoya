@@ -5,6 +5,7 @@ $(function() {
   $.PAGES["_load_about"] = function() {
     $('nav.menu').empty();
     var tetris = $.PAGES.tetris;
+
     if (!PAGE_INITED['about']) {
       if (tetris) {
         tetris.flyAway(ANIMATE.a, ANIMATE.b);

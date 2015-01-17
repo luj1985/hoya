@@ -43,7 +43,7 @@
     return html;
   }
 
-  function generateBlock(conf, tdata) {
+  function generateBlock(container, conf, tdata) {
     var size = conf.standard;
     var bottom = (conf.height * 1.3 + tdata.y * size);
     var left = tdata.x * size;
@@ -88,16 +88,15 @@
       }
       block.append(formatCaseNumber(name)).appendTo(html);
     }
-    conf.container.append(html);
+    container.append(html);
   }
 
-  function Tetris(conf) {
+  function Tetris(container, conf) {
 
     this.tetris = conf.tetris;
 
     this.flyAway = function(fatime, delay) {
-      var container = conf.container,
-          width = $(window).width(),
+      var width = $(window).width(),
           height = $(window).height(),
           easing = ['0', 
             { 'left': ['+=' + width + 'px', 'easeInQuad'] }, 
@@ -117,9 +116,9 @@
     };
 
     this.reset = function() {
-      conf.container.children('.tetris-block').each(function() {
+      container.children('.tetris-block').each(function() {
         var $this = $(this);
-        $this.css({
+        $(this).css({
           'left': $this.data('left'),
           'bottom': $this.data('bottom')
         });
@@ -128,15 +127,15 @@
 
     this.init = function(callback) {
       $.each(conf.tetris, function(_, val) {
-        generateBlock(conf, val);
+        generateBlock(container, conf, val);
       });
-      callback();
+      callback && callback();
       return this;
     };
 
     this.start = function(callback) {
       var step = Math.round(conf.height * 1.3);
-      conf.container.children('.tetris-block').each(function(i) {
+      container.children('.tetris-block').each(function(i) {
         $(this).delay(i * conf.speed * 0.93)
           .animate({'bottom': ['-=' + step + 'px', 'easeOutExpo']}, conf.speed);
       });
@@ -154,6 +153,6 @@
       standard: 10,
       speed: 100
     }, options);
-    return new Tetris(options);
+    return new Tetris(this, options);
   };
 })(window, jQuery);

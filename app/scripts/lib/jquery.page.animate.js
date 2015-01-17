@@ -1,5 +1,16 @@
 (function(window, $, undefined) {
   'use strict';
+  
+  $.fn.classed = function(cls, predictor) {
+    this.each(function() {
+      var page = $(this);
+      if (predictor(page)) {
+        page.addClass(cls);
+      } else {
+        page.removeClass(cls);
+      }
+    });
+  }
 
   function switchPage(id, callback) {
     $('.page').classed('active', function(page) {

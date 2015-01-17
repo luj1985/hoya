@@ -23,7 +23,6 @@ $(function() {
   var TETRIS_WIDTH = SCREEN_WIDTH > 480 ? 480 : SCREEN_WIDTH; 
   var container = $('#tetris');
   var tetris = container.tetris({
-    container: container,
     tetris: tetrisDefs,
     tCaseData: CASEDICT,
     height: SCREEN_HEIGHT,
