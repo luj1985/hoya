@@ -3,43 +3,63 @@ header {
   display: block;
   width: 100%;
   height: @header-height;
-  z-index: 1;
   .box-shadow(0 2px 5px rgba(0,0,0,0.26));
-  .box-sizing(content-box);
+}
+
+section {
+  h3 {
+    color: @hoya-orange;
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+  }
+
+  article {
+    color: @hoya-content;
+    font-size: .9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5rem;
+
+    h4 {
+      color: @hoya-black;
+      margin: 8px 0 0 0;
+      font-size: 1.2rem;
+      font-weight: normal;
+    }
+
+    p {
+      font-size: .9rem;
+      line-height: 1rem;
+      margin: .4rem 0;
+    }
+  }
 }
 
 .page {
   position: absolute;
   top: @header-height;
-  z-index: 0;
-  padding: 1rem;
   bottom: 0;
   width: 100%;
+  padding: 1rem;
   display: none;
   visibility: hidden;
   overflow-x: hidden;
   overflow-y: auto;
   opacity: 0;
-  .transition(all .2s ease);
+  .transition(opacity .2s ease);
 
   &.active {
     display: block;
     visibility: visible;
     opacity: 1;
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
   }
 }
 
-.tetris-wrapper {
-  position: absolute;
-  overflow: hidden;
-  width: 100%;
-  top: 0;
-  bottom: 0;
-}
-
 footer {
+  text-align: center;
+  font-size: .8rem;
+  color: @hoya-light;
+  display: none;
   position: absolute;
   width: 100%;
   height: 0;
