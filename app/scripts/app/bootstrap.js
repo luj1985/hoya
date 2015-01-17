@@ -9,7 +9,7 @@ $(function() {
   });
   
   var DEFAULT_MENU_HTML = [
-    '<a href="#tetris"><i class="md md-apps"></i></a>',
+    '<a href="#home"><i class="md md-apps"></i></a>',
     '<a href="#about"><i class="md md-menu"></i></a>'
   ].join('');
 
@@ -55,7 +55,7 @@ $(function() {
   }
 
   $(window).on('hashchange', function(e) {
-    var hash = location.hash.replace('#', '') || 'tetris';
+    var hash = location.hash.replace('#', '') || 'home';
     var names = hash.split('_');
     var name = names[0], param = names[1];
     dispatch(name, param);
