@@ -1,12 +1,5 @@
 $(function() {
-  var PAGE_INITED = $.PAGE_INITED;
   var PAGES = $.PAGES;
-  var ANIMATE = $.ANIMATE;
-
-  $('.page').each(function() {
-    var name = $(this).attr('id');
-    PAGE_INITED[name] = false;
-  });
   
   var DEFAULT_MENU_HTML = [
     '<a href="#home"><i class="md md-apps"></i></a>',
@@ -16,18 +9,12 @@ $(function() {
   $.PAGES["_load_about"] = function() {
     $('nav.menu').empty();
     var tetris = $.PAGES.tetris;
-
-    if (!PAGE_INITED['about']) {
-      if (tetris) {
-        tetris.flyAway(function() {
-          $.switchPage('about', function() {
-            tetris.reset();
-          });
+    if (tetris) {
+      tetris.flyAway(function() {
+        $.switchPage('about', function() {
+          tetris.reset();
         });
-      } else {
-        $.switchPage('about');
-      }
-      PAGE_INITED['about'] = true;
+      });
     } else {
       $.switchPage('about');
     }

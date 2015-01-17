@@ -1,5 +1,4 @@
 $(function() {
-  var PAGE_INITED = $.PAGE_INITED;
   var PAGES = $.PAGES;
 
   CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
@@ -18,26 +17,23 @@ $(function() {
   function generateCasePage(name) {
     var data = CASEDICT[name];
     var detail = CASEDETAILS[name];
-    var html = '';
-    var cnt = 0;
+    var gallery = $('<div class="gallery">');
     var bg = findColorDef(name);
-    html += '<div class="gallery">';
+    var html = '';
     for (var i = 1, length = data.img; i <= length; i++) {
       if (i === 2) {
         html += '<div class="slide description" style="background-color:' + bg + '">';
         html += detail || '';
         html += '<br>';
         html += data.desc || ''
-        html += '</div>\n';
-        cnt++;
+        html += '</div>';
       }
-      html += '<div class="slide image"><img src="images/image-loader.gif" data-src="images/case/' + name + '/' + i + '.jpg"></div>\n';
-      cnt++;
+      html += '<div class="slide image">';
+      html += '<img src="images/image-loader.gif" data-src="images/case/' + name + '/' + i + '.jpg">';
+      html += '</div>';
     }
-    html += '</div>';
-    var content = $(html);
-    // content.css('width', (100 * cnt) + '%');
-    return content;
+    gallery.append(html);
+    return gallery;
   }
 
   PAGES['_load_case'] = function(name) {
@@ -50,23 +46,20 @@ $(function() {
     
     $.switchPage('case', function() {
       var tetris = $.PAGES.tetris;
-      if (tetris) {
-        tetris.reset();
-      }
+      if (tetris) { tetris.reset(); }
+
       $('nav.menu').html('<a href="#home"><i class="md md-apps"></i></a>');
       var content = generateCasePage(name);
-      content.find('.slide:first').addClass('active');
-      content.on('click', '.slide', function() {
-        var node = $(this),
-            next = node.next();
-        if (next.length === 0) {
-          next = content.find('.slide:first');
-        }
-
-        node.removeClass('active');
-        next.addClass('active');
-      })
-      page.html(content);
+      content.find('.slide:first').addClass('active').end()
+        .on('click', '.slide', function() {
+          var node = $(this), next = node.next();
+          if (next.length === 0) {
+            next = content.find('.slide:first');
+          }
+          node.removeClass('active');
+          next.addClass('active');
+        })
+        .appendTo(page);
     });
   };
 });

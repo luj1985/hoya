@@ -1,5 +1,4 @@
 $(function() {
-  var PAGE_INITED = $.PAGE_INITED;
 
   var tetrisDefs = $.map(CASES, function(t) {
     return {
@@ -29,12 +28,9 @@ $(function() {
   $.PAGES["_load_home"] = function() {
     $.switchPage('home', function() {
       $('nav.menu').empty();
-      if (!PAGE_INITED['home']) {
-        tetris.start(function() { 
-          $.loading(false); 
-        });
-        PAGE_INITED['home'] = true;
-      }
+      tetris.start(function() { 
+        $.loading(false); 
+      });
     });
   }
 

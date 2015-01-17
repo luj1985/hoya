@@ -15,7 +15,6 @@
   }
 
   $.PAGES = {};
-  $.PAGE_INITED = {};
   $.switchPage = switchPage;
 
 })(window, jQuery);

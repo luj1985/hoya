@@ -117,7 +117,14 @@
       return this;
     };
 
+    var finished = false;
+
     this.start = function(callback) {
+      if (finished) {
+        callback && callback();
+        return this
+      };
+
       var step = Math.round(conf.height * SCALE);
       container.children('.tetris-block').addClass('drop').css({
         'transition-delay': function(i) {
@@ -127,6 +134,7 @@
           return $(this).data('bottom');
         }
       }).transitionend(callback);
+      finished = true;
     };
 
     this.reset = function() {
@@ -143,8 +151,13 @@
       });
     };
 
-
+    var away = false;
     this.flyAway = function(callback) {
+      if (away) {
+        callback && callback();
+        return this;
+      }
+
       container.children('.tetris-block')
         .removeClass('drop')
         .addClass('fly').each(function() {
@@ -155,6 +168,8 @@
           node.css(EASING[atype]);
         })
         .transitionend(callback);
+
+      away = true;
     };
   }
 
