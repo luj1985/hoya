@@ -61,9 +61,7 @@ $(function() {
     switchPage('home', function(page) {
       var tetris = $('#tetris', page).tetris();
       $('nav.menu').empty();
-      tetris.start(function() { 
-        $.loading(false); 
-      });
+      tetris.start();
     });
   }
 
