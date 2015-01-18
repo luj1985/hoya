@@ -1,47 +1,43 @@
-
-nav {
-  > ul {
-    display: inline;
-    height: inherit;
-    line-height: inherit;
-    color: @hoya-sub-title-color;
-    > li {
-      display: inline-block;
-      position: relative;
-      ul {
-        position: absolute;
-        max-height: 22rem;
-        max-width: 12rem;
-        min-width: 6rem;
-        overflow: auto;
-        top: 3rem;
-        left: 0;
-        display: none;
-        visibility: hidden;
-        background: @hoya-menu-bg-color; 
-        color: @hoya-menu-color;
-        li {
-          padding-left: 1rem;
-          display: block; 
-          // white-space: nowrap;
-          background: @hoya-menu-bg-color; 
-          color: @hoya-menu-color;
-          &:hover { 
-            color: lighten(@hoya-link-color, 10%);
-            background: lighten(@hoya-menu-bg-color, 10%)
-          }
-        }
-      }
-    }
-  }
-  > ul li.active:hover ul {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-  }
-  > ul li.active:hover {
-    background: @hoya-menu-bg-color;
-    color: lighten(@hoya-link-color, 10%);
+ul#filter {
+  color: @hoya-menu-color;
+  background-color: @hoya-menu-bg-color;
+  list-style: none;
+  line-height: 3rem;
+  max-height: 20rem;
+  max-width: 13rem;
+  min-width: 6rem;
+  overflow: auto;
+  li {
+    white-space: nowrap;
+    padding: 0 1rem;
   }
 }
 
+nav.category {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  top: 1rem;
+
+  > ul {
+    display: block;
+    color: @hoya-sub-title-color;
+
+    > li {
+      display: inline-block;
+      position: relative;
+
+      a {
+        display: inline-block;
+        height: 3rem;
+        line-height: 3rem;
+        padding: 0 1rem;
+      }
+    }
+  }
+
+  > ul li.active {
+    color: @hoya-menu-color;
+    background: @hoya-menu-bg-color;
+  }
+}

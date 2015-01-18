@@ -23,27 +23,43 @@ $(function() {
     tetris: tetrisDefs
   });
 
-  $('nav.category .item').on('click', function(e) {
+  $('nav.category .item a').on('click', function(e) {
     e.preventDefault();
-    $(this).toggleClass('active');
-  });
+    var link = $(this);
+    var target = link.attr('href');
+    var offset = link.offset();
+    var filter = $(target).clone().attr('id', 'filter');
 
-  $('#year_list').on('click', 'li', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var year = $(this).data('year');
     var container = $('#tetris');
-    container.find('.tetris-block').addClass('disabled');
-    container.find('.tetris-block[data-year="' + year + '"]').removeClass('disabled');
-  });
+    if (target === '#year_list') {
+      filter.on('click', 'li', function(e) {
+        var year = $(this).data('year');
+        container.find('.tetris-cell').addClass('disabled');
+        container.find('.tetris-cell[data-year="' + year + '"]').removeClass('disabled');
+      })
+    } else if (target === '#category_list') {
+      filter.on('click', 'li', function(e) {
+        var category = $(this).data('category');
+        container.find('.tetris-cell').addClass('disabled');
+        container.find('.tetris-cell[data-category="' + category + '"]').removeClass('disabled');
+      });
+    } else {
+      throw new Error('unknown target: ' + target);
+    }
 
-  $('#category_list').on('click', 'li', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    var category = $(this).data('category');
-    var container = $('#tetris');
-    container.find('.tetris-block').addClass('disabled');
-    container.find('.tetris-block[data-category="' + category + '"]').removeClass('disabled');
+    var highlight = $('.highlight');
+
+    highlight.find('.content').css({
+      'top' : offset.top + link.height(),
+      'left': offset.left
+    }).html(filter);
+
+    var li = link.closest('li');
+    highlight.addClass('active').one('click', function(e) {
+      li.removeClass('active');
+    });
+
+    li.addClass('active');
   });
 
   // 8rem;
@@ -71,9 +87,10 @@ $(function() {
       var preview = [
         '<a class="preview" href="#case_' + name + '">',
           '<h5>' + d.text + '</h5>',
-          '<img src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
+          '<img src="images/image-loader.gif" data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
         '</a>'
       ].join('\n');
+
 
       $('.highlight').find('.content').html(preview).css({ 
         left: left, 
@@ -81,7 +98,7 @@ $(function() {
         width: CONTENT_WIDTH,
         height: CONTENT_HEIGHT
       })
-      .end().addClass('active');
+      .end().addClass('active').imageloader();
     }
     e.stopPropagation(); 
   });

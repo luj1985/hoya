@@ -69,7 +69,7 @@
         'line-height': (size / 3) + 'px'
       });
 
-    var d = CASEDICT[name];
+    var d = RELATIONSHIP[name];
     if (d) {
       cell.attr({
         'data-year': d.year,

@@ -110,8 +110,6 @@ $(function() {
   });
 
   function loadCase(name) {
-    var cell = $('.tetris-cell[case="' + name + '"]');
-    var bg = cell.css('background-color');
     var data = CASEDICT[name];
     var page = $('#case');
     page.empty();
