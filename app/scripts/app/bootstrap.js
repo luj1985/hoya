@@ -2,7 +2,7 @@ $(function() {
   
   var DEFAULT_MENU_HTML = [
     '<a href="#home"><i class="icon-app"></i></a>',
-    '<a href="#about"><i class="icon-menu"></i></a>'
+    '<a href="#about"><i class="icon-list"></i></a>'
   ].join('');
 
   CASEDICT = $.extend(true, CASEDICT, RELATIONSHIP);
