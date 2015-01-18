@@ -1,15 +1,3 @@
-@hoya-orange: #E27D12;
-@hoya-black: #231815;
-@hoya-green: #84C325;
-@hoya-white: #FFFFFF;
-@hoya-content: #828282;
-@hoya-content-invert: #EEE;
-@hoya-light: #B5B5B5;
-@hoya-background: @hoya-white;
-@footer-height: 3rem;
-@header-height: 3rem;
-
-
 @font-face {
     font-family: 'BGOTHL';
     src: url('fonts/BGOTHL.eot');
@@ -35,7 +23,7 @@
 
 html, body {
   display: block;
-  color: @hoya-black;
+  color: @hoya-content-color;
   width: 100%;
   height: 100%;
   -webkit-font-smoothing: antialiased;
@@ -47,10 +35,58 @@ body {
 }
 
 a {
-  color: @hoya-black;
+  color: @hoya-content-color;
   text-decoration: none;
 
-  &:hover {
-    color: @hoya-orange;
+  &:hover, &.active {
+    color: @hoya-link-color;
+  }
+}
+
+nav {
+  display: block;
+  height: @hoya-nav-height;
+  line-height: @hoya-nav-height;
+  font-size: 1rem;
+  > * {
+    display: inline-block;
+    line-height: inherit;
+    height: inherit;
+  }
+}
+
+header nav a {
+  width: 3rem;
+  text-align: center;
+}
+
+
+section {
+  h3 {
+    color: @hoya-title-color;
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+  }
+
+  article {
+    color: @hoya-content-color;
+    font-size: .9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5rem;
+
+    h4 {
+      color: @hoya-sub-title-color;
+      margin-bottom: .5rem;
+      font-size: 1.2rem;
+      font-weight: normal;
+    }
+
+    p {
+      color: @hoya-content-color;
+      font-size: .9rem;
+      line-height: 1rem;
+      margin: .4rem 0;
+    }
   }
 }

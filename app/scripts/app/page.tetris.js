@@ -81,13 +81,13 @@ $(function() {
         width: CONTENT_WIDTH,
         height: CONTENT_HEIGHT
       })
-      .end().addClass('show');
+      .end().addClass('active');
     }
     e.stopPropagation(); 
   });
 
   $('.highlight').on('click', function(e) {
-    $(this).removeClass('show');
+    $(this).removeClass('active');
     e.stopPropagation();
   })
 });
