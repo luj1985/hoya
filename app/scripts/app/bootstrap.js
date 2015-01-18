@@ -84,8 +84,11 @@ $(function() {
       if (next.length === 0) {
         next = page.find('.slide:first');
       }
-      node.removeClass('active');
-      next.addClass('active');
+      node.transitionend(function() {
+        next.removeClass('inactive').addClass('active');
+        node.removeClass('active swipeLeft').addClass('inactive');
+      });
+      node.addClass('swipeLeft');      
     },
     swipeRight: function() {
       var page = $(this);
@@ -94,8 +97,11 @@ $(function() {
       if (prev.length === 0) {
         prev = page.find('.slide:last');
       }
-      node.removeClass('active');
-      prev.addClass('active');
+      node.transitionend(function() {
+        prev.removeClass('inactive').addClass('active');
+        node.removeClass('active swipeRight').addClass('inactive');
+      });
+      node.addClass('swipeRight');
     }
   });
 

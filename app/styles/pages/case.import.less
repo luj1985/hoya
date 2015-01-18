@@ -20,11 +20,10 @@
     overflow: hidden;
     text-align: center;
     opacity: 0;
-    transition: opacity 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
 
     &.image {
       vertical-align: middle;
-      // background-color: rgba(0,0,0,0.8);
       &:before {
         content: "";
         display: inline-block;
@@ -38,6 +37,18 @@
       display: block;
       visibility: visible;
       opacity: 1;
+    }
+
+    // &.inactive {
+    //   transition: none !important;
+    // }
+
+    &.swipeLeft {
+      left: -100%;
+    }
+
+    &.swipeRight {
+      left: 100%;
     }
 
     &.description {
