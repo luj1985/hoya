@@ -9,18 +9,28 @@
 @footer-height: 3rem;
 @header-height: 3rem;
 
-@font-face {
-  .font-face(BGOTHL, ~'fonts/BGOTHL', normal, normal)
-}
 
 @font-face {
-  .font-face(BGOTHM, ~'fonts/BGOTHM', normal, normal)
+    font-family: 'BGOTHL';
+    src: url('fonts/BGOTHL.eot');
+    src: local('☺'), url('fonts/BGOTHL.woff') format('woff'), url('fonts/BGOTHL.ttf') format('truetype'), url('fonts/BGOTHL.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'BGOTHM';
+    src: url('fonts/BGOTHM.eot');
+    src: local('☺'), url('fonts/BGOTHM.woff') format('woff'), url('fonts/BGOTHM.ttf') format('truetype'), url('fonts/BGOTHM.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 * {
   padding: 0;
   margin: 0;
-  .box-sizing(border-box);
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
 }
 
 html, body {
@@ -32,8 +42,8 @@ html, body {
   font-smoothing: antialiased;
 }
 
-body, button, input, select, textarea, i{
-  font: 12px/1.5 "BGOTHL", "Microsoft YaHei", "Tahoma", "Arial";
+body {
+  font-family: "BGOTHL", "Microsoft YaHei", "Tahoma", "Arial";
 }
 
 a {
