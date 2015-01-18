@@ -2,25 +2,29 @@
 nav {
   > ul {
     display: inline;
-    list-style: none;
     height: inherit;
     line-height: inherit;
+    color: @hoya-sub-title-color;
     > li {
       display: inline-block;
       position: relative;
       ul {
         position: absolute;
         max-height: 22rem;
+        max-width: 12rem;
+        min-width: 6rem;
         overflow: auto;
         top: 3rem;
         left: 0;
-        width: 7rem;
         display: none;
         visibility: hidden;
+        background: @hoya-menu-bg-color; 
+        color: @hoya-menu-color;
         li {
           padding-left: 1rem;
-          background: @hoya-menu-bg-color; 
           display: block; 
+          // white-space: nowrap;
+          background: @hoya-menu-bg-color; 
           color: @hoya-menu-color;
           &:hover { 
             color: lighten(@hoya-link-color, 10%);

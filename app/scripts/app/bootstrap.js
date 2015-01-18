@@ -66,6 +66,7 @@ $(function() {
     $('nav.menu').empty();
     var tetris = $('#tetris').tetris();
     if (tetris) {
+      // TODO: should detect 'home' page has been viewed or not
       tetris.flyAway(function() {
         switchPage('about', function() {
           tetris.reset();
