@@ -67,6 +67,9 @@ $(function() {
 
   $('#tetris .tetris-cell').on('click', function(e) {
     var cell = $(this);
+    if (cell.hasClass('disabled')) {
+      return;
+    }
     var name = cell.data('case');
     var d = CASEDICT[name];
     if (d) {
