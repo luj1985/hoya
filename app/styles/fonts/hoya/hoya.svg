@@ -1,0 +1,13 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2015 by original authors @ fontello.com</metadata>
+<defs>
+<font id="hoya" horiz-adv-x="1000" >
+<font-face font-family="hoya" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="menu" unicode="&#xe802;" d="m125 100h750v83h-750v-83z m0 208h750v84h-750v-84z m0 292v-83h750v83h-750z" horiz-adv-x="1000" />
+<glyph glyph-name="app" unicode="&#xe803;" d="m167 517h166v166h-166v-166z m250-500h166v166h-166v-166z m-250 0h166v166h-166v-166z m0 250h166v166h-166v-166z m250 0h166v166h-166v-166z m250 416v-166h166v166h-166z m-250-166h166v166h-166v-166z m250-250h166v166h-166v-166z m0-250h166v166h-166v-166z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>
