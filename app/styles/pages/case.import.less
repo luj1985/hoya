@@ -14,16 +14,15 @@
 
   .slide {
     position: absolute;
-    visibility: hidden;
     height: 100%;
     width: 100%;
     overflow: hidden;
     text-align: center;
-    opacity: 0;
-    transition: all 500ms ease-in-out;
-
+    transition: all 400ms ease-in-out;
+    display: block;
     &.image {
       vertical-align: middle;
+      background-color: @hoya-white;
       &:before {
         content: "";
         display: inline-block;
@@ -34,20 +33,15 @@
       }
     }
     &.active {
-      display: block;
-      visibility: visible;
-      opacity: 1;
+      left: 0 !important;
+      z-index: 3;
     }
 
-    // &.inactive {
-    //   transition: none !important;
-    // }
-
-    &.swipeLeft {
+    &.left {
       left: -100%;
     }
 
-    &.swipeRight {
+    &.right {
       left: 100%;
     }
 

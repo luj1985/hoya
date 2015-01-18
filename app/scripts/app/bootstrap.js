@@ -38,13 +38,13 @@ $(function() {
     var html = '';
     for (var i = 1, length = data.img; i <= length; i++) {
       if (i === 2) {
-        html += '<div class="slide description" style="background-color:' + bg + '">';
+        html += '<div class="slide right description" style="background-color:' + bg + '">';
         html += detail || '';
         html += '<br>';
         html += data.desc || ''
         html += '</div>';
       }
-      html += '<div class="slide image">';
+      html += '<div class="slide right image">';
       html += '<img src="images/image-loader.gif" data-src="images/case/' + name + '/' + i + '.jpg">';
       html += '</div>';
     }
@@ -81,27 +81,19 @@ $(function() {
       var page = $(this);
       var node = page.find('.slide.active');
       var next = node.next();
-      if (next.length === 0) {
-        next = page.find('.slide:first');
+      if (next.length !== 0) {
+        node.removeClass('active right').addClass('left');
+        next.addClass('active');
       }
-      node.transitionend(function() {
-        next.removeClass('inactive').addClass('active');
-        node.removeClass('active swipeLeft').addClass('inactive');
-      });
-      node.addClass('swipeLeft');      
     },
     swipeRight: function() {
       var page = $(this);
       var node = page.find('.slide.active');
       var prev = node.prev();
-      if (prev.length === 0) {
-        prev = page.find('.slide:last');
+      if (prev.length !== 0) {
+        node.removeClass('active left').addClass('right');
+        prev.addClass('active');
       }
-      node.transitionend(function() {
-        prev.removeClass('inactive').addClass('active');
-        node.removeClass('active swipeRight').addClass('inactive');
-      });
-      node.addClass('swipeRight');
     }
   });
 
