@@ -158,7 +158,7 @@
 
     var away = false;
     this.flyAway = function(callback) {
-      if (away) {
+      if (away || !finished) {
         callback && callback();
         return this;
       }
