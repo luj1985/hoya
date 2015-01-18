@@ -1,10 +1,11 @@
 (function(window, $, undefined) {
   'use strict';
 
+  var TRANSITION_END = 'transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd';
+
   $.fn.transitionend = function(callback) {
     var length = this.length, count = 0;
-    return this.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){ 
-      console.log('transition end event was received')
+    return this.bind(TRANSITION_END, function() { 
       if (++count === length && callback) {
         callback.apply(this);
       }

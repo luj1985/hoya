@@ -19,11 +19,11 @@ $(function() {
   }
 
   function switchPage(id, initializer) {
-    initializer && initializer();
     $('.page').each(function() {
       var page = $(this);
       if (page.attr('id') === id) {
-        page.find('img').imageloader().end().addClass('active');
+        page.addClass('active');
+        initializer && initializer(page);
       } else {
         page.removeClass('active');
       }
@@ -53,8 +53,8 @@ $(function() {
   }
 
   function loadHome() {
-    switchPage('home', function() {
-      var tetris = $('#tetris').tetris();
+    switchPage('home', function(page) {
+      var tetris = $('#tetris', page).tetris();
       $('nav.menu').empty();
       tetris.start(function() { 
         $.loading(false); 
@@ -83,7 +83,7 @@ $(function() {
       var next = node.next();
       if (next.length !== 0) {
         node.removeClass('active right').addClass('left');
-        next.addClass('active');
+        next.addClass('active').imageloader();
       }
     },
     swipeRight: function() {
@@ -92,7 +92,7 @@ $(function() {
       var prev = node.prev();
       if (prev.length !== 0) {
         node.removeClass('active left').addClass('right');
-        prev.addClass('active');
+        prev.addClass('active').imageloader();
       }
     }
   });
@@ -104,12 +104,12 @@ $(function() {
     var page = $('#case');
     page.empty();
 
-    switchPage('case', function() {
+    switchPage('case', function(page) {
       var tetris = $('#tetris').tetris();
       if (tetris) { tetris.reset(); }
       $('nav.menu').html('<a href="#home"><i class="icon-app"></i></a>');
       var content = generateCasePage(name);
-      content.find('.slide:first').addClass('active');
+      content.find('.slide:first').addClass('active').imageloader();
       page.append(content);
     });
   }
@@ -121,8 +121,9 @@ $(function() {
       case 'case': loadCase(param); break;
       default:
         // survey, culture, team, list, research, honor, media, recruit, contact
-        switchPage(name, function() {
+        switchPage(name, function(page) {
           $('nav.menu').html(DEFAULT_MENU_HTML);
+          $('img', page).imageloader();
         });
     }
   }
