@@ -3,6 +3,33 @@
   overflow-y: hidden;
 }
 
+.indicators {
+  position: absolute;
+  height: 2rem;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
+  text-align: center;
+  line-height: 2rem;
+
+  .indicator {
+    display: inline-block;
+    width: .5rem;
+    height: .5rem;
+    margin: .3rem;
+    line-height: 2rem;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid @hoya-indicator-color;
+
+    &.active {
+      width: .75rem;
+      height: .75rem;
+      background-color: @hoya-indicator-color;
+    }
+  }
+}
+
 .gallery {
   position: relative;
   display: block;

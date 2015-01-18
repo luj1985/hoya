@@ -33,23 +33,28 @@ $(function() {
   function generateCasePage(name) {
     var data = CASEDICT[name];
     var detail = CASEDETAILS[name];
-    var gallery = $('<div class="gallery">');
+    var gallery = '<div class="gallery">';
+    var indicators = '<div class="indicators">';
     var bg = findColorDef(name);
-    var html = '';
     for (var i = 1, length = data.img; i <= length; i++) {
       if (i === 2) {
-        html += '<div class="slide right description" style="background-color:' + bg + '">';
-        html += detail || '';
-        html += '<br>';
-        html += data.desc || ''
-        html += '</div>';
+        gallery += '<div class="slide right description" style="background-color:' + bg + '">';
+        gallery += detail || '';
+        gallery += '<br>';
+        gallery += data.desc || ''
+        gallery += '</div>';
+
+        indicators += '<span class="indicator"></span>';
       }
-      html += '<div class="slide right image">';
-      html += '<img src="images/image-loader.gif" data-src="images/case/' + name + '/' + i + '.jpg">';
-      html += '</div>';
+      gallery += '<div class="slide right image">';
+      gallery += '<img src="images/image-loader.gif" data-src="images/case/' + name + '/' + i + '.jpg">';
+      gallery += '</div>';
+
+      indicators += '<span class="indicator"></span>'
     }
-    gallery.append(html);
-    return gallery;
+    gallery += '</div>';
+    indicators += '</div>'
+    return gallery + indicators;
   }
 
   function loadHome() {
@@ -80,20 +85,26 @@ $(function() {
   $('#case').swipe({
     swipeLeft: function() {
       var page = $(this);
-      var node = page.find('.slide.active');
-      var next = node.next();
-      if (next.length !== 0) {
-        node.removeClass('active right').addClass('left');
-        next.addClass('active').imageloader();
+      var slide = page.find('.slide.active'),
+          indicator = page.find('.indicator.active');
+      var n1 = slide.next(), n2 = indicator.next();
+      if (n1.length !== 0) {
+        slide.removeClass('active right').addClass('left');
+        indicator.removeClass('active');
+        n1.addClass('active').imageloader();
+        n2.addClass('active');
       }
     },
     swipeRight: function() {
       var page = $(this);
-      var node = page.find('.slide.active');
-      var prev = node.prev();
-      if (prev.length !== 0) {
-        node.removeClass('active left').addClass('right');
-        prev.addClass('active').imageloader();
+      var slide = page.find('.slide.active'),
+          indicator = page.find('.indicator.active');
+      var n1 = slide.prev(), n2 = indicator.prev();
+      if (n1.length !== 0) {
+        slide.removeClass('active left').addClass('right');
+        indicator.removeClass('active');
+        n1.addClass('active').imageloader();
+        n2.addClass('active');
       }
     }
   });
@@ -109,8 +120,10 @@ $(function() {
       var tetris = $('#tetris').tetris();
       if (tetris) { tetris.reset(); }
       $('nav.menu').html('<a href="#home"><i class="icon-app"></i></a>');
-      var content = generateCasePage(name);
+      var html = generateCasePage(name);
+      var content = $(html);
       content.find('.slide:first').addClass('active').imageloader();
+      content.find('.indicator:first').addClass('active');
       page.append(content);
     });
   }

@@ -164,8 +164,7 @@
       }
 
       container.children('.tetris-block')
-        .removeClass('drop')
-        .removeClass('reset')
+        .removeClass('drop reset')
         .addClass('fly')
         .each(function() {
           var node = $(this);
@@ -184,9 +183,7 @@
     var tetris = this.data('tetris');
     if (tetris) { return tetris; }
 
-    var width = this.width();
-    width = width > 480 ? 480 : width;     
-
+    var width = this.width();   
     options = $.extend({
       tetris: [],
       height: SCREEN_HEIGHT,
