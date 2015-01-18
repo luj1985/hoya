@@ -76,30 +76,43 @@ $(function() {
     }
   }
 
+  $('#case').swipe({
+    swipeLeft: function() {
+      var page = $(this);
+      var node = page.find('.slide.active');
+      var next = node.next();
+      if (next.length === 0) {
+        next = page.find('.slide:first');
+      }
+      node.removeClass('active');
+      next.addClass('active');
+    },
+    swipeRight: function() {
+      var page = $(this);
+      var node = page.find('.slide.active');
+      var prev = node.prev();
+      if (prev.length === 0) {
+        prev = page.find('.slide:last');
+      }
+      node.removeClass('active');
+      prev.addClass('active');
+    }
+  });
+
   function loadCase(name) {
     var cell = $('.tetris-cell[case="' + name + '"]');
     var bg = cell.css('background-color');
     var data = CASEDICT[name];
-
     var page = $('#case');
     page.empty();
-    
+
     switchPage('case', function() {
       var tetris = $('#tetris').tetris();
       if (tetris) { tetris.reset(); }
-
-      $('nav.menu').html('<a href="#home"><i class="md md-apps"></i></a>');
+      $('nav.menu').html('<a href="#home"><i class="icon-app"></i></a>');
       var content = generateCasePage(name);
-      content.find('.slide:first').addClass('active').end()
-        .on('click', '.slide', function() {
-          var node = $(this), next = node.next();
-          if (next.length === 0) {
-            next = content.find('.slide:first');
-          }
-          node.removeClass('active');
-          next.addClass('active');
-        })
-        .appendTo(page);
+      content.find('.slide:first').addClass('active');
+      page.append(content);
     });
   }
 
