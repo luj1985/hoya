@@ -105,7 +105,8 @@ $(function() {
         n1.addClass('active').imageloader();
         n2.addClass('active');
       }
-    }
+    },
+    allowPageScroll: "vertical"
   });
 
   function loadCase(name) {
