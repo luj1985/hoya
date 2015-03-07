@@ -106,6 +106,7 @@ $(function() {
         n2.addClass('active');
       }
     },
+    fallbackToMouseEvents: true,
     allowPageScroll: "vertical"
   });
 
