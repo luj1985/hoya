@@ -1,6 +1,7 @@
 $(function() {
   
   var DEFAULT_MENU_HTML = [
+    '<a href="#back"><i class="icon-back"></i></a>',
     '<a href="#home"><i class="icon-app"></i></a>',
     '<a href="#about"><i class="icon-list"></i></a>'
   ].join('');
