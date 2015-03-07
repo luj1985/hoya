@@ -18,14 +18,13 @@
     height: .5rem;
     margin: .3rem;
     line-height: 2rem;
-    border-radius: 50%;
     vertical-align: middle;
-    border: 1px solid @hoya-indicator-color;
+    border: 1px inset @hoya-indicator-color;
+    background-color: @hoya-indicator-color;
 
     &.active {
-      width: .75rem;
-      height: .75rem;
-      background-color: @hoya-indicator-color;
+      background-color: @hoya-indicator-color-active;
+      border-color: @hoya-indicator-color-active;
     }
   }
 }
