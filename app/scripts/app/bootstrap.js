@@ -1,7 +1,7 @@
 $(function() {
   
   var DEFAULT_MENU_HTML = [
-    '<a href="#back"><i class="icon-back"></i></a>',
+    '<a href="#back" class="back"><i class="icon-back"></i></a>',
     '<a href="#home"><i class="icon-app"></i></a>',
     '<a href="#about"><i class="icon-list"></i></a>'
   ].join('');
@@ -116,7 +116,10 @@ $(function() {
     switchPage('case', function(page) {
       var tetris = $('#tetris').tetris();
       if (tetris) { tetris.reset(); }
-      $('nav.menu').html('<a href="#home"><i class="icon-app"></i></a>');
+      $('nav.menu').html([
+        '<a href="#back" class="back"><i class="icon-back"></i></a>',
+        '<a href="#home"><i class="icon-app"></i></a>'
+      ].join(''));
       var html = generateCasePage(name);
       var content = $(html);
       content.find('.slide:first').addClass('active').imageloader();
@@ -155,4 +158,10 @@ $(function() {
     dispatch(name, param);
   });
   $(window).trigger('hashchange');
+
+
+  $('body').on('click', '.back', function(e) {
+    e.preventDefault();
+    history.back();
+  });
 });
