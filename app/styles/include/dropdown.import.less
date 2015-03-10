@@ -7,6 +7,8 @@ ul#filter {
   max-width: 13rem;
   min-width: 6rem;
   overflow: auto;
+  opacity: .97;
+  .box-shadow-helper(4);
   li {
     white-space: nowrap;
     padding: 0 1rem;
@@ -36,6 +38,7 @@ nav.category {
 
       &.active a {
         color: @hoya-menu-color;
+        .box-shadow-helper(4);
       }
     }
   }
