@@ -35,8 +35,11 @@
         color: @hoya-white;
       }
     }
-    td:not(:empty) {
+    td {
       background: @hoya-botton-bg-color;
+      &.empty {
+        background-color: transparent;
+      }
     }
   }
 }
