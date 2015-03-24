@@ -7,19 +7,36 @@
     transform: translateY(0);
   }
 
-  li {
-    display: inline-block;
-    margin: 1rem;
-    background: @hoya-botton-bg-color;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  
+  -webkit-box-align: end;
+  -moz-box-align: end;
+  -webkit-align-items: flex-end;
+  -ms-flex-align: end;
+  align-items: flex-end;
 
-    a {
-      display: inline-block;
+  table.tetris {
+
+    width: 16rem;
+    margin: 0 auto;
+    td {
       color: @hoya-white;
       font-size: 1rem;
       height: 4rem;
       line-height: 4rem;
       width: 4rem;
+
+      font-size: 1rem;
+      a {
+        color: @hoya-white;
+      }
+    }
+    td:not(:empty) {
+      background: @hoya-botton-bg-color;
     }
   }
-
 }
