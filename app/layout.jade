@@ -1,0 +1,52 @@
+- var lang = 'tw';
+- var keywords = 'hoya';
+- var description = 'hoya';
+- var title = 'hoya';
+
+block vars
+
+doctype html
+html(lang="#{lang}")
+  head
+    meta(charset="utf-8")
+    meta(name="keywords", content="#{keywords}")
+    meta(name="description", content="#{description}")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0, user-scalable=no")
+    link(rel="shortcut icon", href="favicon.ico")
+    link(rel="stylesheet", href="styles/hoya.css")
+    title #{title}
+  body
+    header
+      nav.menu
+      nav.locale
+        a(class={active: lang === 'tw'}, href="./index.html") 繁
+        a(class={active: lang === 'zh'}, href="./zh.html") 简
+        a(class={active: lang === 'en'}, href="./en.html") EN
+
+    .highlight
+      .content
+
+    main
+      block content
+        include jade/tw.jade
+
+    // build:js scripts/platform.js
+    script(src='../bower_components/jquery/dist/jquery.js')
+    script(src='../bower_components/jquery-touchswipe/jquery.touchSwipe.js')
+    script(src='scripts/lib/jquery.imageloader.js')
+    script(src='scripts/lib/jquery.transitionend.js')
+    // endbuild
+
+    block data
+      // build:js scripts/data.tw.js
+      script(src='scripts/data/content.zh_tw.js')
+      // endbuild
+
+    // build:js scripts/app.js
+    script(src='scripts/data/relationship.js')
+    script(src='scripts/data/cases.js')
+
+    script(src='scripts/app/jquery.tetris.js')
+    script(src='scripts/app/page.tetris.js')
+    script(src='scripts/app/bootstrap.js')
+    // endbuild
