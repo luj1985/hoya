@@ -24,7 +24,7 @@ $(function() {
     tetris: tetrisDefs
   });
 
-  $('nav.category .item a').on('click', function() {
+  $('nav.category .item a').on('click', function(e) {
     e.preventDefault();
     var link = $(this);
     var target = link.attr('href');
