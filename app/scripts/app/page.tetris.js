@@ -68,6 +68,8 @@ $(function() {
   CONTENT_HEIGHT = CONTENT_WIDTH = 6 * 16;
 
   $('#tetris .tetris-cell').on('click', function(e) {
+    e.preventDefault();
+
     var cell = $(this);
     if (cell.hasClass('disabled')) {
       return;
@@ -83,8 +85,8 @@ $(function() {
       left = left < 0 ? 0 : left;
       top = top < 0 ? 0 : top;
 
-      maxLeft = (SCREEN_WIDTH - CONTENT_WIDTH);
-      maxTop = (SCREEN_HEIGHT - CONTENT_HEIGHT);
+      var maxLeft = (SCREEN_WIDTH - CONTENT_WIDTH);
+      var maxTop = (SCREEN_HEIGHT - CONTENT_HEIGHT);
 
       left = left > maxLeft ? maxLeft : left;
       top = top > maxTop ? maxTop : top;
