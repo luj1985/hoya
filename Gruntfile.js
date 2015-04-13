@@ -201,7 +201,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= config.app %>',
-          src: '*.jade',
+          src: ['index.jade', 'en.jade', 'zh.jade'],
           dest: '.tmp',
           ext: '.html'
         }]
@@ -257,7 +257,7 @@ module.exports = function (grunt) {
       options: {
         dest: '<%= config.dist %>'
       },
-      html: ['<%= config.app %>/index.html', '<%= config.app %>/zh.html', '<%= config.app %>/en.html']
+      html: '.tmp/*.html'
     },
 
      // Performs rewrites based on rev and the useminPrepare configuration
@@ -312,7 +312,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= config.dist %>',
-          src: '{,*/}*.html',
+          src: '.tmp/*.html',
           dest: '<%= config.dist %>'
         }]
       }
@@ -365,6 +365,11 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '<%= config.app %>',
           src: 'images/case/**/*',
+          dest: '<%= config.dist %>'
+        }, {
+          expand: true,
+          cwd: '.tmp',
+          src: '*.html',
           dest: '<%= config.dist %>'
         }]
       },
@@ -456,6 +461,4 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
-
-  grunt.loadNpmTasks('grunt-bower-concat');
 };
