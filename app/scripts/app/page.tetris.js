@@ -1,4 +1,5 @@
 $(function() {
+  'use strict';
 
   var tetrisDefs = $.map(CASES, function(t) {
     return {
@@ -23,7 +24,7 @@ $(function() {
     tetris: tetrisDefs
   });
 
-  $('nav.category .item a').on('click', function(e) {
+  $('nav.category .item a').on('click', function() {
     e.preventDefault();
     var link = $(this);
     var target = link.attr('href');
@@ -32,13 +33,13 @@ $(function() {
 
     var container = $('#tetris');
     if (target === '#year_list') {
-      filter.on('click', 'li', function(e) {
+      filter.on('click', 'li', function() {
         var year = $(this).data('year');
         container.find('.tetris-cell').addClass('disabled');
         container.find('.tetris-cell[data-year="' + year + '"]').removeClass('disabled');
       })
     } else if (target === '#category_list') {
-      filter.on('click', 'li', function(e) {
+      filter.on('click', 'li', function() {
         var category = $(this).data('category');
         container.find('.tetris-cell').addClass('disabled');
         container.find('.tetris-cell[data-category="' + category + '"]').removeClass('disabled');
@@ -63,7 +64,8 @@ $(function() {
   });
 
   // 8rem;
-  var CONTENT_HEIGHT = CONTENT_WIDTH = 6 * 16;
+  var CONTENT_HEIGHT, CONTENT_WIDTH;
+  CONTENT_HEIGHT = CONTENT_WIDTH = 6 * 16;
 
   $('#tetris .tetris-cell').on('click', function(e) {
     var cell = $(this);
