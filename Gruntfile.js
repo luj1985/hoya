@@ -48,6 +48,13 @@ module.exports = function (grunt) {
       gruntfile: {
         files: ['Gruntfile.js']
       },
+      jade: {
+        files: [
+          '<%= config.app %>/*.jade',
+          '<%= config.app %>/jade/{,*/}*.jade'
+        ],
+        tasks: ['jade:compile']
+      },
       less: {
         files: ['<%= config.app %>/styles/{,*/}*.less'],
         tasks: ['less:server', 'autoprefixer']
@@ -63,6 +70,7 @@ module.exports = function (grunt) {
         files: [
           '<%= config.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
+          '.tmp/*.html',
           '<%= config.app %>/images/{,*/}*'
         ]
       }
@@ -183,6 +191,22 @@ module.exports = function (grunt) {
       }
     },
 
+
+    jade: {
+      compile: {
+        options: {
+          client: false,
+          pretty: true
+        },
+        files: [{
+          expand: true,
+          cwd: '<%= config.app %>',
+          src: '*.jade',
+          dest: '.tmp',
+          ext: '.html'
+        }]
+      }
+    },
     // Add vendor prefixed styles
     autoprefixer: {
       options: {
@@ -357,7 +381,8 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'less:server',
-        'copy:styles'
+        'copy:styles',
+        'jade:compile'
       ],
       test: [
         'copy:styles'
@@ -413,6 +438,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
+    'jade:compile',
     'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
