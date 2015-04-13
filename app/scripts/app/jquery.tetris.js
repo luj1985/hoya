@@ -25,15 +25,25 @@
     '82': [ [1, 0], [2, 0], [3, 0], [4, 0], [5, 0] ]
   };
   var SCALE = 1.3,
-      SCREEN_WIDTH = $(window).width(),
+      COLUMNS = 12,
       SCREEN_HEIGHT = $(window).height();
 
-  var EASING = [
-    { 'left':   function(i, v) { return (parseInt(v) + SCREEN_WIDTH) + 'px'; }},
-    { 'bottom': function(i, v) { return (parseInt(v) + SCREEN_HEIGHT) + 'px'; }},
-    { 'left':   function(i, v) { return (parseInt(v) - SCREEN_WIDTH) + 'px'; }},
-    { 'bottom': function(i, v) { return (parseInt(v) - SCREEN_HEIGHT) + 'px'; }}
-  ];
+  function caculateEasing() {
+    var screenWidth = $(window).width(), screenHeight = $(window).height();
+    return [
+      { 'left':   function(i, v) { return (parseInt(v) + screenWidth) + 'px'; }},
+      { 'bottom': function(i, v) { return (parseInt(v) + screenHeight) + 'px'; }},
+      { 'left':   function(i, v) { return (parseInt(v) - screenWidth) + 'px'; }},
+      { 'bottom': function(i, v) { return (parseInt(v) - screenHeight) + 'px'; }}
+    ];
+  }
+
+  var EASING = caculateEasing();
+
+  $(window).on('resize', function() {
+    EASING = caculateEasing();
+    SCREEN_HEIGHT = $(window).height();
+  });
 
   function formatCaseNumber(caseid) {
     if (!caseid) {
@@ -98,7 +108,7 @@
     var shapeId = def.shape + '' + def.orientation;
     var shape = SHAPES[shapeId] || [];
 
-    for (var i = 0; i < shape.length; i++) {
+    for (var i = 0, length = shape.length; i < length; i++) {
       var name = def.text[i] || '';
       var pos = shape[i];
       var cell = generateCell(name, pos, def, size);
@@ -187,7 +197,7 @@
     options = $.extend({
       tetris: [],
       height: SCREEN_HEIGHT,
-      standard: width / 12,
+      standard: width / COLUMNS,
       speed: 222
     }, options);
     tetris = new Tetris(this, options);
