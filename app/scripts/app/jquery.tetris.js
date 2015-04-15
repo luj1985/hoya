@@ -26,6 +26,7 @@
   };
   var SCALE = 1.3,
       COLUMNS = 12,
+      DELAY = 200,
       SCREEN_HEIGHT = $(window).height();
 
   function caculateEasing() {
@@ -63,46 +64,16 @@
     return html;
   }
 
-  function generateCell(name, pos, def, size) {
-    var cell = $('<span>')
-      .attr('class', 'tetris-cell')
-      .attr('data-case', name)
-      .css({
-        'color' : def.textColor,
-        'background-color': def.bgColor,
-        'top': pos[1] * size + 'px',
-        'left': pos[0] * size + 'px',
-        'height': size + 'px',
-        'width': size + 'px',
-        // exclude 1px border and 1px padding
-        'font-size' : ((size - 4) / 3) + 'px',
-        'line-height': (size / 3) + 'px'
-      });
-
-    var d = RELATIONSHIP[name];
-    if (d) {
-      cell.attr({
-        'data-year': d.year,
-        'data-category': d.category,
-      })
-    }
-    cell.append(formatCaseNumber(name))
-    return cell;
-  }
   function generateBlock(conf, def) {
     var size = conf.standard;
-    var bottom = (conf.height * SCALE + def.y * size);
-    var left = def.x * size;
     var block = $('<div>')
       .attr('class', 'tetris-block')
-      .css({
-        left: left,
-        bottom: Math.round(bottom)
-      }).data({
+      .data({
         'aidx': def.aIndex,
-        'atype': def.aType,
-        'left': left + 'px',
-        'bottom': Math.round(bottom - conf.height * SCALE) + 'px',
+        'atype': def.aType
+      }).data({
+        'x' : def.x,
+        'y' : def.y
       });
 
     var shapeId = def.shape + '' + def.orientation;
@@ -117,53 +88,110 @@
     return block;
   }
 
+
+  function generateCell(name, pos, def, size) {
+    var cell = $('<span>')
+      .attr('class', 'tetris-cell')
+      .attr('data-case', name)
+      .data({ x: pos[0], y: pos[1] })
+      .css({
+        'color' : def.textColor,
+        'background-color': def.bgColor
+      });
+
+    var d = RELATIONSHIP[name];
+    if (d) {
+      cell.attr({
+        'data-year': d.year,
+        'data-category': d.category,
+      })
+    }
+    cell.append(formatCaseNumber(name))
+    return cell;
+  }
+
+  function updateCellPosition(collection, conf) {
+    var size = conf.standard;
+    return collection.find('.tetris-cell').each(function() {
+      var cell = $(this);
+      var y = cell.data('y'), 
+          x = cell.data('x');
+
+      cell.css({
+        'top': y * size + 'px',
+        'left': x * size + 'px',
+        'height': size + 'px',
+        'width': size + 'px',
+        // exclude 1px border and 1px padding
+        'font-size' : ((size - 4) / 3) + 'px',
+        'line-height': (size / 3) + 'px'
+      })
+    });
+  }
+
+  function updateBlockPosition(collection, conf) {
+    var size = conf.standard;
+    return collection.find('.tetris-block').each(function() {
+      $(this).css({
+        left: function() {
+          return $(this).data('x') * size + 'px';
+        },
+        bottom: function() {
+          var block = $(this), y = block.data('y');
+          if (block.hasClass('dropped')) {
+            return Math.round(y * size) + 'px';
+          } else if (block.hasClass('reset')) {
+            return Math.round(y * size) + 'px';
+          }
+          return y * size + conf.height * SCALE + 'px';
+        }
+      })
+    });
+  }
+
+  function updatePosition(container, conf) {
+    updateCellPosition(container, conf);
+    updateBlockPosition(container, conf);
+    return container;
+  }
+
   function Tetris(container, conf) {
+    var finished = false;
 
     this.init = function() {
+      var size = conf.standard;
       $.each(conf.tetris, function(_, def) {
         var block = generateBlock(conf, def);
         container.append(block);
       });
+      updatePosition(container, conf);
       return this;
     };
-
-    var finished = false;
 
     this.start = function(callback) {
       if (finished) {
         callback && callback();
         return this
       };
-
-      var step = Math.round(conf.height * SCALE);
       container.children('.tetris-block')
-        .removeClass('fly')
-        .removeClass('reset')
-        .addClass('drop')
+        .removeClass('fly reset')
+        .addClass('dropped')
         .css({
           'transition-delay': function(i) {
-            return Math.round(i * conf.speed * 0.93) + 'ms';
-          },
-          'bottom': function(i, v) {
-            return $(this).data('bottom');
+            return Math.round(i * DELAY) + 'ms';
           }
-        })
-        .transitionend(callback);
+        });
+
+      updatePosition(container, conf).transitionend(callback);
       finished = true;
     };
 
     this.reset = function() {
       container.children('.tetris-block')
-        .removeClass('drop')
-        .removeClass('fly')
-        .addClass('reset')
-        .each(function() {
-          var $this = $(this);
-          $(this).css({
-            'left': $this.data('left'),
-            'bottom': $this.data('bottom')
-          });
-      });
+        .removeClass('dropped fly')
+        .addClass('reset');
+
+      updatePosition(container, conf);
     };
 
     var away = false;
@@ -174,7 +202,7 @@
       }
 
       container.children('.tetris-block')
-        .removeClass('drop reset')
+        .removeClass('dropped reset')
         .addClass('fly')
         .each(function() {
           var node = $(this);
@@ -187,6 +215,11 @@
 
       away = true;
     };
+
+    this.getCellSize = function() {
+      var width = this.width();
+      return (width / COLUMNS);
+    }
   }
 
   $.fn.tetris = function(options) {
@@ -197,8 +230,7 @@
     options = $.extend({
       tetris: [],
       height: SCREEN_HEIGHT,
-      standard: width / COLUMNS,
-      speed: 222
+      standard: width / COLUMNS
     }, options);
     tetris = new Tetris(this, options);
 
