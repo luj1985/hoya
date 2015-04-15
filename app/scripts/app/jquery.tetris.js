@@ -82,14 +82,14 @@
     for (var i = 0, length = shape.length; i < length; i++) {
       var name = def.text[i] || '';
       var pos = shape[i];
-      var cell = generateCell(name, pos, def, size);
+      var cell = generateCell(name, pos, def);
       block.append(cell);
     }
     return block;
   }
 
 
-  function generateCell(name, pos, def, size) {
+  function generateCell(name, pos, def) {
     var cell = $('<span>')
       .attr('class', 'tetris-cell')
       .attr('data-case', name)
@@ -106,13 +106,12 @@
         'data-category': d.category,
       })
     }
-    cell.append(formatCaseNumber(name))
-    return cell;
+    return cell.append(formatCaseNumber(name));
   }
 
-  function updateCellPosition(collection, conf) {
+  function updateCellPosition(container, conf) {
     var size = conf.standard;
-    return collection.find('.tetris-cell').each(function() {
+    return container.find('.tetris-cell').each(function() {
       var cell = $(this);
       var y = cell.data('y'), 
           x = cell.data('x');
@@ -129,18 +128,16 @@
     });
   }
 
-  function updateBlockPosition(collection, conf) {
+  function updateBlockPosition(container, conf) {
     var size = conf.standard;
-    return collection.find('.tetris-block').each(function() {
+    return container.find('.tetris-block').each(function() {
       $(this).css({
         left: function() {
           return $(this).data('x') * size + 'px';
         },
         bottom: function() {
           var block = $(this), y = block.data('y');
-          if (block.hasClass('dropped')) {
-            return Math.round(y * size) + 'px';
-          } else if (block.hasClass('reset')) {
+          if (container.hasClass('dropping') || container.hasClass('reset')) {
             return Math.round(y * size) + 'px';
           }
           return y * size + conf.height * SCALE + 'px';
@@ -156,11 +153,11 @@
   }
 
   function Tetris(container, conf) {
-    var finished = false;
+    var finished = false, away = false;
 
     this.init = function() {
       var size = conf.standard;
-      $.each(conf.tetris, function(_, def) {
+      $.each(conf.tetris, function(i, def) {
         var block = generateBlock(conf, def);
         container.append(block);
       });
@@ -173,13 +170,13 @@
         callback && callback();
         return this
       };
-      container.children('.tetris-block')
+
+      container
         .removeClass('fly reset')
-        .addClass('dropped')
-        .css({
-          'transition-delay': function(i) {
-            return Math.round(i * DELAY) + 'ms';
-          }
+        .addClass('dropping')
+        .children('.tetris-block')
+        .css('transition-delay', function(i) {
+          return Math.round(i * DELAY) + 'ms';
         });
 
       updatePosition(container, conf).transitionend(callback);
@@ -187,23 +184,23 @@
     };
 
     this.reset = function() {
-      container.children('.tetris-block')
-        .removeClass('dropped fly')
+      container
+        .removeClass('dropping fly')
         .addClass('reset');
 
       updatePosition(container, conf);
     };
 
-    var away = false;
     this.flyAway = function(callback) {
       if (away || !finished) {
         callback && callback();
         return this;
       }
 
-      container.children('.tetris-block')
-        .removeClass('dropped reset')
+      container
+        .removeClass('dropping reset')
         .addClass('fly')
+        .children('.tetris-block')
         .each(function() {
           var node = $(this);
           var idx = node.data('aidx'),

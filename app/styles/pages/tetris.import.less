@@ -9,27 +9,27 @@
   height: 100%;
   max-width: 480px;
   margin: 0 auto;
-  overflow: visible;
+  overflow: visible;  
+
+  .tetris-block {
+    position: absolute;
+  }
 }
 
-.tetris-block {
-  position: absolute;
+#tetris.dropping .tetris-block {
+  transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000);
+  transition-duration: 500ms;
+  transition-property: all;
+}
 
-  &.dropped {
-    transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000);
-    transition-duration: 500ms;
-    transition-property: all;
-  }
+#tetris.fly .tetris-block {
+  transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530);
+  transition-duration: 100ms;
+  transition-property: all;
+}
 
-  &.fly {
-    transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530);
-    transition-duration: 100ms;
-    transition-property: all;
-  }
-
-  &.reset {
-    transition: none !important;
-  }
+#tetris.reset .tetris-block {
+  transition: none !important; 
 }
 
 .tetris-cell {
