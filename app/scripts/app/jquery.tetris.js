@@ -1,6 +1,8 @@
 (function(window, $, undefined) {
   'use strict';
 
+  function emptyFn(){};
+
   var SHAPES = {
     '11': [ [0, 0], [1, 0], [0, 1], [1, 1] ],
     '21': [ [1, 0], [0, 1], [1, 1], [2, 1] ],
@@ -24,10 +26,7 @@
     '81': [ [0, 1], [0, 2], [0, 3], [0, 4], [0, 5] ],
     '82': [ [1, 0], [2, 0], [3, 0], [4, 0], [5, 0] ]
   };
-  var SCALE = 1.3,
-      COLUMNS = 12,
-      DELAY = 200,
-      SCREEN_HEIGHT = $(window).height();
+  var SCALE = 1.3, COLUMNS = 12, DELAY = 200;
 
   function caculateEasing() {
     var screenWidth = $(window).width(), screenHeight = $(window).height();
@@ -43,7 +42,6 @@
 
   $(window).on('resize', function() {
     EASING = caculateEasing();
-    SCREEN_HEIGHT = $(window).height();
   });
 
   function formatCaseNumber(caseid) {
@@ -65,7 +63,6 @@
   }
 
   function generateBlock(options, def) {
-    var size = options.standard;
     var block = $('<div>')
       .attr('class', 'tetris-block')
       .data({
@@ -110,11 +107,6 @@
   }
 
   function Tetris(container, options) {
-    var finished = false, away = false;
-
-    this.getOptions = function() {
-      return options;
-    };
 
     this.init = function() {
       $.each(options.tetris, function(i, def) {
@@ -126,6 +118,7 @@
     };
 
     this.start = function(callback) {
+      callback = callback || emptyFn;
       container
         .removeClass('fly reset')
         .addClass('drop')
@@ -136,7 +129,7 @@
         .transitionend(callback);
 
       this.start = function() {
-        callback && callback();
+        callback();
       }
     };
 
@@ -148,42 +141,39 @@
     };
 
     this.flyAway = function(callback) {
-      container
-        .removeClass('drop reset')
-        .addClass('fly')
-        .children('.tetris-block')
-        .each(function() {
-          var node = $(this);
-          var idx = node.data('aidx'),
-              atype = parseInt(node.data('atype')) - 1;
-          node.css('transition-delay', (idx * 80) + 'ms');
-          node.css(EASING[atype]);
-        })
-        .transitionend(callback);
+      callback = callback || emptyFn;
 
-      this.flyAway = function() {
-        callback && callback();
+      if (container.hasClass('drop')) {
+        container
+          .removeClass('drop reset')
+          .addClass('fly')
+          .children('.tetris-block')
+          .each(function() {
+            var node = $(this),
+                idx = node.data('aidx'),
+                atype = parseInt(node.data('atype')) - 1;
+            node.css('transition-delay', (idx * 80) + 'ms');
+            node.css(EASING[atype]);
+          })
+          .transitionend(callback);
+
+        this.flyAway = function() {
+          callback();
+        }
+      } else {
+        callback();
       }
-    };
-
-    this.getCellSize = function() {
-      var width = this.width();
-      return (width / COLUMNS);
-    }
+    };    
   }
 
 
-
-  function updateCellPosition(container, options) {
-    var size = options.standard;
+  function updateCellPosition(container, size) {
     return container.find('.tetris-cell').each(function() {
-      var cell = $(this);
-      var y = cell.data('y'), 
-          x = cell.data('x');
+      var cell = $(this), x = cell.data('x'), y = cell.data('y');
 
       cell.css({
-        'top': y * size + 'px',
         'left': x * size + 'px',
+        'top': y * size + 'px',
         'height': size + 'px',
         'width': size + 'px',
         // exclude 1px border and 1px padding
@@ -193,10 +183,9 @@
     });
   }
 
-  function updateBlockPosition(container, options) {
-    var size = options.standard,
-        dropped = (container.hasClass('drop') || container.hasClass('reset')),
-        offset = options.height * SCALE;
+  function updateBlockPosition(container, size, height) {
+    var dropped = (container.hasClass('drop') || container.hasClass('reset')),
+        offset = height * SCALE;
 
     return container.find('.tetris-block').each(function() {
       var block = $(this), x = block.data('x'), y = block.data('y');
@@ -207,28 +196,26 @@
   }
 
   $.fn.animateTetris = function() {
-    var tetris = this.data('tetris');
-    if (!tetris) throw new Error('cannot access tetris settings');
+    var width = this.width(), height = $(window).height();
+    var size = width / COLUMNS;
 
-    var options = tetris.getOptions(), container = this;
-    updateBlockPosition(container, options);
-    updateCellPosition(container, options);
+    updateBlockPosition(this, size, height);
+    updateCellPosition(this, size, height);
     return this;
   }
 
   $.fn.tetris = function(options) {
-    var tetris = this.data('tetris');
+    var container = this;
+    var tetris = container.data('tetris');
     if (tetris) { return tetris; }
+ 
+    options = $.extend({ tetris: [] }, options);
+    tetris = new Tetris(container, options);
+    container.data('tetris', tetris);
 
-    var width = this.width();   
-    options = $.extend({
-      tetris: [],
-      height: SCREEN_HEIGHT,
-      standard: width / COLUMNS
-    }, options);
-    tetris = new Tetris(this, options);
-
-    this.data('tetris', tetris);
+    $(window).on('resize', function() {
+      container.animateTetris();
+    });
     return tetris.init();
   };
 })(window, jQuery);
