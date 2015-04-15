@@ -207,6 +207,7 @@
   function updateTetrisGeom(container, size, height) {
     var height = size * 12 + 48;
     container.css('min-height', height + 'px');
+    $('.tetris-wrapper').scrollTop(height);
   }
 
   $.fn.animateTetris = function() {
