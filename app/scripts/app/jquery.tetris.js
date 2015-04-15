@@ -31,7 +31,6 @@
     '81': [ [0, 1], [0, 2], [0, 3], [0, 4], [0, 5] ],
     '82': [ [1, 0], [2, 0], [3, 0], [4, 0], [5, 0] ]
   };
-  var SCALE = 1.3, COLUMNS = 12, DELAY = 200;
 
   function caculateEasing() {
     var screenWidth = $(window).width(), screenHeight = $(window).height();
@@ -129,7 +128,7 @@
         .removeClass('fly dropped')
         .addClass('dropping')
         .children('.tetris-block')
-        .css('transition-delay', function(i) { return Math.round(i * DELAY) + 'ms'; })
+        .css('transition-delay', function(i) { return Math.round(i * 200) + 'ms'; })
         .transitionend(callback, 'bottom')
         .transitionend(function() {
           container.removeClass('dropping').addClass('dropped');
@@ -189,19 +188,25 @@
 
   function updateBlockPosition(container, size, height) {
     var dropped = (container.hasClass('dropping') || container.hasClass('dropped')),
-        offset = height * SCALE;
+        offset = height * 1.5;
 
     return container.find('.tetris-block').each(function() {
       var block = $(this), x = block.data('x'), y = block.data('y');
       var left = x * size, bottom = y * size;
       bottom = dropped ? bottom : bottom + offset;
-      block.css({ left: left + 'px', bottom: Math.round(bottom) + 'px' });
+
+      block.css('left', left + 'px');
+      block.css('bottom', bottom + 'px');
+      // read css style back
+      // for iOS, the bottom style may not take effect immediately
+      // read it back as workaround
+      block.css('bottom');
     });
   }
 
   $.fn.animateTetris = function(suspendTransition) {
     var width = this.width(), height = $(window).height();
-    var size = width / COLUMNS;
+    var size = width / 12;
 
     updateBlockPosition(this, size, height, suspendTransition);
     updateCellPosition(this, size, height, suspendTransition);
