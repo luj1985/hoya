@@ -7,20 +7,15 @@
     var length = this.length, count = 0;
 
     function propertyMatcher(e) {
-      return e.originalEvent.propertyName === property;
+      var pn = e.originalEvent.propertyName;
+      return !!callback && ($.isArray(property) ? (property.indexOf(pn) !== -1) : (pn === property));
     }
-
-    function matchAll() {
-      return true;
-    }
-    
+    function matchAll() { return !!callback; }    
     var matcher = property ? propertyMatcher : matchAll;
 
     return this.bind(TRANSITION_END, function(e) {
-      if (matcher(e)) {
-        if (++count >= length && callback) {
-          callback.apply(this);
-        }
+      if (matcher(e) && (++count >= length)) {
+        callback.apply(this);
       }
     });
   };

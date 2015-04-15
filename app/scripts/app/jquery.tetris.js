@@ -121,6 +121,8 @@
       return container.animateTetris();
     };
 
+    var i = 0;
+
     this.start = function(callback) {
       callback = callback || emptyFn;
       container
@@ -197,12 +199,12 @@
     });
   }
 
-  $.fn.animateTetris = function() {
+  $.fn.animateTetris = function(suspendTransition) {
     var width = this.width(), height = $(window).height();
     var size = width / COLUMNS;
 
-    updateBlockPosition(this, size, height);
-    updateCellPosition(this, size, height);
+    updateBlockPosition(this, size, height, suspendTransition);
+    updateCellPosition(this, size, height, suspendTransition);
     return this;
   }
 
