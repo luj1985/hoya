@@ -2,6 +2,11 @@
   'use strict';
 
   function emptyFn(){};
+  function callThought(callback) {
+    return function() {
+      callback();
+    }
+  }
 
   var SHAPES = {
     '11': [ [0, 0], [1, 0], [0, 1], [1, 1] ],
@@ -113,8 +118,7 @@
         var block = generateBlock(options, def);
         container.append(block);
       });
-      container.animateTetris();
-      return this;
+      return container.animateTetris();
     };
 
     this.start = function(callback) {
@@ -128,9 +132,7 @@
         .animateTetris()
         .transitionend(callback);
 
-      this.start = function() {
-        callback();
-      }
+      this.start = callThought(callback);
     };
 
     this.reset = function() {
@@ -156,10 +158,7 @@
             node.css(EASING[atype]);
           })
           .transitionend(callback);
-
-        this.flyAway = function() {
-          callback();
-        }
+        this.flyAway = callThought(callback);
       } else {
         callback();
       }
