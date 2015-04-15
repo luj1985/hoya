@@ -170,7 +170,7 @@
   }
 
 
-  function updateCellPosition(container, size) {
+  function updateCellGeom(container, size) {
     return container.find('.tetris-cell').each(function() {
       var cell = $(this), x = cell.data('x'), y = cell.data('y');
 
@@ -186,7 +186,7 @@
     });
   }
 
-  function updateBlockPosition(container, size, height) {
+  function updateBlockGeom(container, size, height) {
     var dropped = (container.hasClass('dropping') || container.hasClass('dropped')),
         offset = height * 1.5;
 
@@ -204,12 +204,18 @@
     });
   }
 
+  function updateTetrisGeom(container, size, height) {
+    var height = size * 12 + 48;
+    container.css('min-height', height + 'px');
+  }
+
   $.fn.animateTetris = function() {
     var width = this.width(), height = $(window).height();
     var size = width / 12;
 
-    updateBlockPosition(this, size, height);
-    updateCellPosition(this, size, height);
+    updateCellGeom(this, size, height);
+    updateBlockGeom(this, size, height);
+    updateTetrisGeom(this, size, height);
     return this;
   }
 
