@@ -48,7 +48,7 @@ $(function() {
         indicators += '<span class="indicator"></span>';
       }
       gallery += '<div class="slide right image">';
-      gallery += '<img src="images/image-loader.gif" data-src="images/case/' + name + '/' + i + '.jpg">';
+      gallery += '<img src="images/image-loader.gif" data-src="images/thumbnails/' + name + '/' + i + '.jpg">';
       gallery += '</div>';
 
       indicators += '<span class="indicator"></span>'
