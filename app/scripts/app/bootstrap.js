@@ -161,6 +161,31 @@ $(function() {
   });
   $(window).trigger('hashchange');
 
+  $('#case').on('click', '.slide.image img', function(e) {
+    var img = $(e.target);
+    var src = img.attr('src');
+    if (src === 'images/image-loader.gif') {
+      src = img.attr('data-src');
+    }
+    var fullsize = src.replace('thumbnails', 'case');
+
+    var lightbox = [
+      '<div class="lightbox">',
+        '<img src="' + src + '" data-src="' + fullsize + '">',
+      '</div>'
+    ].join('\n');
+
+    $('.highlight').find('.content').html(lightbox).css({ 
+      left: 0, 
+      top: 0,
+      width: '100%',
+      height: '100%'
+    })
+    .end()
+    .addClass('active')
+    .imageloader();
+  });
+
 
   $('body').on('click', '.back', function(e) {
     e.preventDefault();
