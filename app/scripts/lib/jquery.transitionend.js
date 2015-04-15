@@ -12,8 +12,8 @@
     }
     function matchAll() { return !!callback; }    
     var matcher = property ? propertyMatcher : matchAll;
-
-    return this.bind(TRANSITION_END, function(e) {
+    // cancel unfinished transition
+    return this.unbind(TRANSITION_END).bind(TRANSITION_END, function(e) {
       if (matcher(e) && (++count >= length)) {
         callback.apply(this);
       }

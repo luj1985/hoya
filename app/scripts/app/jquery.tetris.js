@@ -204,12 +204,12 @@
     });
   }
 
-  $.fn.animateTetris = function(suspendTransition) {
+  $.fn.animateTetris = function() {
     var width = this.width(), height = $(window).height();
     var size = width / 12;
 
-    updateBlockPosition(this, size, height, suspendTransition);
-    updateCellPosition(this, size, height, suspendTransition);
+    updateBlockPosition(this, size, height);
+    updateCellPosition(this, size, height);
     return this;
   }
 
