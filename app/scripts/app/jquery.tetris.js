@@ -124,30 +124,33 @@
     this.start = function(callback) {
       callback = callback || emptyFn;
       container
-        .removeClass('fly reset')
-        .addClass('drop')
+        .removeClass('fly dropped')
+        .addClass('dropping')
         .children('.tetris-block')
         .css('transition-delay', function(i) { return Math.round(i * DELAY) + 'ms'; })
+        .transitionend(callback, 'bottom')
+        .transitionend(function() {
+          container.removeClass('dropping').addClass('dropped');
+        }, 'bottom')
         .end()
-        .animateTetris()
-        .transitionend(callback);
+        .animateTetris();
 
       this.start = callThought(callback);
     };
 
     this.reset = function() {
       container
-        .removeClass('drop fly')
-        .addClass('reset')
+        .removeClass('dropping fly')
+        .addClass('dropped')
         .animateTetris();
     };
 
     this.flyAway = function(callback) {
       callback = callback || emptyFn;
 
-      if (container.hasClass('drop')) {
+      if (container.hasClass('dropping') || container.hasClass('dropped')) {
         container
-          .removeClass('drop reset')
+          .removeClass('dropping dropped')
           .addClass('fly')
           .children('.tetris-block')
           .each(function() {
@@ -183,7 +186,7 @@
   }
 
   function updateBlockPosition(container, size, height) {
-    var dropped = (container.hasClass('drop') || container.hasClass('reset')),
+    var dropped = (container.hasClass('dropping') || container.hasClass('dropped')),
         offset = height * SCALE;
 
     return container.find('.tetris-block').each(function() {
