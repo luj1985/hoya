@@ -368,6 +368,11 @@ module.exports = function (grunt) {
           dest: '<%= config.dist %>'
         }, {
           expand: true,
+          cwd: '<%= config.app %>',
+          src: 'images/thumbnails/**/*',
+          dest: '<%= config.dist %>'
+        }, {
+          expand: true,
           cwd: '.tmp',
           src: '*.html',
           dest: '<%= config.dist %>'
