@@ -202,7 +202,10 @@ $(function() {
     var $lightbox = $(lightbox);
     $lightbox.swipe({
       fingers: 1,
-      swipeLeft: function() {
+      allowPageScroll: 'all',
+      triggerOnTouchLeave: true,
+      triggerOnTouchEnd: false,
+      swipeLeft: function(el, e) {
         var page = $(this);
         var currentSlide = page.find('.slide.active');
         var currentIndicator = page.find('.indicator.active');
@@ -214,7 +217,7 @@ $(function() {
           currentIndicator.next().addClass('active');
         }
       },
-      swipeRight: function() {
+      swipeRight: function(el, e) {
         var page = $(this);
         var currentSlide = page.find('.slide.active');
         var currentIndicator = page.find('.indicator.active');
