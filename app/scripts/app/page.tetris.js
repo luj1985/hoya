@@ -94,7 +94,7 @@ $(function() {
       var preview = [
         '<a class="preview" href="#case_' + name + '">',
           '<h5>' + d.text + '</h5>',
-          '<img src="images/image-loader.gif" data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
+          '<img src="images/image-loader.svg" data-src="images/case/' + name + '/a.jpg" alt="' + d.text + '">',
         '</a>'
       ].join('\n');
 

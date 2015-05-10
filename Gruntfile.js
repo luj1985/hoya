@@ -244,7 +244,7 @@ module.exports = function (grunt) {
             '<%= config.dist %>/images/{,*/}*.*',
             '<%= config.dist %>/styles/fonts/{,*/}*.*',
             '<%= config.dist %>/*.{ico,png}',
-            '!<%= config.dist %>/images/image-loader.gif'
+            '!<%= config.dist %>/images/image-loader.svg'
           ]
         }
       }

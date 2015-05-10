@@ -48,7 +48,7 @@ $(function() {
         indicators += '<span class="indicator"></span>';
       }
       gallery += '<div class="slide right image">';
-      gallery += '<img src="images/image-loader.gif" data-src="images/thumbnails/' + name + '/' + i + '.jpg">';
+      gallery += '<img src="images/image-loader.svg" data-src="images/thumbnails/' + name + '/' + i + '.jpg">';
       gallery += '</div>';
 
       indicators += '<span class="indicator"></span>'
@@ -167,7 +167,7 @@ $(function() {
   $('#case').on('click', '.slide.image img', function(e) {
     var img = $(e.target);
     var currentImage = img.attr('src');
-    if (currentImage === 'images/image-loader.gif') {
+    if (currentImage === 'images/image-loader.svg') {
       currentImage = img.attr('data-src');
     }
     var fullsize = currentImage.replace('thumbnails', 'case');
@@ -189,7 +189,7 @@ $(function() {
         position = 'right';
       } else {
         gallery += '<div class="slide image ' + position + '">\n';
-        gallery += '<img src="images/image-loader.gif" data-src="' + path + '">\n';
+        gallery += '<img src="images/image-loader.svg" data-src="' + path + '">\n';
 
         indicators += '<span class="indicator"></span>';
       }
