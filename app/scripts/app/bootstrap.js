@@ -157,6 +157,7 @@ $(function() {
     var hash = location.hash.replace('#', '') || 'home';
     var names = hash.split('_');
     var name = names[0], param = names[1];
+    $('.highlight').removeClass('active');
     dispatch(name, param);
   });
   $(window).trigger('hashchange');
