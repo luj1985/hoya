@@ -160,6 +160,7 @@ $(function() {
     var names = hash.split('_');
     var name = names[0], param = names[1];
     $('.highlight').removeClass('active');
+    $('.highlight').find('.content').empty();
     dispatch(name, param);
   });
   $(window).trigger('hashchange');
