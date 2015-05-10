@@ -30,13 +30,25 @@
 }
 
 .highlight.active .lightbox {
+  position: relative;
+  display: block;
+  top: 0;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  overflow: hidden;
+
   background-color: rgba(0, 0, 0, 0.88);
+
+  .gallery {
+    .slide {
+      background-color: transparent;
+      img {
+        max-height: 100%;
+        max-width: 100%;
+      }
+    }
+  }
 }
+
 
 .gallery {
   position: relative;
@@ -44,67 +56,70 @@
   top: 0;
   height: 100%;
   overflow: hidden;
+}
 
-  .slide {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    text-align: center;
-    transition: all 400ms ease-in-out;
-    display: block;
-    &.image {
+.slide {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  transition: all 400ms ease-in-out;
+  display: block;
+  &.image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    background-color: @hoya-white;
+    &:before {
+      content: "";
+      display: inline-block;
+      height: 100%;
       vertical-align: middle;
-      background-color: @hoya-white;
-      &:before {
-        content: "";
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-        margin: 0;
-        padding: 0;
-      }
+      margin: 0;
+      padding: 0;
     }
-    &.active {
-      left: 0 !important;
-      z-index: 3;
-    }
+  }
+  &.active {
+    left: 0 !important;
+    z-index: 3;
+  }
 
-    &.left {
-      left: -100%;
-    }
+  &.left {
+    left: -100%;
+  }
 
-    &.right {
-      left: 100%;
-    }
+  &.right {
+    left: 100%;
+  }
 
-    &.description {
-      padding: 1rem 1rem 2rem 1rem;
-      text-align: left;
+  &.description {
+    padding: 1rem 1rem 2rem 1rem;
+    text-align: left;
+    color: @hoya-content-invert-color;
+    white-space: normal;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    h3 {
       color: @hoya-content-invert-color;
-      white-space: normal;
-      overflow-y: auto;
-      overflow-x: hidden;
-
-      h3 {
-        color: @hoya-content-invert-color;
-        font-size: @hoya-title-font-size;
-        margin-bottom: 1rem;
-      }
-      h4 {
-        font-size: @hoya-subtitle-font-size;
-      }
-      p {
-        font-size: @hoya-body-font-size;
-        line-height: 2rem;
-      }
+      font-size: @hoya-title-font-size;
+      margin-bottom: 1rem;
     }
-
-    img {
-      vertical-align: middle;
-      
-      max-height: 95%;
-      max-width: 95%;
+    h4 {
+      font-size: @hoya-subtitle-font-size;
     }
+    p {
+      font-size: @hoya-body-font-size;
+      line-height: 2rem;
+    }
+  }
+
+  img {
+    vertical-align: middle;
+    
+    max-height: 95%;
+    max-width: 95%;
   }
 }
