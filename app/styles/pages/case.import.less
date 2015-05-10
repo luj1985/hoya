@@ -64,7 +64,11 @@
   width: 100%;
   overflow: hidden;
   text-align: center;
-  transition: all 400ms ease-in-out;
+
+  transition-timing-function: ease-in-out;
+  transition-duration: 400ms;
+  transition-property: left top transform;
+
   display: block;
   &.image {
     display: flex;

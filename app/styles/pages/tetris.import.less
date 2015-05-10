@@ -4,6 +4,11 @@
 .tetris-wrapper {
   height: 100%;
   overflow: auto;
+
+  
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 #tetris {
@@ -20,24 +25,34 @@
   }
 }
 
+.tetris-block, .tetris-cell {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
 #tetris.dropping .tetris-block {
   transition-timing-function: cubic-bezier(0.190, 1.000, 0.220, 1.000);
   transition-duration: 500ms;
-  transition-property: all;
+  transition-property: left top;
 }
 
 #tetris.fly .tetris-block {
   transition-timing-function: cubic-bezier(0.550, 0.085, 0.680, 0.530);
   transition-duration: 100ms;
-  transition-property: all;
+  transition-property: left top;
 }
 
 #tetris.dropped .tetris-block {
-  transition: none !important; 
+  transition-property: none !important;
 }
 
 #tetris.resizing .tetris-block {
-  transition: none !important; 
+  transition-property: none !important;
 }
 
 .tetris-cell {

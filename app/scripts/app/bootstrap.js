@@ -159,8 +159,8 @@ $(function() {
     var hash = location.hash.replace('#', '') || 'home';
     var names = hash.split('_');
     var name = names[0], param = names[1];
-    $('.highlight').removeClass('active');
-    $('.highlight').find('.content').empty();
+    $('.highlight').removeClass('active').html('<div class="content"></div>');
+
     dispatch(name, param);
   });
   $(window).trigger('hashchange');
