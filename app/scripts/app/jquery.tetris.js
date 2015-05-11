@@ -209,7 +209,8 @@
   }
 
   $.fn.animateTetris = function() {
-    var width = this.width(), height = $(window).height();
+    var width = $(window).width(), height = $(window).height();
+    width = width > 480 ? 480 : width;
     var size = width / 12;
 
     updateCellGeom(this, size, height);
