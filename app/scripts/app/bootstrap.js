@@ -11,7 +11,7 @@ $(function() {
   function findColorDef(name) {
     for(var i = 0, length = CASES.length; i < length; i++) {
       var c = CASES[i];
-      var arr = c[2];
+      var arr = c[1];
       if (arr.indexOf(name) > -1) {
         return c[0];
       }

@@ -19,18 +19,16 @@ $(function() {
       SCREEN_HEIGHT = $(window).height();
 
   var container = $('#tetris');
-  var tetris = container.tetris({
-    tetris: tetrisDefs
-  });
+  var tetris = container.tetris({tetris: tetrisDefs});
 
-  $('nav.category .item a').on('click', function(e) {
+  $('nav.category').on('click', '.item a', function(e) {
     e.preventDefault();
-    var link = $(this);
-    var target = link.attr('href');
-    var offset = link.offset();
+    var link = $(this),
+        target = link.attr('href'),
+        offset = link.offset();
+
     var filter = $(target).clone().attr('id', 'filter');
 
-    var container = $('#tetris');
     if (target === '#year_list') {
       filter.on('click', 'li', function() {
         var year = $(this).data('year');
@@ -66,7 +64,7 @@ $(function() {
   var CONTENT_HEIGHT, CONTENT_WIDTH;
   CONTENT_HEIGHT = CONTENT_WIDTH = 6 * 16;
 
-  $('#tetris .tetris-cell').on('click', function(e) {
+  $('#tetris').on('click', '.tetris-cell', function(e) {
     e.preventDefault();
 
     var cell = $(this);
