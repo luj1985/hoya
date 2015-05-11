@@ -4,14 +4,13 @@ $(function() {
   var tetrisDefs = $.map(CASES, function(t) {
     return {
       bgColor: t[0],
-      textColor: t[1],
-      text: t[2],
-      shape: t[3],
-      orientation: t[4],
-      aIndex: t[5],
-      aType: t[6],
-      x: t[7],
-      y: t[8]
+      text: t[1],
+      shape: t[2],
+      orientation: t[3],
+      aIndex: t[4],
+      aType: t[5],
+      x: t[6],
+      y: t[7]
     };
   });
 

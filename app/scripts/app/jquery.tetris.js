@@ -95,7 +95,6 @@
       .attr('data-case', name)
       .data({ x: pos[0], y: pos[1] })
       .css({
-        'color' : def.textColor,
         'background-color': def.bgColor
       });
 
@@ -170,6 +169,11 @@
 
 
   function updateCellGeom(container, size) {
+    container.css({
+      // exclude 1px border and 1px padding
+      'font-size' : ((size - 4) / 3) + 'px',
+      'line-height': (size / 3) + 'px'
+    });
     return container.find('.tetris-cell').each(function() {
       var cell = $(this), x = cell.data('x'), y = cell.data('y');
 
@@ -177,10 +181,7 @@
         'left': x * size + 'px',
         'top': y * size + 'px',
         'height': size + 'px',
-        'width': size + 'px',
-        // exclude 1px border and 1px padding
-        'font-size' : ((size - 4) / 3) + 'px',
-        'line-height': (size / 3) + 'px'
+        'width': size + 'px'
       })
     });
   }
