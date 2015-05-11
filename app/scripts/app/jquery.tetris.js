@@ -56,11 +56,9 @@
     var html = '';
     var matches = caseid.match(/^([a-zA-Z])(\d+)$/);
     if (matches) {
-      var l = matches[1], no = matches[2];
-      html += '<em>' + l + '</em>';
-      html += '<span>' + no + '</span>';
+      html += '<em>' + matches[1] + '</em>' + matches[2] ;
     } else {
-      html += '<span>' + caseid + '</span>';
+      html += caseid ;
     }
     return html;
   }
