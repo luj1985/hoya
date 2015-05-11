@@ -26,11 +26,8 @@
     PINCH = "pinch",
     TAP = "tap",
     DOUBLE_TAP = "doubletap",
-    LONG_TAP = "longtap",
     HOLD = "hold",
     
-    HORIZONTAL = "horizontal",
-    VERTICAL = "vertical",
 
     ALL_FINGERS = "all",
     
@@ -581,14 +578,6 @@
         phase = PHASE_END;
                 triggerHandler(event, phase);
       }
-      //Special cases - A tap should always fire on touch end regardless,
-      //So here we manually trigger the tap end handler by itself
-      //We dont run trigger handler as it will re-trigger events that may have fired already
-      else if (!options.triggerOnTouchEnd && hasTap()) {
-                //Trigger the pinch events...
-          phase = PHASE_END;
-          triggerHandlerForGesture(event, phase, TAP);
-      }
       else if (phase === PHASE_MOVE) {
         phase = PHASE_CANCEL;
         triggerHandler(event, phase);
@@ -942,109 +931,7 @@
         return fingerData[0].end.x !== 0;
         }
 
-    // TAP / CLICK
-    /**
-     * Returns true if a click / tap events have been registered
-     * @return Boolean
-     * @inner
-    */
-    function hasTap() {
-      //Enure we dont return 0 or null for false values
-      return !!(options.tap) ;
-    }
     
-    /**
-     * Returns true if a double tap events have been registered
-     * @return Boolean
-     * @inner
-    */
-    function hasDoubleTap() {
-      //Enure we dont return 0 or null for false values
-      return !!(options.doubleTap) ;
-    }
-    
-    /**
-     * Returns true if any long tap events have been registered
-     * @return Boolean
-     * @inner
-    */
-    function hasLongTap() {
-      //Enure we dont return 0 or null for false values
-      return !!(options.longTap) ;
-    }
-    
-    /**
-     * Returns true if we could be in the process of a double tap (one tap has occurred, we are listening for double taps, and the threshold hasn't past.
-     * @return Boolean
-     * @inner
-    */
-    function validateDoubleTap() {
-        if(doubleTapStartTime==null){
-            return false;
-        }
-        var now = getTimeStamp();
-        return (hasDoubleTap() && ((now-doubleTapStartTime) <= options.doubleTapThreshold));
-    }
-    
-    /**
-     * Returns true if we could be in the process of a double tap (one tap has occurred, we are listening for double taps, and the threshold hasn't past.
-     * @return Boolean
-     * @inner
-    */
-    function inDoubleTap() {
-        return validateDoubleTap();
-    }
-    
-    
-    /**
-     * Returns true if we have a valid tap
-     * @return Boolean
-     * @inner
-    */
-    function validateTap() {
-        return ((fingerCount === 1 || !SUPPORTS_TOUCH) && (isNaN(distance) || distance < options.threshold));
-    }
-    
-    /**
-     * Returns true if we have a valid long tap
-     * @return Boolean
-     * @inner
-    */
-    function validateLongTap() {
-        //slight threshold on moving finger
-            return ((duration > options.longTapThreshold) && (distance < DOUBLE_TAP_THRESHOLD)); 
-    }
-    
-    /**
-     * Returns true if we are detecting taps and have one
-     * @return Boolean
-     * @inner
-    */
-    function didTap() {
-        //Enure we dont return 0 or null for false values
-      return !!(validateTap() && hasTap());
-    }
-    
-    
-    /**
-     * Returns true if we are detecting double taps and have one
-     * @return Boolean
-     * @inner
-    */
-    function didDoubleTap() {
-        //Enure we dont return 0 or null for false values
-      return !!(validateDoubleTap() && hasDoubleTap());
-    }
-    
-    /**
-     * Returns true if we are detecting long taps and have one
-     * @return Boolean
-     * @inner
-    */
-    function didLongTap() {
-        //Enure we dont return 0 or null for false values
-      return !!(validateLongTap() && hasLongTap());
-    }
     
     
     
