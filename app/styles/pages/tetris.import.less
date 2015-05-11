@@ -57,25 +57,20 @@
 
 .tetris-cell {
   position: absolute;
-  width: 2rem;
-  height: 2rem;
   text-align: center;
   border: 1px solid white;
-
-  .case {
-    position: absolute;
-    padding: 1px;
-    bottom: 0;
-    width: 100%;
-    i {
-      display: block;
-      font-size: 120%;
-      font-weight: bold;
-      font-style: normal;
-    }
-    span {
-      display: block;
-    }
+  padding: 1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  em {
+    display: block;
+    font-size: 120%;
+    font-weight: bold;
+    font-style: normal;
+  }
+  span {
+    display: block;
   }
 
   &:not(:empty) {

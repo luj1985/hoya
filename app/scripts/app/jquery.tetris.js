@@ -53,16 +53,15 @@
       return '';
     }
 
-    var html = '<div class="case">';
+    var html = '';
     var matches = caseid.match(/^([a-zA-Z])(\d+)$/);
     if (matches) {
       var l = matches[1], no = matches[2];
-      html += '<i>' + l + '</i>';
+      html += '<em>' + l + '</em>';
       html += '<span>' + no + '</span>';
     } else {
       html += '<span>' + caseid + '</span>';
     }
-    html += '</div>';
     return html;
   }
 
