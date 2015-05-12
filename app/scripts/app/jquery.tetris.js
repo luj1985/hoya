@@ -56,9 +56,9 @@
     var html = '';
     var matches = caseid.match(/^([a-zA-Z])(\d+)$/);
     if (matches) {
-      html += '<em>' + matches[1] + '</em>' + matches[2] ;
+      html += '<em>' + matches[1] + '</em><span>' + matches[2] + '</span>';
     } else {
-      html += caseid ;
+      html += '<span>' + caseid + '</span>';
     }
     return html;
   }
